@@ -1,10 +1,10 @@
 import Head from 'next/head'
 
-export default function Home() {
+export default function About() {
   return (
     <div>
       <Head>
-        <title>Gallery | The Wild Ones</title>
+        <title>About the Artist | The Wild Ones</title>
         <link rel="icon" href="/white_logo.jpg" />
       </Head>
     </div>
