@@ -1,6 +1,9 @@
 import Head from 'next/head'
+import { useAuth } from '../../contexts/auth.js';
 
 export default function Login() {
+  const { login } = useAuth();
+
   return (
     <div>
       <Head>
@@ -12,19 +15,18 @@ export default function Login() {
         <h2 className="subheader-client">admin console</h2>
         <div className="form-gallery">
           <h4 className="text-gallery-form-header">Sign in</h4>
-          {/* <form id="form-login" onSubmit={props.signInHandler}> */}
-          <form id="form-login">
+          <form id="form-login" onSubmit={login}>
             <input
               className="input-landing"
               // type="email" 
-              name="userEmail"
+              name="login"
               placeholder="E.g: johnDorian123@gmail.com"
               id="userEmail"
             />
             <input
               className="input-landing"
               type="password"
-              name="userPassword"
+              name="password"
               placeholder="Your password"
               id="userPassword"
             />

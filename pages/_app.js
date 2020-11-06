@@ -2,6 +2,9 @@ import '../styles/globals.css'
 import { useState } from 'react';
 import Link from 'next/link';
 import Router from 'next/router';
+import { useEffect } from 'react';
+import Axios from 'axios';
+import { AuthProvider } from '../contexts/auth.js';
 
 function MyApp({ Component, pageProps }) {
 
@@ -11,6 +14,17 @@ function MyApp({ Component, pageProps }) {
   const [currentUrl, setCurrentUrl] = useState(null);
   const [animation, setAnimation] = useState('hidden');
   const [cart, setCart] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    // getCart();
+    // getStore();
+
+    Axios
+      .get('/api/about')
+      .then(response => setBanner(response.data[0].bannerFireBaseUrl))
+      .catch(err => console.error(err));
+  }, [])
 
   const toolBarHandler = () => {
     showClientToolBar ? setShowClientToolBar(false) : setShowClientToolBar(true)
@@ -114,7 +128,14 @@ function MyApp({ Component, pageProps }) {
           }
         </div>
       </div>
-      <Component {...pageProps} />
+      <AuthProvider>
+        <Component {...pageProps}
+          banner={banner}
+          returnHome={returnHome}
+          loading={loading}
+          setLoading={setLoading}
+          />
+      </AuthProvider>
     </div>
   )
 }
