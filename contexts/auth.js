@@ -13,7 +13,6 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     async function loadUserFromCookies() {
       const token = document.cookie.split('=')[1];
-
       // if token exists
       if (token) {
         api.defaults.headers.authorization = `Bearer ${token}`;

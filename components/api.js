@@ -3,7 +3,7 @@ import getConfig from 'next/config';
 const { publicRuntimeConfig } = getConfig();
 
 let urls = {
-  development: 'localhost:3000',
+  development: 'http://localhost:3000',
   // production: 'http://52.8.24.75:3000'
 }
 

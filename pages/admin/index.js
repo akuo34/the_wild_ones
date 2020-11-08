@@ -6,7 +6,7 @@ export default function Admin() {
 
   useEffect(() => {
     Router.push('/admin/login');
-  });
+  }, []);
 
   return (
     <div>

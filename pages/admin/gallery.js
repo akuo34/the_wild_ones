@@ -50,11 +50,12 @@ export default function GalleryManager(props) {
     if (imageAsFile === '') {
       console.error(`not an image, the image file is a ${typeof (imageAsFile)}`);
       props.setLoading(false);
+      return;
     };
 
     let randomizer = (Math.floor(Math.random() * (1000 - 1)) + 1).toString();
     let split = imageAsFile.name.split('.');
-    const filename = split[0] + randomizer + split[1];
+    const filename = split[0] + randomizer + '.' + split[1];
 
     const uploadTask = storage.ref(`/images/${filename}`).put(imageAsFile);
 
@@ -77,7 +78,6 @@ export default function GalleryManager(props) {
             .post('/api/gallery', request)
             .then(response => {
               getImages();
-              console.log(response)
               setImageAsFile('');
             })
             .catch(err => console.error(err))
@@ -98,7 +98,6 @@ export default function GalleryManager(props) {
       .put(`/api/gallery/${_id}`, { title, description, index: '' })
       .then(response => {
         getImages();
-        console.log(response)
       })
       .catch(err => console.error(err));
 
@@ -118,9 +117,14 @@ export default function GalleryManager(props) {
     if (imageAsFile === '') {
       console.error(`not an image, the image file is a ${typeof (imageAsFile)}`);
       props.setLoading(false);
+      return;
     };
 
-    const uploadTask = storage.ref(`/images/${imageAsFile.name}`).put(imageAsFile);
+    let randomizer = (Math.floor(Math.random() * (1000 - 1)) + 1).toString();
+    let split = imageAsFile.name.split('.');
+    const filenameNew = split[0] + randomizer + '.' + split[1];
+
+    const uploadTask = storage.ref(`/images/${filenameNew}`).put(imageAsFile);
 
     uploadTask.on('state_changed', (snapshot) => {
       console.log(snapshot)
@@ -128,20 +132,17 @@ export default function GalleryManager(props) {
       console.log(err);
     }, () => {
       console.log('uploaded to firebase')
-      storage.ref('images').child(imageAsFile.name).getDownloadURL()
+      storage.ref('images').child(filenameNew).getDownloadURL()
         .then(fireBaseUrl => {
 
           storage.ref('images').child(filename).delete()
             .then(() => console.log('deleted from firebase'))
             .catch(err => console.error(err));
 
-          filename = imageAsFile.name;
-
-          const request = { fireBaseUrl, filename };
+          const request = { fireBaseUrl, filename: filenameNew };
           Axios
             .put(`/api/gallery/photo/${_id}`, request)
             .then(response => {
-              console.log(response);
               getImages();
               setImageAsFile('');
             })
@@ -161,7 +162,6 @@ export default function GalleryManager(props) {
     Axios
       .delete(`/api/gallery/${_id}`)
       .then(response => {
-        console.log(response);
         getImages();
 
         storage.ref('images').child(filename).delete()
@@ -198,12 +198,10 @@ export default function GalleryManager(props) {
       Axios
         .put(`/api/gallery/${_id}`, { index, title: '', description: '' })
         .then(response => {
-          console.log(response);
 
           Axios
             .put(`/api/gallery/${swapperId}`, { index: originalIndex, title: '', description: '' })
             .then(response => {
-              console.log(response);
               getImages();
             })
             .catch(err => console.error(err));
@@ -223,12 +221,10 @@ export default function GalleryManager(props) {
       Axios
         .put(`/api/gallery/${_id}`, { index, title: '', description: '' })
         .then(response => {
-          console.log(response);
 
           Axios
             .put(`/api/gallery/${swapperId}`, { index: originalIndex, title: '', description: '' })
             .then(response => {
-              console.log(response);
               getImages();
             })
             .catch(err => console.error(err));

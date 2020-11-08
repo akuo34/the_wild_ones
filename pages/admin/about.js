@@ -52,9 +52,14 @@ export default function AboutManager(props) {
     if (imageAsFile === '') {
       console.error(`not an image, the image file is a ${typeof (imageAsFile)}`);
       props.setLoading(false);
+      return;
     };
 
-    const uploadTask = storage.ref(`/about/${imageAsFile.name}`).put(imageAsFile);
+    let randomizer = (Math.floor(Math.random() * (1000 - 1)) + 1).toString();
+    let split = imageAsFile.name.split('.');
+    const filename = split[0] + randomizer + '.' + split[1];
+
+    const uploadTask = storage.ref(`/about/${filename}`).put(imageAsFile);
 
     uploadTask.on('state_changed', (snapshot) => {
       console.log(snapshot)
@@ -62,7 +67,7 @@ export default function AboutManager(props) {
       console.log(err);
     }, () => {
       console.log('uploaded to firebase')
-      storage.ref('about').child(imageAsFile.name).getDownloadURL()
+      storage.ref('about').child(filename).getDownloadURL()
         .then(portraitFireBaseUrl => {
 
           let portraitFilename = imageAsFile.name;
@@ -76,7 +81,6 @@ export default function AboutManager(props) {
             .then(response => {
               getBio();
               setAllowUpload(false);
-              console.log(response);
               setImageAsFile('');
             })
             .catch(err => console.error(err))
@@ -99,9 +103,14 @@ export default function AboutManager(props) {
     if (imageAsFile === '') {
       console.error(`not an image, the image file is a ${typeof (imageAsFile)}`);
       props.setLoading(false);
+      return;
     };
 
-    const uploadTask = storage.ref(`/about/${imageAsFile.name}`).put(imageAsFile);
+    let randomizer = (Math.floor(Math.random() * (1000 - 1)) + 1).toString();
+    let split = imageAsFile.name.split('.');
+    const filename = split[0] + randomizer + '.' + split[1];
+
+    const uploadTask = storage.ref(`/about/${filename}`).put(imageAsFile);
 
     uploadTask.on('state_changed', (snapshot) => {
       console.log(snapshot)
@@ -109,21 +118,18 @@ export default function AboutManager(props) {
       console.log(err);
     }, () => {
       console.log('uploaded to firebase')
-      storage.ref('about').child(imageAsFile.name).getDownloadURL()
+      storage.ref('about').child(filename).getDownloadURL()
         .then(portraitFireBaseUrl => {
 
           storage.ref('about').child(portraitFilename).delete()
             .then(() => console.log('deleted from firebase'))
             .catch(err => console.error(err));
 
-          portraitFilename = imageAsFile.name;
-
-          const request = { portraitFireBaseUrl, portraitFilename };
+          const request = { portraitFireBaseUrl, portraitFilename: filename };
           Axios
             .put(`/api/about/portrait/${_id}`, request)
             .then(response => {
               getBio();
-              console.log(response);
               setImageAsFile('');
             })
             .catch(err => console.error(err))
@@ -147,9 +153,14 @@ export default function AboutManager(props) {
     if (imageAsFile === '') {
       console.error(`not an image, the image file is a ${typeof (imageAsFile)}`);
       props.setLoading(false);
+      return;
     };
 
-    const uploadTask = storage.ref(`/about/${imageAsFile.name}`).put(imageAsFile);
+    let randomizer = (Math.floor(Math.random() * (1000 - 1)) + 1).toString();
+    let split = imageAsFile.name.split('.');
+    const filename = split[0] + randomizer + '.' + split[1];
+
+    const uploadTask = storage.ref(`/about/${filename}`).put(imageAsFile);
 
     uploadTask.on('state_changed', (snapshot) => {
       console.log(snapshot)
@@ -157,44 +168,26 @@ export default function AboutManager(props) {
       console.log(err);
     }, () => {
       console.log('uploaded to firebase')
-      storage.ref('about').child(imageAsFile.name).getDownloadURL()
+      storage.ref('about').child(filename).getDownloadURL()
         .then(bannerFireBaseUrl => {
 
           if (oldBannerFilename) {
             storage.ref('about').child(oldBannerFilename).delete()
-              .then(() => {
-                console.log('deleted from firebase');
-
-                let bannerFilename = imageAsFile.name;
-                const request = { bannerFireBaseUrl, bannerFilename };
-
-                Axios
-                  .put(`/api/about/banner/${_id}`, request)
-                  .then(response => {
-                    getBio();
-                    window.location.reload();
-                    console.log(response);
-                    setImageAsFile('');
-                  })
-                  .catch(err => console.error(err))
-              })
+              .then(() => console.log('deleted from firebase'))
               .catch(err => console.error(err));
-          } else {
-
-            let bannerFilename = imageAsFile.name;
-            const request = { bannerFireBaseUrl, bannerFilename };
-
-            Axios
-              .put(`/api/about/banner/${_id}`, request)
-              .then(response => {
-                getBio();
-                props.setLoading(false);
-                window.location.reload();
-                console.log(response);
-                setImageAsFile('');
-              })
-              .catch(err => console.error(err))
           }
+
+          const request = { bannerFireBaseUrl, bannerFilename: filename };
+
+          Axios
+            .put(`/api/about/banner/${_id}`, request)
+            .then(response => {
+              getBio();
+              props.setLoading(false);
+              window.location.reload();
+              setImageAsFile('');
+            })
+            .catch(err => console.error(err))
         });
     });
 
@@ -211,7 +204,6 @@ export default function AboutManager(props) {
       .put(`/api/about/${_id}`, { bio })
       .then(response => {
         getBio();
-        console.log(response)
       })
       .catch(err => console.error(err));
 
@@ -222,13 +214,10 @@ export default function AboutManager(props) {
     const _id = e.target.value;
     const portraitFilename = e.target.dataset.portraitfilename;
     const bannerFilename = e.target.dataset.bannerfilename;
-    console.log(portraitFilename);
-    console.log(bannerFilename);
 
     Axios
       .delete(`/api/about/${_id}`)
       .then(response => {
-        console.log(response)
         getBio();
         window.location.reload();
 

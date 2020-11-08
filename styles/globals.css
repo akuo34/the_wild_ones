@@ -466,13 +466,15 @@ label {
   justify-content: space-evenly;
 }
 
-.button-carousel:hover {
-  opacity: 1;
+.button-carousel {
+  height: 30px;
+  opacity: 20%;
+  margin: -15px;
 }
 
 .button-carousel:hover {
   cursor: pointer;
-  opacity: 100%;
+  opacity: 50%;
 }
 
 .button-store-category {
@@ -508,6 +510,8 @@ label {
 .img-store {
   height: 100%;
   margin: 0 auto;
+  max-width: calc(180px + 7.5vw);
+  object-fit: cover;
 }
 
 .container-store-img {
@@ -530,7 +534,6 @@ label {
   display: flex;
   flex-direction: column;
   width: calc(220px + 10vw);
-  margin-bottom: 20px;  
 }
 
 /* Contact Manager ----------------------------------------------------------------------------- */
