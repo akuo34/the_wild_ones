@@ -288,9 +288,9 @@ export default function GalleryManager(props) {
                       alt="down arrow" />
                   </div>
                   <div className="container-gallery-title-description">
-                    <p>Title: {item.title}</p>
-                    <p>Description: {item.description}</p>
-                    <p>Date Uploaded: {item.date}</p>
+                    <p><b>Title:</b> {item.title}</p>
+                    <p><b>Description:</b> {item.description}</p>
+                    <p><b>Date Uploaded:</b> {item.date}</p>
                     <div className="container-form-buttons">
                       <button value={item._id} type="submit" style={{ "marginRight": "5px" }} onClick={editToggler}>Edit</button>
                       <button value={item._id} onClick={deleteHandler} data-filename={item.filename} data-index={item.index}>Delete</button>

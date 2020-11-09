@@ -412,12 +412,12 @@ export default function EventsManager(props) {
                   }
                 </div>
                 <div className="container-events-title-description">
-                  <p>Title: {item.title}</p>
-                  <p>Location: {item.location}</p>
-                  <p style={{ "lineHeight": "28px" }}>Description: {item.resource}</p>
-                  <p>Start Date: {localizeDate(item.startDate, item.timezone)}</p>
-                  <p>End Date: {localizeDate(item.endDate, item.timezone)}</p>
-                  <p>Number of Photos: {item.images.length}</p>
+                  <p><b>Title:</b> {item.title}</p>
+                  <p><b>Location:</b> {item.location}</p>
+                  <p><b>Description:</b> {item.resource}</p>
+                  <p><b>Start Date:</b> {localizeDate(item.startDate, item.timezone)}</p>
+                  <p><b>End Date:</b> {localizeDate(item.endDate, item.timezone)}</p>
+                  <p><b>Number of Photos:</b> {item.images.length}</p>
                   <div className="container-form-buttons">
                     <button value={item._id} style={{ "marginRight": "5px" }} onClick={editToggler}>Edit</button>
                     <button value={item._id} onClick={deleteHandler} data-filename={item.filename}>Delete</button>

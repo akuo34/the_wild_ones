@@ -303,7 +303,7 @@ export default function AboutManager(props) {
                     </form>
                   </div>
                 </div>
-                <p style={{ "width": "calc(200px + 27vw)", "marginBottom": "40px", "lineHeight": "28px" }}>Bio: {item.bio}</p>
+                <p style={{ "width": "min(1000px, 90vw)", "marginBottom": "40px", "lineHeight": "28px" }}><b>Bio:</b> {item.bio}</p>
               </div>
             )
           })
