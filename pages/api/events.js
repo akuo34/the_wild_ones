@@ -2,9 +2,9 @@ import model from '../../database/model.js';
 
 export default async (req, res) => {
   if (req.method === 'POST') {
-    const { images, title, resource, location, startDate, endDate, startTime, endTime, allDay } = req.body;
+    const { images, title, resource, location, startDate, endDate, startTime, endTime, allDay, timezone } = req.body;
     model
-      .postEvent(images, title, resource, location, startDate, endDate, startTime, endTime, allDay)
+      .postEvent(images, title, resource, location, startDate, endDate, startTime, endTime, allDay, timezone)
       .then(() => res.status(201).send('posted to DB'))
       .catch(err => res.status(400).send(err));
   }

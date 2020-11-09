@@ -52,6 +52,7 @@ export default function AboutManager(props) {
     if (imageAsFile === '') {
       console.error(`not an image, the image file is a ${typeof (imageAsFile)}`);
       props.setLoading(false);
+      alert('Please select an image to upload');
       return;
     };
 
@@ -70,7 +71,7 @@ export default function AboutManager(props) {
       storage.ref('about').child(filename).getDownloadURL()
         .then(portraitFireBaseUrl => {
 
-          let portraitFilename = imageAsFile.name;
+          let portraitFilename = filename;
           let bannerFireBaseUrl = '';
           let bannerFilename = '';
 
@@ -103,6 +104,7 @@ export default function AboutManager(props) {
     if (imageAsFile === '') {
       console.error(`not an image, the image file is a ${typeof (imageAsFile)}`);
       props.setLoading(false);
+      alert('Please select an image to upload');
       return;
     };
 
@@ -153,6 +155,7 @@ export default function AboutManager(props) {
     if (imageAsFile === '') {
       console.error(`not an image, the image file is a ${typeof (imageAsFile)}`);
       props.setLoading(false);
+      alert('Please select an image to upload');
       return;
     };
 

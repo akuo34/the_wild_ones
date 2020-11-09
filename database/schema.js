@@ -39,6 +39,7 @@ const eventSchema = new mongoose.Schema({
   endTime: String,
   allDay: Boolean,
   resource: String,
+  timezone: String
 });
 
 const storeSchema = new mongoose.Schema({

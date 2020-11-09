@@ -6,9 +6,9 @@ export default async (req, res) => {
   } = req;
 
   if (req.method === 'PUT') {
-    const { title, resource, location, startDate, endDate, startTime, endTime, allDay } = req.body;
+    const { title, resource, location, startDate, endDate, startTime, endTime, allDay, timezone } = req.body;
     model
-      .putEvent(title, resource, location, startDate, endDate, startTime, endTime, allDay, _id)
+      .putEvent(title, resource, location, startDate, endDate, startTime, endTime, allDay, _id, timezone)
       .then(() => res.status(200).send('updated to DB'))
       .catch(err => res.status(400).send(err));
   }

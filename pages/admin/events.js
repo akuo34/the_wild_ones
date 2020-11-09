@@ -3,6 +3,8 @@ import AdminHeader from '../../components/adminHeader.js';
 import React, { useState, useEffect } from 'react';
 import { storage } from '../../firebase/firebase';
 import Axios from 'axios';
+import timezones from '../../components/timezones.js';
+import moment from 'moment-timezone';
 
 export default function EventsManager(props) {
 
@@ -27,6 +29,16 @@ export default function EventsManager(props) {
       .catch(err => console.error(err));
   }, []);
 
+  useEffect(() => {
+    let copy = { ...indexes };
+    urlList.forEach(item => {
+      if (copy[item._id] === undefined) {
+        copy[item._id] = 0;
+      }
+    });
+    setIndexes(copy);
+  }, [urlList]);
+
   const handleImageAsFile = (e) => {
     const image = e.target.files[0];
     setImageAsFile(imageFile => image)
@@ -37,8 +49,7 @@ export default function EventsManager(props) {
       .get('/api/events')
       .then(response => {
 
-        let array = response.data;
-        setUrlList(array);
+        setUrlList(response.data);
         props.setLoading(false);
       })
       .catch(err => console.error(err));
@@ -56,26 +67,41 @@ export default function EventsManager(props) {
     const startTime = e.target.startTime.value;
     const endTime = e.target.endTime.value;
     const allDay = false;
+    const timezone = e.target.timezone.value;
 
-    let startYear = parseInt(startDate.substring(0, 4));
-    let startMonth = parseInt(startDate.substring(5, 7)) - 1;
-    let startDay = parseInt(startDate.substring(8, 10));
+    if (startDate === '' || startTime === '' || endTime === '') {
+      alert('Please complete required fields');
+      return;
+    }
+
+    let startYear = startDate.substring(0, 4);
+    let startMonth = startDate.substring(5, 7);
+    let startDay = startDate.substring(8, 10);
     let endYear = startYear;
     let endMonth = startMonth;
     let endDay = startDay;
 
-    let startHours = parseInt(startTime.substring(0, 2));
-    let startMinutes = parseInt(startTime.substring(3, 5));
-    let endHours = parseInt(endTime.substring(0, 2));
-    let endMinutes = parseInt(endTime.substring(3, 5));
+    let startHours = startTime.substring(0, 2);
+    let startMinutes = startTime.substring(3, 5);
+    let endHours = endTime.substring(0, 2);
+    let endMinutes = endTime.substring(3, 5);
 
-    startDate = new Date(startYear, startMonth, startDay, startHours, startMinutes, 0, 0);
-    let endDate = new Date(endYear, endMonth, endDay, endHours, endMinutes, 0, 0);
+    let timezoneCode = timezones[timezone];
+    let a = moment.tz(`${startYear}-${startMonth}-${startDay} ${startHours}:${startMinutes}`, timezoneCode);
+    let b = moment.tz(`${endYear}-${endMonth}-${endDay} ${endHours}:${endMinutes}`, timezoneCode);
+    let startUTC = a.utc().format();
+    let endUTC = b.utc().format();
+
+    if (endUTC < startUTC) {
+      alert('Event end time must be later than start time');
+      return;
+    }
 
     console.log('start of upload');
 
     if (imageAsFile === '') {
       props.setLoading(false);
+      alert('Please select an image to upload');
       console.error(`not an image, the image file is a ${typeof (imageAsFile)}`);
       return;
     };
@@ -96,7 +122,7 @@ export default function EventsManager(props) {
         .then(fireBaseUrl => {
 
           let images = [{ fireBaseUrl, filename }];
-          const request = { images, resource, title, location, startDate, endDate, startTime, endTime, allDay };
+          const request = { images, resource, title, location, startDate: startUTC, endDate: endUTC, startTime, endTime, allDay, timezone: timezoneCode };
 
           Axios
             .post('/api/events', request)
@@ -119,30 +145,42 @@ export default function EventsManager(props) {
     const resource = e.target.description.value;
     const location = e.target.location.value;
     let startDate = e.target.startDate.value;
-    const startTime = e.target.startTime.value;
-    const endTime = e.target.endTime.value;
+    let startTime = e.target.startTime.value;
+    let endTime = e.target.endTime.value;
     const allDay = false;
+    const timezone = e.target.timezone.value;
 
-    let startYear = parseInt(startDate.substring(0, 4));
-    let startMonth = parseInt(startDate.substring(5, 7)) - 1;
-    let startDay = parseInt(startDate.substring(8, 10));
-    let endYear = startYear;
-    let endMonth = startMonth;
-    let endDay = startDay;
+    let startUTC = '';
+    let endUTC = '';
+    let timezoneCode = '';
 
-    let startHours = parseInt(startTime.substring(0, 2));
-    let startMinutes = parseInt(startTime.substring(3, 5));
-    let endHours = parseInt(endTime.substring(0, 2));
-    let endMinutes = parseInt(endTime.substring(3, 5));
-
-    startDate = new Date(startYear, startMonth, startDay, startHours, startMinutes, 0, 0);
-    let endDate = new Date(endYear, endMonth, endDay, endHours, endMinutes, 0, 0);
+    if (startDate !== '' && startTime !== '' && endTime !== '') {
+      let startYear = startDate.substring(0, 4);
+      let startMonth = startDate.substring(5, 7);
+      let startDay = startDate.substring(8, 10);
+      let endYear = startYear;
+      let endMonth = startMonth;
+      let endDay = startDay;
+  
+      let startHours = startTime.substring(0, 2);
+      let startMinutes = startTime.substring(3, 5);
+      let endHours = endTime.substring(0, 2);
+      let endMinutes = endTime.substring(3, 5);
+  
+      timezoneCode = timezones[timezone];
+      let a = moment.tz(`${startYear}-${startMonth}-${startDay} ${startHours}:${startMinutes}`, timezoneCode);
+      let b = moment.tz(`${endYear}-${endMonth}-${endDay} ${endHours}:${endMinutes}`, timezoneCode);
+      startUTC = a.utc().format();
+      endUTC = b.utc().format();
+    } else {
+      startTime = '';
+      endTime = '';
+    }
 
     Axios
-      .put(`/api/events/${_id}`, { title, resource, location, startDate, endDate, startTime, endTime, allDay })
+      .put(`/api/events/${_id}`, { title, resource, location, startDate: startUTC, endDate: endUTC, startTime, endTime, allDay, timezone: timezoneCode })
       .then(response => {
         getImages();
-        setShowEdit(null);
       })
       .catch(err => console.error(err));
 
@@ -157,6 +195,10 @@ export default function EventsManager(props) {
       .delete(`/api/events/${_id}`)
       .then(response => {
         getImages();
+
+        let copy = { ...indexes };
+        delete copy[_id];
+        setIndexes(copy);
 
         event.images.forEach(image => {
           storage.ref('events').child(image.filename).delete()
@@ -179,6 +221,7 @@ export default function EventsManager(props) {
 
     if (imageAsFile === '') {
       props.setLoading(false);
+      alert('Please select an image to upload');
       console.error(`not an image, the image file is a ${typeof (imageAsFile)}`);
       return;
     };
@@ -277,6 +320,11 @@ export default function EventsManager(props) {
     return hours > 12 ? (hours - 12).toString() + ':' + minutes + ' PM' : hours.toString() + ':' + minutes + ' AM';
   }
 
+  const localizeDate = (utc, timezone) => {
+    let date = new Date(utc);
+    return date.toLocaleString('env-US', { timeZone: timezone });
+  }
+
   return (
     <div>
       <Head>
@@ -296,22 +344,25 @@ export default function EventsManager(props) {
           <input className="input-landing" type="text" name="location" placeholder="Location" />
           <textarea className="input-description" name="description" placeholder="Description" />
           <div className="form-1-events-row">
-            <label className="label-1-date-time">Date: </label>
-            <div className="container-date-time-column">
-              <input className="input-date-time" type="date" name="startDate" placeholder="YYYY-MM-DD" />
-            </div>
+            <label className="label-1-date-time">*Date: </label>
+            <input className="input-date-time" type="date" name="startDate" placeholder="YYYY-MM-DD" />
           </div>
           <div className="form-1-events-row">
-            <label className="label-1-date-time">Start Time:</label>
-            <div className="container-date-time-column">
-              <input className="input-date-time" type="time" name="startTime" placeholder="HH:MM" />
-            </div>
+            <label className="label-1-date-time">*Start:</label>
+            <input className="input-date-time" type="time" name="startTime" placeholder="HH:MM" />
           </div>
           <div className="form-1-events-row">
-            <label className="label-1-date-time">End Time:</label>
-            <div className="container-date-time-column">
-              <input className="input-date-time" type="time" name="endTime" placeholder="HH:MM" />
-            </div>
+            <label className="label-1-date-time">*End:</label>
+            <input className="input-date-time" type="time" name="endTime" placeholder="HH:MM" />
+          </div>
+          <div className="form-1-events-row">
+            <label className="label-1-date-time">*Timezone:</label>
+            <select className="input-date-time" style={{ "height": "24.69px", "fontSize": "15px" }} name="timezone">
+              <option value="Pacific">Pacific</option>
+              <option value="Mountain">Mountain</option>
+              <option value="Central">Central</option>
+              <option value="Eastern">Eastern</option>
+            </select>
           </div>
           <div className="container-gallery-inputs">
             <input
@@ -320,6 +371,9 @@ export default function EventsManager(props) {
               onChange={handleImageAsFile}
             />
             <button className="button-gallery-post">Upload to Events</button>
+          </div>
+          <div className="form-1-events-row" style={{ "marginBottom": "0" }}>
+            <label className="label-1-date-time" style={{ "width": "100%", "marginTop": "15px" }}>*Required fields</label>
           </div>
         </form>
         {
@@ -337,7 +391,10 @@ export default function EventsManager(props) {
                   {showEdit === item._id ?
                     <div style={{ "display": "flex", "flexDirection": "column", "marginBottom": "20px" }}>
                       <form id="form-events-edit-photo" onSubmit={handleAddPhoto} data-id={item._id}>
-                        <div style={{ "marginBottom": "5px", "alignSelf": "flex-start" }}>Add photo</div>
+                        <div style={{ "display": "flex", "marginBottom": "5px" }}>
+                          <div style={{ "justifySelf": "flex-start" }}>Add photo</div>
+                          <div style={{ "justifySelf": "flex-end", "margin": "0 0 0 auto" }}>{(indexes[item._id] + 1) + '/' + item.images.length}</div>
+                        </div>
                         <div style={{ "display": "flex", "flexWrap": "wrap", "justifySelf": "space-between", "width": "100%" }}>
                           <input
                             type="file"
@@ -357,12 +414,10 @@ export default function EventsManager(props) {
                 <div className="container-events-title-description">
                   <p>Title: {item.title}</p>
                   <p>Location: {item.location}</p>
-                  <p>Start Date: {item.startDate}</p>
-                  <p>Start Time: {convertTime(item.startTime)}</p>
-                  <p>End Date: {item.endDate}</p>
-                  <p>End Time: {convertTime(item.endTime)}</p>
-                  <p>Number of Photos: {item.images.length}</p>
                   <p style={{ "lineHeight": "28px" }}>Description: {item.resource}</p>
+                  <p>Start Date: {localizeDate(item.startDate, item.timezone)}</p>
+                  <p>End Date: {localizeDate(item.endDate, item.timezone)}</p>
+                  <p>Number of Photos: {item.images.length}</p>
                   <div className="container-form-buttons">
                     <button value={item._id} style={{ "marginRight": "5px" }} onClick={editToggler}>Edit</button>
                     <button value={item._id} onClick={deleteHandler} data-filename={item.filename}>Delete</button>
@@ -389,6 +444,15 @@ export default function EventsManager(props) {
                         <div className="container-date-time-column">
                           <input className="input-date-time" type="time" name="endTime" placeholder="HH:MM" />
                         </div>
+                      </div>
+                      <div className="form-2-events-row">
+                        <p className="label-2-date-time">Timezone: </p>
+                        <select className="container-date-time-column" name="timezone">
+                          <option className="input-date-time" value="Pacific">Pacific</option>
+                          <option className="input-date-time" value="Mountain">Mountain</option>
+                          <option className="input-date-time" value="Central">Central</option>
+                          <option className="input-date-time" value="Eastern">Eastern</option>
+                        </select>
                       </div>
                       <div className="container-form-buttons">
                         <button style={{ "marginRight": "5px" }} type="submit">Submit Changes</button>

@@ -34,10 +34,10 @@ module.exports = {
   putAboutBanner: (bannerFireBaseUrl, bannerFilename, _id) => AboutItem.findOneAndUpdate({ _id }, { bannerFireBaseUrl, bannerFilename }),
   deleteAbout: (_id) => AboutItem.findOneAndDelete({ _id }),
   getEvent: () => EventItem.find().sort([['startDate', 1]]),
-  postEvent: (images, title, resource, location, startDate, endDate, startTime, endTime, allDay) => EventItem.create({ images, title, resource, location, startDate, endDate, startTime, endTime, allDay }),
-  putEvent: (title, resource, location, startDate, endDate, startTime, endTime, allDay, _id) => {
+  postEvent: (images, title, resource, location, startDate, endDate, startTime, endTime, allDay, timezone) => EventItem.create({ images, title, resource, location, startDate, endDate, startTime, endTime, allDay, timezone }),
+  putEvent: (title, resource, location, startDate, endDate, startTime, endTime, allDay, _id, timezone) => {
 
-    let object = { title, resource, location, startDate, endDate, startTime, endTime, allDay };
+    let object = { title, resource, location, startDate, endDate, startTime, endTime, allDay, timezone };
     for (let key in object) {
       if (!object[key]) {
         delete object[key];
