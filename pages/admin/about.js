@@ -264,9 +264,9 @@ export default function AboutManager(props) {
             </form> : null
         }
         {
-          urlList.map(item => {
+          urlList.map((item, key) => {
             return (
-              <div className="container-about-render">
+              <div key={key} className="container-about-render">
                 <div className="container-gallery-row">
                   <div className="container-gallery-img">
                     <img className="img-gallery" src={item.portraitFireBaseUrl} alt="gallery img" />

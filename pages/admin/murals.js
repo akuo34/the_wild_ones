@@ -51,12 +51,13 @@ export default function MuralsManager(props) {
     if (imageAsFile === '') {
       console.error(`not an image, the image file is a ${typeof (imageAsFile)}`);
       props.setLoading(false);
+      alert('Please select an image to upload');
       return;
     };
 
     let randomizer = (Math.floor(Math.random() * (1000 - 1)) + 1).toString();
     let split = imageAsFile.name.split('.');
-    const filename = split[0] + randomizer + split[1];
+    const filename = split[0] + randomizer + '.' + split[1];
 
     const uploadTask = storage.ref(`/murals/${filename}`).put(imageAsFile);
 
@@ -79,7 +80,6 @@ export default function MuralsManager(props) {
             .post('/api/murals', request)
             .then(response => {
               getImages();
-              console.log(response);
               setImageAsFile('');
             })
             .catch(err => console.error(err))
@@ -97,10 +97,9 @@ export default function MuralsManager(props) {
     const description = e.target.description.value;
 
     Axios
-      .put(`/api/murals/${_id}`, { title, description })
+      .put(`/api/murals/${_id}`, { title, description, index: '' })
       .then(response => {
         getImages();
-        console.log(response)
       })
       .catch(err => console.error(err));
 
@@ -120,10 +119,15 @@ export default function MuralsManager(props) {
     if (imageAsFile === '') {
       console.error(`not an image, the image file is a ${typeof (imageAsFile)}`);
       props.setLoading(false);
+      alert('Please select an image to upload');
       return;
     };
 
-    const uploadTask = storage.ref(`/murals/${imageAsFile.name}`).put(imageAsFile);
+    let randomizer = (Math.floor(Math.random() * (1000 - 1)) + 1).toString();
+    let split = imageAsFile.name.split('.');
+    const newfilename = split[0] + randomizer + '.' + split[1];
+
+    const uploadTask = storage.ref(`/murals/${newfilename}`).put(imageAsFile);
 
     uploadTask.on('state_changed', (snapshot) => {
       console.log(snapshot)
@@ -131,20 +135,19 @@ export default function MuralsManager(props) {
       console.log(err);
     }, () => {
       console.log('uploaded to firebase')
-      storage.ref('murals').child(imageAsFile.name).getDownloadURL()
+      storage.ref('murals').child(newfilename).getDownloadURL()
         .then(fireBaseUrl => {
 
           storage.ref('murals').child(filename).delete()
             .then(() => console.log('deleted from firebase'))
             .catch(err => console.error(err));
 
-          filename = imageAsFile.name;
+          filename = newfilename;
 
           const request = { fireBaseUrl, filename };
           Axios
             .put(`/api/murals/photo/${_id}`, request)
             .then(response => {
-              console.log(response);
               getImages();
               setImageAsFile('');
             })
@@ -164,7 +167,6 @@ export default function MuralsManager(props) {
     Axios
       .delete(`/api/murals/${_id}`)
       .then(response => {
-        console.log(response);
         getImages();
 
         storage.ref('murals').child(filename).delete()
@@ -201,12 +203,10 @@ export default function MuralsManager(props) {
       Axios
         .put(`/api/murals/${_id}`, { index, title: '', description: '' })
         .then(response => {
-          console.log(response);
 
           Axios
             .put(`/api/murals/${swapperId}`, { index: originalIndex, title: '', description: '' })
             .then(response => {
-              console.log(response);
               getImages();
             })
             .catch(err => console.error(err));
@@ -226,12 +226,10 @@ export default function MuralsManager(props) {
       Axios
         .put(`/api/murals/${_id}`, { index, title: '', description: '' })
         .then(response => {
-          console.log(response);
 
           Axios
             .put(`/api/murals/${swapperId}`, { index: originalIndex, title: '', description: '' })
             .then(response => {
-              console.log(response);
               getImages();
             })
             .catch(err => console.error(err));
@@ -293,9 +291,9 @@ export default function MuralsManager(props) {
                       alt="down arrow" />
                   </div>
                   <div className="container-gallery-title-description">
-                    <p>Title: {item.title}</p>
-                    <p>Description: {item.description}</p>
-                    <p>Date Uploaded: {item.date}</p>
+                    <p><b>Title:</b> {item.title}</p>
+                    <p><b>Description:</b> {item.description}</p>
+                    <p><b>Date uploaded:</b> {item.date}</p>
                     <div className="container-form-buttons">
                       <button value={item._id} type="submit" onClick={editToggler} style={{ "marginRight": "5px" }}>Edit</button>
                       <button value={item._id} onClick={deleteHandler} data-filename={item.filename} data-index={item.index}>Delete</button>

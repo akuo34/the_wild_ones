@@ -264,7 +264,7 @@ export default function GalleryManager(props) {
         {
           urlList.map((item, key) => {
             return (
-              <div className="container-gallery-row">
+              <div key={key} className="container-gallery-row">
                 <div className="container-gallery-img">
                   <img
                     className="img-gallery"
@@ -290,7 +290,7 @@ export default function GalleryManager(props) {
                   <div className="container-gallery-title-description">
                     <p><b>Title:</b> {item.title}</p>
                     <p><b>Description:</b> {item.description}</p>
-                    <p><b>Date Uploaded:</b> {item.date}</p>
+                    <p><b>Date uploaded:</b> {item.date}</p>
                     <div className="container-form-buttons">
                       <button value={item._id} type="submit" style={{ "marginRight": "5px" }} onClick={editToggler}>Edit</button>
                       <button value={item._id} onClick={deleteHandler} data-filename={item.filename} data-index={item.index}>Delete</button>

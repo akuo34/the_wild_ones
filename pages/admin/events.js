@@ -172,6 +172,11 @@ export default function EventsManager(props) {
       let b = moment.tz(`${endYear}-${endMonth}-${endDay} ${endHours}:${endMinutes}`, timezoneCode);
       startUTC = a.utc().format();
       endUTC = b.utc().format();
+
+      if (startUTC > endUTC) {
+        alert('Event end time must be later than start time');
+        return;
+      }
     } else {
       startTime = '';
       endTime = '';
@@ -379,7 +384,7 @@ export default function EventsManager(props) {
         {
           urlList.map((item, key) => {
             return (
-              <div className="container-gallery-row">
+              <div key={key} className="container-gallery-row">
                 <div className="container-store-column">
                   <div style={{ "display": "flex", "alignItems": "center", "marginBottom": "40px" }}>
                     <img className={indexes[item._id] > 0 ? "button-carousel" : "button-carousel hidden"} onClick={previousPhoto} data-id={item._id} src={'https://calendar-trips.s3-us-west-1.amazonaws.com/left_button.png'}></img>
@@ -417,7 +422,7 @@ export default function EventsManager(props) {
                   <p><b>Description:</b> {item.resource}</p>
                   <p><b>Start Date:</b> {localizeDate(item.startDate, item.timezone)}</p>
                   <p><b>End Date:</b> {localizeDate(item.endDate, item.timezone)}</p>
-                  <p><b>Number of Photos:</b> {item.images.length}</p>
+                  <p><b>Number of photos:</b> {item.images.length}</p>
                   <div className="container-form-buttons">
                     <button value={item._id} style={{ "marginRight": "5px" }} onClick={editToggler}>Edit</button>
                     <button value={item._id} onClick={deleteHandler} data-filename={item.filename}>Delete</button>
@@ -429,29 +434,23 @@ export default function EventsManager(props) {
                       <textarea name="description" placeholder="Description" style={{ "height": "50px", "marginBottom": "5px", "fontSize": "14px" }}></textarea>
                       <div className="form-2-events-row">
                         <p className="label-2-date-time">Date: </p>
-                        <div className="container-date-time-column">
-                          <input className="input-date-time" type="date" name="startDate" placeholder="YYYY-MM-DD" />
-                        </div>
+                        <input className="input-date-time" type="date" name="startDate" placeholder="YYYY-MM-DD" />
                       </div>
                       <div className="form-2-events-row">
                         <p className="label-2-date-time">Start Time: </p>
-                        <div className="container-date-time-column">
-                          <input className="input-date-time" type="time" name="startTime" placeholder="HH:MM" />
-                        </div>
+                        <input className="input-date-time" type="time" name="startTime" placeholder="HH:MM" />
                       </div>
                       <div className="form-2-events-row">
                         <p className="label-2-date-time">End Time: </p>
-                        <div className="container-date-time-column">
-                          <input className="input-date-time" type="time" name="endTime" placeholder="HH:MM" />
-                        </div>
+                        <input className="input-date-time" type="time" name="endTime" placeholder="HH:MM" />
                       </div>
                       <div className="form-2-events-row">
                         <p className="label-2-date-time">Timezone: </p>
-                        <select className="container-date-time-column" name="timezone">
-                          <option className="input-date-time" value="Pacific">Pacific</option>
-                          <option className="input-date-time" value="Mountain">Mountain</option>
-                          <option className="input-date-time" value="Central">Central</option>
-                          <option className="input-date-time" value="Eastern">Eastern</option>
+                        <select className="input-date-time" name="timezone" style={{ "height": "24.69px", "fontSize": "15px" }}>
+                          <option value="Pacific">Pacific</option>
+                          <option value="Mountain">Mountain</option>
+                          <option value="Central">Central</option>
+                          <option value="Eastern">Eastern</option>
                         </select>
                       </div>
                       <div className="container-form-buttons">
