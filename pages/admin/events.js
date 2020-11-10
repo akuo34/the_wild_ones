@@ -398,11 +398,11 @@ export default function EventsManager(props) {
                 <div key={key} className="container-gallery-row">
                   <div className="container-store-column">
                     <div style={{ "display": "flex", "alignItems": "center", "marginBottom": "40px" }}>
-                      <img className={indexes[item._id] > 0 ? "button-carousel" : "button-carousel hidden"} onClick={previousPhoto} data-id={item._id} src={'https://calendar-trips.s3-us-west-1.amazonaws.com/left_button.png'}></img>
+                      <img className={indexes[item._id] > 0 ? "button-carousel" : "button-carousel hidden"} onClick={previousPhoto} data-id={item._id} src={'/black_left_arrow.svg'}></img>
                       <div className="container-store-img">
                         <img className="img-store" src={item.images.length === 0 ? "https://calendar-trips.s3-us-west-1.amazonaws.com/unnamed.png" : indexes[item._id] !== undefined ? item.images[indexes[item._id]].fireBaseUrl : item.images[0].fireBaseUrl} alt="gallery img" />
                       </div>
-                      <img className={indexes[item._id] < item.images.length - 1 ? "button-carousel" : "button-carousel hidden"} onClick={nextPhoto} data-id={item._id} src={'https://calendar-trips.s3-us-west-1.amazonaws.com/right_button.png'}></img>
+                      <img className={indexes[item._id] < item.images.length - 1 ? "button-carousel" : "button-carousel hidden"} onClick={nextPhoto} data-id={item._id} src={'/black_right_arrow.svg'}></img>
                     </div>
                     {showEdit === item._id ?
                       <div style={{ "display": "flex", "flexDirection": "column", "marginBottom": "20px" }}>

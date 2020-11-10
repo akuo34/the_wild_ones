@@ -938,6 +938,8 @@ button.slick-arrow.slick-next,
 
 .image-events {
   height: calc(120px + 10vw);
+  max-width: min(400px, 90vw);
+  object-fit: cover;
   margin: 0 auto;
 }
 

@@ -1,5 +1,6 @@
 import '../styles/globals.css';
 import '../styles/horizontal.css';
+import '../styles/react-big-calendar.css';
 import { useState } from 'react';
 import Link from 'next/link';
 import Router from 'next/router';
