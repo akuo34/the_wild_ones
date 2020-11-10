@@ -200,6 +200,9 @@ export default function MuralsManager(props) {
       let index = originalIndex - 1;
       let swapperId = urlList[index]._id;
 
+      let element = document.getElementById('image' + swapperId);
+      element.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" });
+
       Axios
         .put(`/api/murals/${_id}`, { index, title: '', description: '' })
         .then(response => {
@@ -222,6 +225,9 @@ export default function MuralsManager(props) {
     if (originalIndex < urlList.length - 1) {
       let index = originalIndex + 1;
       let swapperId = urlList[index]._id;
+
+      let element = document.getElementById('image' + swapperId);
+      element.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" });
 
       Axios
         .put(`/api/murals/${_id}`, { index, title: '', description: '' })
@@ -265,18 +271,17 @@ export default function MuralsManager(props) {
           </div>
         </form>
         {
-          urlList.map(item => {
+          urlList.map((item, key) => {
             return (
-              <div className="container-gallery-row">
+              <div key={key} className="container-gallery-row">
                 <div className="container-gallery-img">
                   <img
                     className="img-gallery"
-                    loading="lazy"
                     src={item.fireBaseUrl}
                     alt="gallery img" />
                 </div>
                 <div className="wrapper-arrows-form">
-                  <div className="container-up-down">
+                  <div id={'image' + item._id} className="container-up-down">
                     <img className="arrow-up"
                       onClick={moveUpHandler}
                       data-id={item._id}

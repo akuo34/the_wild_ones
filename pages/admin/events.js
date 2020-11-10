@@ -361,7 +361,7 @@ export default function EventsManager(props) {
             <input className="input-date-time" type="time" name="endTime" placeholder="HH:MM" />
           </div>
           <div className="form-1-events-row">
-            <label className="label-1-date-time">*Timezone:</label>
+            <label className="label-1-date-time">*Time Zone:</label>
             <select className="input-date-time" style={{ "height": "24.69px", "fontSize": "15px" }} name="timezone">
               <option value="Pacific">Pacific</option>
               <option value="Mountain">Mountain</option>
@@ -445,7 +445,7 @@ export default function EventsManager(props) {
                         <input className="input-date-time" type="time" name="endTime" placeholder="HH:MM" />
                       </div>
                       <div className="form-2-events-row">
-                        <p className="label-2-date-time">Timezone: </p>
+                        <p className="label-2-date-time">Time Zone: </p>
                         <select className="input-date-time" name="timezone" style={{ "height": "24.69px", "fontSize": "15px" }}>
                           <option value="Pacific">Pacific</option>
                           <option value="Mountain">Mountain</option>

@@ -675,8 +675,8 @@ label {
 }
 
 .button-cart {
-  height: calc(16px + 2vw);
-  width: calc(16px + 2vw);
+  height: calc(25px + 1.5vw);
+  width: calc(25px + 1.5vw);
   margin-right: calc(7px + 1.9vw);
   -webkit-transition: all .25s linear;
   -webkit-tap-highlight-color: transparent;
@@ -690,8 +690,8 @@ label {
 }
 
 .button-hamburger {
-  height: calc(16px + 2vw);
-  width: calc(16px + 2vw);
+  height: calc(25px + 1.5vw);
+  width: calc(25px + 1.5vw);
   margin-right: calc(7px + 1.9vw);
   margin-top: calc(8px + 0.6vw);
   -webkit-transform: translateY(-20%);
