@@ -398,7 +398,7 @@ export default function EventsManager(props) {
                       <form id="form-events-edit-photo" onSubmit={handleAddPhoto} data-id={item._id}>
                         <div style={{ "display": "flex", "marginBottom": "5px" }}>
                           <div style={{ "justifySelf": "flex-start" }}>Add photo</div>
-                          <div style={{ "justifySelf": "flex-end", "margin": "0 0 0 auto" }}>{(indexes[item._id] + 1) + '/' + item.images.length}</div>
+                          <div style={{ "justifySelf": "flex-end", "margin": "0 0 0 auto" }}>{item.images.length ? (indexes[item._id] + 1) + '/' + item.images.length : null}</div>
                         </div>
                         <div style={{ "display": "flex", "flexWrap": "wrap", "justifySelf": "space-between", "width": "100%" }}>
                           <input
