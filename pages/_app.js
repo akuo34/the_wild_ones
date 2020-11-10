@@ -1,4 +1,5 @@
-import '../styles/globals.css'
+import '../styles/globals.css';
+import '../styles/horizontal.css';
 import { useState } from 'react';
 import Link from 'next/link';
 import Router from 'next/router';
@@ -141,6 +142,7 @@ function MyApp({ Component, pageProps }) {
           banner={banner}
           returnHome={returnHome}
           setLoading={setLoading}
+          modalHandler={modalHandler}
         />
       </AuthProvider>
     </div>

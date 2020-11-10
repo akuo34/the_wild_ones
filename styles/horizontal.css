@@ -1,0 +1,93 @@
+.slider {
+	position: relative;
+	/* height: calc(100vh - min(calc(60px + 7vw), 20vh) - calc(34px + 5vw) - 40px); */
+	height: calc(100vh - min(calc(60px + 7vw), 20vh) - 40px - 7.5vw);
+	max-height: 60vw;
+	margin-bottom: 60px;
+	width: 90vw;
+	overflow: hidden;
+}
+
+.slider a.previousButton, .slider a.nextButton {
+	font-size: 22px;
+	line-height: 0;
+	display: block;
+	position: absolute;
+	top: 50%;
+	-webkit-tap-highlight-color: transparent;
+	-webkit-transform: translateY(-50%);
+	        transform: translateY(-50%);
+	-webkit-transition: all 0.4s ease;
+	transition: all 0.4s ease;
+	z-index: 1;
+	color: #333;
+	padding: 10px;
+	text-decoration: none;
+	-webkit-backface-visibility: hidden;
+	        backface-visibility: hidden;
+	/* prevent jump effect when scaling */
+}
+
+.slider a.previousButton:not(.disabled):hover, .slider a.nextButton:not(.disabled):hover {
+	-webkit-transform: translateY(-50%) scale(1.25);
+	        transform: translateY(-50%) scale(1.25);
+	cursor: pointer;
+}
+
+.slider a.previousButton {
+	left: 0;
+	opacity: 0.55;
+}
+
+.slider a.nextButton {
+	right: 0;
+	opacity: 0.55;
+}
+
+.slide {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	overflow: hidden
+}
+
+.slide.hidden {
+	visibility: hidden;
+}
+
+.slide.previous {
+	left: -200%;
+}
+
+.slide.current {
+	left: 0;
+}
+
+.slide.next {
+	left: 200%;
+}
+
+.slide.animateIn {
+	-webkit-transition: all .8s ease-in-out;
+	transition: all .8s ease-in-out;	
+}
+
+.slide.animateOut {
+	-webkit-transition: all .8s ease-in-out;
+	transition: all .8s ease-in-out;
+}
+
+.slide.animateIn.previous,
+		.slide.animateIn.next {
+	left: 0;
+	visibility: visible;
+}
+
+.slide.animateOut.previous {
+	left: 200%;
+}
+
+.slide.animateOut.next {
+	left: -200%;
+}
+
