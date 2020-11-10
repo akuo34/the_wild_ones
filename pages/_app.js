@@ -5,6 +5,7 @@ import Router from 'next/router';
 import { useEffect } from 'react';
 import Axios from 'axios';
 import { AuthProvider } from '../contexts/auth.js';
+import DotLoader from 'react-spinners/DotLoader';
 
 function MyApp({ Component, pageProps }) {
 
@@ -127,12 +128,18 @@ function MyApp({ Component, pageProps }) {
             /> : null
           }
         </div>
+        <div className={loading ? "container-loader" : "container-loader-hidden"}>
+            <DotLoader
+              size={75}
+              color={"#645D45"}
+              loading={loading}
+            />
+          </div>
       </div>
       <AuthProvider>
         <Component {...pageProps}
           banner={banner}
           returnHome={returnHome}
-          loading={loading}
           setLoading={setLoading}
           />
       </AuthProvider>
