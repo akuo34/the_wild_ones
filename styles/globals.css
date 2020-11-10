@@ -758,9 +758,6 @@ button.slick-arrow.slick-next,
 
 .image-gallery {
   height: 100%;
-  /* max-width: 89vw; */
-  /* width: 100%; */
-  /* object-fit: cover; */
   object-fit: contain;
   margin: 0 auto;
 }
@@ -886,7 +883,7 @@ button.slick-arrow.slick-next,
   max-height: 420px;
   max-width: min(572px, 90vw);
   object-fit: contain;
-  margin: 0px 20px 20px 20px;
+  margin: 0px 40px 20px 40px;
 }
 
 .container-bio {
