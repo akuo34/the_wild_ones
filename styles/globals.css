@@ -321,12 +321,6 @@ label {
   margin-bottom: calc(12px + 0.7vw);
 }
 
-.input-gallery-title {
-  height: 30px;
-  font-size: 20px;
-  width: 90%;
-}
-
 .input-gallery-description {
   height: 50px;
   font-size: 20px;
@@ -517,8 +511,9 @@ label {
 .container-contact-row {
   display: flex;
   margin: 20px auto;
-  justify-content: space-between;
-  width: 600px;
+  justify-content: center;
+  flex-wrap: wrap;
+  /* width: 600px; */
 }
 
 /* Landing Page -------------------------------------------------------------------------------- */
