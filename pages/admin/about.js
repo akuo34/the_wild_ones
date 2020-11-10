@@ -3,12 +3,15 @@ import AdminHeader from '../../components/adminHeader.js';
 import React, { useState, useEffect } from 'react';
 import { storage } from '../../firebase/firebase.js';
 import Axios from 'axios';
+import { useAuth } from '../../contexts/auth.js';
+import DotLoader from 'react-spinners/DotLoader';
 
 export default function AboutManager(props) {
 
   const [imageAsFile, setImageAsFile] = useState('');
   const [urlList, setUrlList] = useState([]);
   const [allowUpload, setAllowUpload] = useState(false);
+  const { admin } = useAuth();
 
   useEffect(() => {
     Axios
@@ -246,69 +249,78 @@ export default function AboutManager(props) {
         returnHome={props.returnHome}
       >
       </AdminHeader>
-      <div className="body-gallery">
-        <h3>About</h3>
-        {
-          allowUpload ?
-            <form id="form-about" className="form-gallery" onSubmit={handleFireBaseUpload}>
-              <h4 className="text-gallery-form-header">Create your bio</h4>
-              <textarea className="input-landing" name="bio" placeholder="About me" style={{ "height": "90px", "fontSize": "14px" }} />
-              <div className="container-gallery-inputs">
-                <input
-                  className="input-gallery-file"
-                  type="file"
-                  onChange={handleImageAsFile}
-                />
-                <button className="button-gallery-post">Upload to About</button>
-              </div>
-            </form> : null
-        }
-        {
-          urlList.map((item, key) => {
-            return (
-              <div key={key} className="container-about-render">
-                <div className="container-gallery-row">
-                  <div className="container-gallery-img">
-                    <img className="img-gallery" src={item.portraitFireBaseUrl} alt="gallery img" />
-                  </div>
-                  <div className="container-gallery-title-description">
-                    <form id="form-edit-portrait" onSubmit={handleChangePortrait} data-id={item._id} data-filename={item.portraitFilename}>
-                      <div style={{ "marginBottom": "5px" }}>Change portrait</div>
-                      <div style={{ "marginBottom": "20px" }}>
-                        <input
-                          type="file"
-                          onChange={handleImageAsFile}
-                          style={{ "marginBottom": "5px" }}
-                        />
-                        <button>Upload portrait</button>
-                      </div>
-                    </form>
-                    <form id="form-edit-banner" onSubmit={handleChangeBanner} data-id={item._id} data-filename={item.bannerFilename}>
-                      <div style={{ "marginBottom": "5px" }}>Change banner</div>
-                      <div style={{ "marginBottom": "20px" }}>
-                        <input
-                          type="file"
-                          onChange={handleImageAsFile}
-                          style={{ "marginBottom": "5px" }}
-                        />
-                        <button>Upload banner</button>
-                      </div>
-                    </form>
-                    <form id={item._id} className="form-gallery-edit" onSubmit={editHandler} data-id={item._id}>
-                      <textarea name="bio" placeholder="Bio" style={{ "height": "80px", "marginBottom": "5px" }}></textarea>
-                      <div className="container-form-buttons">
-                        <button type="submit" style={{ "marginRight": "5px" }}>Edit</button>
-                        <button value={item._id} onClick={deleteHandler} data-bannerfilename={item.bannerFilename} data-portraitfilename={item.portraitFilename}>Delete</button>
-                      </div>
-                    </form>
-                  </div>
+      { !admin ?
+        <div className="container-loader">
+          <DotLoader
+            size={75}
+            color={"#645D45"}
+            loading={true}
+          />
+        </div> :
+        <div className="body-gallery">
+          <h3>About</h3>
+          {
+            allowUpload ?
+              <form id="form-about" className="form-gallery" onSubmit={handleFireBaseUpload}>
+                <h4 className="text-gallery-form-header">Create your bio</h4>
+                <textarea className="input-landing" name="bio" placeholder="About me" style={{ "height": "90px", "fontSize": "14px" }} />
+                <div className="container-gallery-inputs">
+                  <input
+                    className="input-gallery-file"
+                    type="file"
+                    onChange={handleImageAsFile}
+                  />
+                  <button className="button-gallery-post">Upload to About</button>
                 </div>
-                <p style={{ "width": "min(1000px, 90vw)", "marginBottom": "40px", "lineHeight": "28px" }}><b>Bio:</b> {item.bio}</p>
-              </div>
-            )
-          })
-        }
-      </div>
+              </form> : null
+          }
+          {
+            urlList.map((item, key) => {
+              return (
+                <div key={key} className="container-about-render">
+                  <div className="container-gallery-row">
+                    <div className="container-gallery-img">
+                      <img className="img-gallery" src={item.portraitFireBaseUrl} alt="gallery img" />
+                    </div>
+                    <div className="container-gallery-title-description">
+                      <form id="form-edit-portrait" onSubmit={handleChangePortrait} data-id={item._id} data-filename={item.portraitFilename}>
+                        <div style={{ "marginBottom": "5px" }}>Change portrait</div>
+                        <div style={{ "marginBottom": "20px" }}>
+                          <input
+                            type="file"
+                            onChange={handleImageAsFile}
+                            style={{ "marginBottom": "5px" }}
+                          />
+                          <button>Upload portrait</button>
+                        </div>
+                      </form>
+                      <form id="form-edit-banner" onSubmit={handleChangeBanner} data-id={item._id} data-filename={item.bannerFilename}>
+                        <div style={{ "marginBottom": "5px" }}>Change banner</div>
+                        <div style={{ "marginBottom": "20px" }}>
+                          <input
+                            type="file"
+                            onChange={handleImageAsFile}
+                            style={{ "marginBottom": "5px" }}
+                          />
+                          <button>Upload banner</button>
+                        </div>
+                      </form>
+                      <form id={item._id} className="form-gallery-edit" onSubmit={editHandler} data-id={item._id}>
+                        <textarea name="bio" placeholder="Bio" style={{ "height": "80px", "marginBottom": "5px" }}></textarea>
+                        <div className="container-form-buttons">
+                          <button type="submit" style={{ "marginRight": "5px" }}>Edit</button>
+                          <button value={item._id} onClick={deleteHandler} data-bannerfilename={item.bannerFilename} data-portraitfilename={item.portraitFilename}>Delete</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                  <p style={{ "width": "min(1000px, 90vw)", "marginBottom": "40px", "lineHeight": "28px" }}><b>Bio:</b> {item.bio}</p>
+                </div>
+              )
+            })
+          }
+        </div>
+      }
     </div>
   )
 }

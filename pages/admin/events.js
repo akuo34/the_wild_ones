@@ -5,6 +5,8 @@ import { storage } from '../../firebase/firebase';
 import Axios from 'axios';
 import timezones from '../../components/timezones.js';
 import moment from 'moment-timezone';
+import { useAuth } from '../../contexts/auth.js';
+import DotLoader from 'react-spinners/DotLoader';
 
 export default function EventsManager(props) {
 
@@ -12,6 +14,7 @@ export default function EventsManager(props) {
   const [urlList, setUrlList] = useState([]);
   const [showEdit, setShowEdit] = useState(null);
   const [indexes, setIndexes] = useState({});
+  const { admin } = useAuth();
 
   useEffect(() => {
     Axios
@@ -161,12 +164,12 @@ export default function EventsManager(props) {
       let endYear = startYear;
       let endMonth = startMonth;
       let endDay = startDay;
-  
+
       let startHours = startTime.substring(0, 2);
       let startMinutes = startTime.substring(3, 5);
       let endHours = endTime.substring(0, 2);
       let endMinutes = endTime.substring(3, 5);
-  
+
       timezoneCode = timezones[timezone];
       let a = moment.tz(`${startYear}-${startMonth}-${startDay} ${startHours}:${startMinutes}`, timezoneCode);
       let b = moment.tz(`${endYear}-${endMonth}-${endDay} ${endHours}:${endMinutes}`, timezoneCode);
@@ -341,129 +344,138 @@ export default function EventsManager(props) {
         returnHome={props.returnHome}
       >
       </AdminHeader>
-      <div className="body-gallery">
-        <h3>Events</h3>
-        <form id="form-events" className="form-gallery" onSubmit={handleFireBaseUpload}>
-          <h4 className="text-gallery-form-header">Post new event</h4>
-          <input className="input-landing" type="text" name="title" placeholder="Title" />
-          <input className="input-landing" type="text" name="location" placeholder="Location" />
-          <textarea className="input-description" name="description" placeholder="Description" />
-          <div className="form-1-events-row">
-            <label className="label-1-date-time">*Date: </label>
-            <input className="input-date-time" type="date" name="startDate" placeholder="YYYY-MM-DD" />
-          </div>
-          <div className="form-1-events-row">
-            <label className="label-1-date-time">*Start:</label>
-            <input className="input-date-time" type="time" name="startTime" placeholder="HH:MM" />
-          </div>
-          <div className="form-1-events-row">
-            <label className="label-1-date-time">*End:</label>
-            <input className="input-date-time" type="time" name="endTime" placeholder="HH:MM" />
-          </div>
-          <div className="form-1-events-row">
-            <label className="label-1-date-time">*Time Zone:</label>
-            <select className="input-date-time" style={{ "height": "24.69px", "fontSize": "15px" }} name="timezone">
-              <option value="Pacific">Pacific</option>
-              <option value="Mountain">Mountain</option>
-              <option value="Central">Central</option>
-              <option value="Eastern">Eastern</option>
-            </select>
-          </div>
-          <div className="container-gallery-inputs">
-            <input
-              className="input-gallery-file"
-              type="file"
-              onChange={handleImageAsFile}
-            />
-            <button className="button-gallery-post">Upload to Events</button>
-          </div>
-          <div className="form-1-events-row" style={{ "marginBottom": "0" }}>
-            <label className="label-1-date-time" style={{ "width": "100%", "marginTop": "15px" }}>*Required fields</label>
-          </div>
-        </form>
-        {
-          urlList.map((item, key) => {
-            return (
-              <div key={key} className="container-gallery-row">
-                <div className="container-store-column">
-                  <div style={{ "display": "flex", "alignItems": "center", "marginBottom": "40px" }}>
-                    <img className={indexes[item._id] > 0 ? "button-carousel" : "button-carousel hidden"} onClick={previousPhoto} data-id={item._id} src={'https://calendar-trips.s3-us-west-1.amazonaws.com/left_button.png'}></img>
-                    <div className="container-store-img">
-                      <img className="img-store" src={item.images.length === 0 ? "https://calendar-trips.s3-us-west-1.amazonaws.com/unnamed.png" : indexes[item._id] !== undefined ? item.images[indexes[item._id]].fireBaseUrl : item.images[0].fireBaseUrl} alt="gallery img" />
+      { !admin ?
+        <div className="container-loader">
+          <DotLoader
+            size={75}
+            color={"#645D45"}
+            loading={true}
+          />
+        </div> :
+        <div className="body-gallery">
+          <h3>Events</h3>
+          <form id="form-events" className="form-gallery" onSubmit={handleFireBaseUpload}>
+            <h4 className="text-gallery-form-header">Post new event</h4>
+            <input className="input-landing" type="text" name="title" placeholder="Title" />
+            <input className="input-landing" type="text" name="location" placeholder="Location" />
+            <textarea className="input-description" name="description" placeholder="Description" />
+            <div className="form-1-events-row">
+              <label className="label-1-date-time">*Date: </label>
+              <input className="input-date-time" type="date" name="startDate" placeholder="YYYY-MM-DD" />
+            </div>
+            <div className="form-1-events-row">
+              <label className="label-1-date-time">*Start:</label>
+              <input className="input-date-time" type="time" name="startTime" placeholder="HH:MM" />
+            </div>
+            <div className="form-1-events-row">
+              <label className="label-1-date-time">*End:</label>
+              <input className="input-date-time" type="time" name="endTime" placeholder="HH:MM" />
+            </div>
+            <div className="form-1-events-row">
+              <label className="label-1-date-time">*Time Zone:</label>
+              <select className="input-date-time" style={{ "height": "24.69px", "fontSize": "15px" }} name="timezone">
+                <option value="Pacific">Pacific</option>
+                <option value="Mountain">Mountain</option>
+                <option value="Central">Central</option>
+                <option value="Eastern">Eastern</option>
+              </select>
+            </div>
+            <div className="container-gallery-inputs">
+              <input
+                className="input-gallery-file"
+                type="file"
+                onChange={handleImageAsFile}
+              />
+              <button className="button-gallery-post">Upload to Events</button>
+            </div>
+            <div className="form-1-events-row" style={{ "marginBottom": "0" }}>
+              <label className="label-1-date-time" style={{ "width": "100%", "marginTop": "15px" }}>*Required fields</label>
+            </div>
+          </form>
+          {
+            urlList.map((item, key) => {
+              return (
+                <div key={key} className="container-gallery-row">
+                  <div className="container-store-column">
+                    <div style={{ "display": "flex", "alignItems": "center", "marginBottom": "40px" }}>
+                      <img className={indexes[item._id] > 0 ? "button-carousel" : "button-carousel hidden"} onClick={previousPhoto} data-id={item._id} src={'https://calendar-trips.s3-us-west-1.amazonaws.com/left_button.png'}></img>
+                      <div className="container-store-img">
+                        <img className="img-store" src={item.images.length === 0 ? "https://calendar-trips.s3-us-west-1.amazonaws.com/unnamed.png" : indexes[item._id] !== undefined ? item.images[indexes[item._id]].fireBaseUrl : item.images[0].fireBaseUrl} alt="gallery img" />
+                      </div>
+                      <img className={indexes[item._id] < item.images.length - 1 ? "button-carousel" : "button-carousel hidden"} onClick={nextPhoto} data-id={item._id} src={'https://calendar-trips.s3-us-west-1.amazonaws.com/right_button.png'}></img>
                     </div>
-                    <img className={indexes[item._id] < item.images.length - 1 ? "button-carousel" : "button-carousel hidden"} onClick={nextPhoto} data-id={item._id} src={'https://calendar-trips.s3-us-west-1.amazonaws.com/right_button.png'}></img>
+                    {showEdit === item._id ?
+                      <div style={{ "display": "flex", "flexDirection": "column", "marginBottom": "20px" }}>
+                        <form id="form-events-edit-photo" onSubmit={handleAddPhoto} data-id={item._id}>
+                          <div style={{ "display": "flex", "marginBottom": "5px" }}>
+                            <div style={{ "justifySelf": "flex-start" }}>Add photo</div>
+                            <div style={{ "justifySelf": "flex-end", "margin": "0 0 0 auto" }}>{item.images.length ? (indexes[item._id] + 1) + '/' + item.images.length : null}</div>
+                          </div>
+                          <div style={{ "display": "flex", "flexWrap": "wrap", "justifySelf": "space-between", "width": "100%" }}>
+                            <input
+                              type="file"
+                              onChange={handleImageAsFile}
+                              style={{ "marginBottom": "5px" }}
+                            />
+                          </div>
+                          <button type="submit" style={{ "marginBottom": "5px", "alignSelf": "flex-end" }}>Upload Photo</button>
+                        </form>
+                        {
+                          item.images.length !== 0 ?
+                            <button onClick={handleDeletePhoto} value={item._id} style={{ "alignSelf": "flex-end" }}>Delete Photo</button> : null
+                        }
+                      </div> : null
+                    }
                   </div>
-                  {showEdit === item._id ?
-                    <div style={{ "display": "flex", "flexDirection": "column", "marginBottom": "20px" }}>
-                      <form id="form-events-edit-photo" onSubmit={handleAddPhoto} data-id={item._id}>
-                        <div style={{ "display": "flex", "marginBottom": "5px" }}>
-                          <div style={{ "justifySelf": "flex-start" }}>Add photo</div>
-                          <div style={{ "justifySelf": "flex-end", "margin": "0 0 0 auto" }}>{item.images.length ? (indexes[item._id] + 1) + '/' + item.images.length : null}</div>
+                  <div className="container-events-title-description">
+                    <p><b>Title:</b> {item.title}</p>
+                    <p><b>Location:</b> {item.location}</p>
+                    <p><b>Description:</b> {item.resource}</p>
+                    <p><b>Start Date:</b> {localizeDate(item.startDate, item.timezone)}</p>
+                    <p><b>End Date:</b> {localizeDate(item.endDate, item.timezone)}</p>
+                    <p><b>Number of photos:</b> {item.images.length}</p>
+                    <div className="container-form-buttons">
+                      <button value={item._id} style={{ "marginRight": "5px" }} onClick={editToggler}>Edit</button>
+                      <button value={item._id} onClick={deleteHandler} data-filename={item.filename}>Delete</button>
+                    </div>
+                    {showEdit === item._id ?
+                      <form id={item._id} className="form-gallery-edit" onSubmit={editHandler} data-id={item._id}>
+                        <input style={{ "marginBottom": "5px", "marginTop": "5px", "fontSize": "14px" }} type="text" name="title" placeholder="Title" />
+                        <input style={{ "marginBottom": "5px", "fontSize": "14px" }} type="text" name="location" placeholder="Location" />
+                        <textarea name="description" placeholder="Description" style={{ "height": "50px", "marginBottom": "5px", "fontSize": "14px" }}></textarea>
+                        <div className="form-2-events-row">
+                          <p className="label-2-date-time">Date: </p>
+                          <input className="input-date-time" type="date" name="startDate" placeholder="YYYY-MM-DD" />
                         </div>
-                        <div style={{ "display": "flex", "flexWrap": "wrap", "justifySelf": "space-between", "width": "100%" }}>
-                          <input
-                            type="file"
-                            onChange={handleImageAsFile}
-                            style={{ "marginBottom": "5px" }}
-                          />
+                        <div className="form-2-events-row">
+                          <p className="label-2-date-time">Start Time: </p>
+                          <input className="input-date-time" type="time" name="startTime" placeholder="HH:MM" />
                         </div>
-                        <button type="submit" style={{ "marginBottom": "5px", "alignSelf": "flex-end" }}>Upload Photo</button>
-                      </form>
-                      {
-                        item.images.length !== 0 ?
-                          <button onClick={handleDeletePhoto} value={item._id} style={{ "alignSelf": "flex-end" }}>Delete Photo</button> : null
-                      }
-                    </div> : null
-                  }
-                </div>
-                <div className="container-events-title-description">
-                  <p><b>Title:</b> {item.title}</p>
-                  <p><b>Location:</b> {item.location}</p>
-                  <p><b>Description:</b> {item.resource}</p>
-                  <p><b>Start Date:</b> {localizeDate(item.startDate, item.timezone)}</p>
-                  <p><b>End Date:</b> {localizeDate(item.endDate, item.timezone)}</p>
-                  <p><b>Number of photos:</b> {item.images.length}</p>
-                  <div className="container-form-buttons">
-                    <button value={item._id} style={{ "marginRight": "5px" }} onClick={editToggler}>Edit</button>
-                    <button value={item._id} onClick={deleteHandler} data-filename={item.filename}>Delete</button>
+                        <div className="form-2-events-row">
+                          <p className="label-2-date-time">End Time: </p>
+                          <input className="input-date-time" type="time" name="endTime" placeholder="HH:MM" />
+                        </div>
+                        <div className="form-2-events-row">
+                          <p className="label-2-date-time">Time Zone: </p>
+                          <select className="input-date-time" name="timezone" style={{ "height": "24.69px", "fontSize": "15px" }}>
+                            <option value="Pacific">Pacific</option>
+                            <option value="Mountain">Mountain</option>
+                            <option value="Central">Central</option>
+                            <option value="Eastern">Eastern</option>
+                          </select>
+                        </div>
+                        <div className="container-form-buttons">
+                          <button style={{ "marginRight": "5px" }} type="submit">Submit Changes</button>
+                        </div>
+                      </form> : null
+                    }
                   </div>
-                  {showEdit === item._id ?
-                    <form id={item._id} className="form-gallery-edit" onSubmit={editHandler} data-id={item._id}>
-                      <input style={{ "marginBottom": "5px", "marginTop": "5px", "fontSize": "14px" }} type="text" name="title" placeholder="Title" />
-                      <input style={{ "marginBottom": "5px", "fontSize": "14px" }} type="text" name="location" placeholder="Location" />
-                      <textarea name="description" placeholder="Description" style={{ "height": "50px", "marginBottom": "5px", "fontSize": "14px" }}></textarea>
-                      <div className="form-2-events-row">
-                        <p className="label-2-date-time">Date: </p>
-                        <input className="input-date-time" type="date" name="startDate" placeholder="YYYY-MM-DD" />
-                      </div>
-                      <div className="form-2-events-row">
-                        <p className="label-2-date-time">Start Time: </p>
-                        <input className="input-date-time" type="time" name="startTime" placeholder="HH:MM" />
-                      </div>
-                      <div className="form-2-events-row">
-                        <p className="label-2-date-time">End Time: </p>
-                        <input className="input-date-time" type="time" name="endTime" placeholder="HH:MM" />
-                      </div>
-                      <div className="form-2-events-row">
-                        <p className="label-2-date-time">Time Zone: </p>
-                        <select className="input-date-time" name="timezone" style={{ "height": "24.69px", "fontSize": "15px" }}>
-                          <option value="Pacific">Pacific</option>
-                          <option value="Mountain">Mountain</option>
-                          <option value="Central">Central</option>
-                          <option value="Eastern">Eastern</option>
-                        </select>
-                      </div>
-                      <div className="container-form-buttons">
-                        <button style={{ "marginRight": "5px" }} type="submit">Submit Changes</button>
-                      </div>
-                    </form> : null
-                  }
                 </div>
-              </div>
-            )
-          })
-        }
-      </div>
+              )
+            })
+          }
+        </div>
+      }
     </div>
   )
 }

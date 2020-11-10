@@ -129,19 +129,19 @@ function MyApp({ Component, pageProps }) {
           }
         </div>
         <div className={loading ? "container-loader" : "container-loader-hidden"}>
-            <DotLoader
-              size={75}
-              color={"#645D45"}
-              loading={loading}
-            />
-          </div>
+          <DotLoader
+            size={75}
+            color={"#645D45"}
+            loading={loading}
+          />
+        </div>
       </div>
       <AuthProvider>
         <Component {...pageProps}
           banner={banner}
           returnHome={returnHome}
           setLoading={setLoading}
-          />
+        />
       </AuthProvider>
     </div>
   )

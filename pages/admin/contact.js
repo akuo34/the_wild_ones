@@ -2,11 +2,14 @@ import Head from 'next/head'
 import AdminHeader from '../../components/adminHeader.js';
 import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
+import { useAuth } from '../../contexts/auth.js';
+import DotLoader from 'react-spinners/DotLoader';
 
 export default function ContactManager(props) {
 
   const [urlList, setUrlList] = useState([]);
   const [allowUpload, setAllowUpload] = useState(false);
+  const { admin } = useAuth();
 
   useEffect(() => {
     getContact();
@@ -97,46 +100,55 @@ export default function ContactManager(props) {
         returnHome={props.returnHome}
       >
       </AdminHeader>
-      <div className="body-gallery">
-        <h3>Contact</h3>
-        {allowUpload ?
-          <form id="form-contact" className="form-gallery" onSubmit={uploadContact}>
-            <h4 className="text-gallery-form-header">Create your contact</h4>
-            <input className="input-landing" type="text" name="name" placeholder="Name" />
-            <input className="input-landing" type="email" name="email" placeholder="Email" />
-            <input className="input-landing" type="tel" name="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="Phone XXX-XXX-XXXX" />
-            <input className="input-landing" type="url" name="instagram" placeholder="Instagram link" />
-            <button className="button-gallery-post" type="submit">Upload to Contact</button>
-          </form> : null
-        }
-        {
-          urlList.map(item => {
-            return (
-              <div className="container-contact-row">
-                <div style={{ "width": "min(400px, 90vw)"}}>
-                  <p style={{ "lineHeight": "22px" }}><b>Name:</b> {item.name}</p>
-                  <p style={{ "lineHeight": "22px" }}><b>Email:</b> {item.email}</p>
-                  <p style={{ "lineHeight": "22px" }}><b>Phone:</b> {item.phone}</p>
-                  <p style={{ "lineHeight": "22px" }}><b>Instagram:</b> {item.instagram}</p>
-                </div>
-                <form id={item._id}
-                  style={{ "width": "min(400px, 90vw)", "display": "flex", "flexDirection": "column" }}
-                  onSubmit={editHandler}
-                  data-id={item._id}>
-                  <input style={{ "marginBottom": "5px" }} type="text" name="name" placeholder="Name" />
-                  <input style={{ "marginBottom": "5px" }} type="email" name="email" placeholder="Email" />
-                  <input style={{ "marginBottom": "5px" }} type="tel" name="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="Phone XXX-XXX-XXXX" />
-                  <input style={{ "marginBottom": "5px" }} type="url" name="instagram" placeholder="Instagram link" />
-                  <div className="container-form-buttons">
-                    <button type="submit" style={{ "marginRight": "5px" }}>Edit</button>
-                    <button value={item._id} onClick={deleteHandler}>Delete</button>
+      { !admin ?
+        <div className="container-loader">
+          <DotLoader
+            size={75}
+            color={"#645D45"}
+            loading={true}
+          />
+        </div> :
+        <div className="body-gallery">
+          <h3>Contact</h3>
+          {allowUpload ?
+            <form id="form-contact" className="form-gallery" onSubmit={uploadContact}>
+              <h4 className="text-gallery-form-header">Create your contact</h4>
+              <input className="input-landing" type="text" name="name" placeholder="Name" />
+              <input className="input-landing" type="email" name="email" placeholder="Email" />
+              <input className="input-landing" type="tel" name="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="Phone XXX-XXX-XXXX" />
+              <input className="input-landing" type="url" name="instagram" placeholder="Instagram link" />
+              <button className="button-gallery-post" type="submit">Upload to Contact</button>
+            </form> : null
+          }
+          {
+            urlList.map(item => {
+              return (
+                <div className="container-contact-row">
+                  <div style={{ "width": "min(400px, 90vw)" }}>
+                    <p style={{ "lineHeight": "22px" }}><b>Name:</b> {item.name}</p>
+                    <p style={{ "lineHeight": "22px" }}><b>Email:</b> {item.email}</p>
+                    <p style={{ "lineHeight": "22px" }}><b>Phone:</b> {item.phone}</p>
+                    <p style={{ "lineHeight": "22px" }}><b>Instagram:</b> {item.instagram}</p>
                   </div>
-                </form>
-              </div>
-            )
-          })
-        }
-      </div>
+                  <form id={item._id}
+                    style={{ "width": "min(400px, 90vw)", "display": "flex", "flexDirection": "column" }}
+                    onSubmit={editHandler}
+                    data-id={item._id}>
+                    <input style={{ "marginBottom": "5px" }} type="text" name="name" placeholder="Name" />
+                    <input style={{ "marginBottom": "5px" }} type="email" name="email" placeholder="Email" />
+                    <input style={{ "marginBottom": "5px" }} type="tel" name="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="Phone XXX-XXX-XXXX" />
+                    <input style={{ "marginBottom": "5px" }} type="url" name="instagram" placeholder="Instagram link" />
+                    <div className="container-form-buttons">
+                      <button type="submit" style={{ "marginRight": "5px" }}>Edit</button>
+                      <button value={item._id} onClick={deleteHandler}>Delete</button>
+                    </div>
+                  </form>
+                </div>
+              )
+            })
+          }
+        </div>
+      }
     </div>
   )
 }
