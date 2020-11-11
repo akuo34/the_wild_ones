@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "loadAdmin": "node scripts/loadAdmin.js"
+    "loadAdmin": "node scripts/loadAdmin.js",
+    "instance": "SSH -i the_wild_ones.pem ubuntu@ec2-54-215-77-154.us-west-1.compute.amazonaws.com"
   },
   "dependencies": {
     "axios": "^0.21.0",
