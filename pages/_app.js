@@ -184,7 +184,6 @@ function MyApp({ Component, pageProps }) {
           returnHome={returnHome}
           setLoading={setLoading}
           modalHandler={modalHandler}
-          items={items}
         />
       </AuthProvider>
     </div>

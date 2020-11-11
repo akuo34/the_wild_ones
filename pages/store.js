@@ -1,17 +1,26 @@
 import Head from 'next/head';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Router from 'next/router';
+import Axios from 'axios';
 
 export default function Store(props) {
 
   const [category, setCategory] = useState('Prints');
+  const [items, setItems] = useState([]);
 
   const categoryHandler = (e) => {
     let category = e.target.dataset.category;
     setCategory(category);
   }
 
-
+  useEffect(() => {
+    Axios
+      .get('/api/store')
+      .then(response => {
+        setItems(response.data);
+      })
+      .catch(err => console.error(err));
+  }, [])
 
   // const addCartHandler = (e) => {
   //   e.preventDefault();
@@ -74,7 +83,7 @@ export default function Store(props) {
         <h2 className="subheader-client-store">{category.toLowerCase()}</h2>
         <div className="container-grid">
           {
-            props.items.map(item => {
+            items.map(item => {
               if (item.category === category) {
                 return (
                   <div style={{ "marginBottom": "60px" }}>

@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
 import Slider from 'react-slick';
 
-export default function ProductDetails(props) {
+export default function ProductDetails() {
 
   const [product, setProduct] = useState(null);
   const [animation, setAnimation] = useState('hidden');
