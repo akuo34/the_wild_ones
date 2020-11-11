@@ -23,7 +23,7 @@ export default function Home(props) {
   var settings = {
     arrows: true,
     infinite: true,
-    speed: 900,
+    speed: 800,
     slidesToShow: 1,
     initialSlide: 0,
   };

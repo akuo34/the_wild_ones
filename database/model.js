@@ -47,7 +47,7 @@ module.exports = {
   },
   putEventPhoto: (images, _id) => EventItem.findOneAndUpdate({ _id }, { images }),
   deleteEvent: (_id) => EventItem.findOneAndDelete({ _id }),
-  getStore: () => StoreItem.find(),
+  getStore: () => StoreItem.find().sort([['price', 1]]),
   postStore: (images, title, description, width, height, price, category, quantity) => StoreItem.create({ images, title, description, width, height, price, category, quantity }),
   putStore: (title, description, width, height, price, category, quantity, _id) => {
 
@@ -59,6 +59,7 @@ module.exports = {
     }
     return StoreItem.findByIdAndUpdate({ _id }, object);
   },
+  getOneItem: (_id) => StoreItem.findOne({ _id }),
   putStorePhoto: (images, _id) => StoreItem.findByIdAndUpdate({ _id }, { images }),
   deleteStore: (_id) => StoreItem.findByIdAndDelete({ _id }),
   getOrder: (sessionId) => OrderItem.findOne({ sessionId }),

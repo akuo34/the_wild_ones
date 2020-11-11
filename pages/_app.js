@@ -17,17 +17,53 @@ function MyApp({ Component, pageProps }) {
   const [currentUrl, setCurrentUrl] = useState(null);
   const [animation, setAnimation] = useState('hidden');
   const [cart, setCart] = useState([]);
+  const [items, setItems] = useState([]);
+  const [stock, setStock] = useState({});
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     // getCart();
-    // getStore();
+    getStore();
 
     Axios
       .get('/api/about')
       .then(response => setBanner(response.data[0].bannerFireBaseUrl))
       .catch(err => console.error(err));
   }, [])
+
+  useEffect(() => {
+    let copy = {};
+    items.forEach(item => {
+      copy[item._id] = item.quantity;
+    })
+    setStock(copy);
+  }, [items]);
+
+  // const getCart = () => {
+  //   Axios
+  //     .get('/api/orders')
+  //     .then(response => {
+  //       setCart(response.data.items);
+  //     })
+  //     .catch(err => console.error(err));
+  // }
+
+  const getStore = () => {
+    Axios
+    .get('/api/store')
+    .then(response => {
+      setItems(response.data);
+    })
+    .catch(err => console.error(err));
+  }
+
+  const totalCart = () => {
+    let sum = 0;
+    cart.forEach(item => {
+      sum += item.quantity;
+    });
+    return sum;
+  }
 
   const toolBarHandler = () => {
     showClientToolBar ? setShowClientToolBar(false) : setShowClientToolBar(true)
@@ -52,6 +88,10 @@ function MyApp({ Component, pageProps }) {
 
   const returnHome = () => {
     Router.push('/');
+  }
+
+  const toCheckout = () => {
+    Router.push('/checkout');
   }
 
   return (
@@ -112,7 +152,7 @@ function MyApp({ Component, pageProps }) {
               } */}
               <img
                 className="button-cart"
-                // onClick={toCheckout}
+                onClick={toCheckout}
                 src={cart && cart.length ? "/shopping_cart_red.svg" : "/shopping_cart_light_grey.svg"}></img>
             </div>
             <img className="button-hamburger" src="/hamburger_light_grey.svg" onClick={toolBarHandler}></img>
@@ -144,6 +184,7 @@ function MyApp({ Component, pageProps }) {
           returnHome={returnHome}
           setLoading={setLoading}
           modalHandler={modalHandler}
+          items={items}
         />
       </AuthProvider>
     </div>

@@ -23,7 +23,7 @@ export default function Murals(props) {
   var settings = {
     arrows: true,
     infinite: true,
-    speed: 900,
+    speed: 800,
     slidesToShow: 1,
     initialSlide: 0
   };
@@ -42,9 +42,9 @@ export default function Murals(props) {
         {
           images.length ?
             <Slider className="slider" {...settings}>
-              {images.map(image => {
+              {images.map((image, key) => {
                 return (
-                  <div className="container-image-gallery">
+                  <div key={key} className="container-image-gallery">
                     <img
                       className="image-gallery"
                       onClick={props.modalHandler}
@@ -57,9 +57,9 @@ export default function Murals(props) {
             </Slider> : null
         }
         <div className="container-grid">
-          {images.map(image => {
+          {images.map((image, key) => {
             return (
-              <div className="container-image-grid">
+              <div key={key} className="container-image-grid">
                 <img
                   className="image-grid"
                   onClick={props.modalHandler}

@@ -1,6 +1,5 @@
 .slider {
 	position: relative;
-	/* height: calc(100vh - min(calc(60px + 7vw), 20vh) - calc(34px + 5vw) - 40px); */
 	height: calc(100vh - min(calc(60px + 7vw), 20vh) - 40px - 7.5vw);
 	max-height: 60vw;
 	margin-bottom: 60px;
