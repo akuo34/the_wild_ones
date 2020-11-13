@@ -4,7 +4,8 @@ const { publicRuntimeConfig } = getConfig();
 
 let urls = {
   development: 'http://localhost:3000',
-  production: 'http://54.215.77.154:3000'
+  // production: 'http://54.215.77.154:3000'
+  production: 'http://localhost:3000',
 }
 
 const api = Axios.create({

@@ -7,6 +7,10 @@
 	overflow: hidden;
 }
 
+.slick-slide {
+	outline: none !important;
+}
+
 .slider a.previousButton, .slider a.nextButton {
 	font-size: 22px;
 	line-height: 0;

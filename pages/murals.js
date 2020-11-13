@@ -1,24 +1,8 @@
 import Head from 'next/head';
-import React, { useState, useEffect } from 'react';
-import Axios from 'axios';
 import Slider from 'react-slick';
+import model from '../database/model.js';
 
 export default function Murals(props) {
-
-  const [images, setImages] = useState([]);
-
-  useEffect(() => {
-    getImages();
-  }, []);
-
-  const getImages = () => {
-    Axios
-      .get('/api/murals')
-      .then(response => {
-        setImages(response.data);
-      })
-      .catch(err => console.error(err));
-  }
 
   var settings = {
     arrows: true,
@@ -40,9 +24,9 @@ export default function Murals(props) {
       <div className="container-gallery-page">
         <h2 className="subheader-client">murals</h2>
         {
-          images.length ?
+          props.images.length ?
             <Slider className="slider" {...settings}>
-              {images.map((image, key) => {
+              {props.images.map((image, key) => {
                 return (
                   <div key={key} className="container-image-gallery">
                     <img
@@ -57,7 +41,7 @@ export default function Murals(props) {
             </Slider> : null
         }
         <div className="container-grid">
-          {images.map((image, key) => {
+          {props.images.map((image, key) => {
             return (
               <div key={key} className="container-image-grid">
                 <img
@@ -74,4 +58,15 @@ export default function Murals(props) {
       </div>
     </div>
   )
+}
+
+export async function getStaticProps() {
+  let response = await model.getMural();
+  
+  return {
+    props: {
+      images: JSON.parse(JSON.stringify(response))
+    },
+    revalidate: 10
+  }
 }

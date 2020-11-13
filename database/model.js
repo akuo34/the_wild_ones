@@ -1,7 +1,7 @@
 const { GalleryItem, MuralItem, AboutItem, EventItem, StoreItem, ContactItem, OrderItem, MailingListItem, AdminItem } = require('./');
 
 module.exports = {
-  getGallery: () => GalleryItem.find().sort([['index', 1]]),
+  getGallery: async () => GalleryItem.find().sort([['index', 1]]),
   postGallery: (title, description, fireBaseUrl, date, filename, index) => GalleryItem.create({ title, description, fireBaseUrl, date, filename, index }),
   putGallery: (title, description, _id, index) => {
     let object = { title, description, index };
@@ -14,7 +14,7 @@ module.exports = {
   },
   putGalleryPhoto: (fireBaseUrl, filename, _id) => GalleryItem.findOneAndUpdate({ _id }, { fireBaseUrl, filename }),
   deleteGallery: (_id) => GalleryItem.findByIdAndDelete({ _id }),
-  getMural: () => MuralItem.find().sort([['index', 1]]),
+  getMural: async () => MuralItem.find().sort([['index', 1]]),
   postMural: (title, description, fireBaseUrl, date, filename, index) => MuralItem.create({ title, description, fireBaseUrl, date, filename, index }),
   putMural: (title, description, _id, index) => {
     let object = { title, description, index };
@@ -27,7 +27,7 @@ module.exports = {
   },
   putMuralPhoto: (fireBaseUrl, filename, _id) => MuralItem.findOneAndUpdate({ _id }, { fireBaseUrl, filename }),
   deleteMural: (_id) => MuralItem.findByIdAndDelete({ _id }),
-  getAbout: () => AboutItem.find(),
+  getAbout: async () => AboutItem.find(),
   postAbout: (portraitFireBaseUrl, bio, portraitFilename, bannerFireBaseUrl, bannerFilename) => AboutItem.create({ portraitFireBaseUrl, bio, portraitFilename, bannerFireBaseUrl, bannerFilename }),
   putAbout: (bio, _id) => AboutItem.findOneAndUpdate({ _id }, { bio }),
   putAboutPortrait: (portraitFireBaseUrl, portraitFilename, _id) => AboutItem.findOneAndUpdate({ _id }, { portraitFireBaseUrl, portraitFilename }),

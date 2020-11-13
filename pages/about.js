@@ -1,23 +1,7 @@
 import Head from 'next/head';
-import React, { useState, useEffect } from 'react';
-import Axios from 'axios';
+import model from '../database/model.js';
 
-export default function About() {
-
-  const [images, setImages] = useState([]);
-
-  useEffect(() => {
-    getImages();
-  }, []);
-
-  const getImages = () => {
-    Axios
-      .get('/api/about')
-      .then(response => {
-        setImages(response.data);
-      })
-      .catch(err => console.error(err));
-  }
+export default function About(props) {
 
   return (
     <div>
@@ -28,13 +12,24 @@ export default function About() {
       <div className="buffer"></div>
       <div className="container-gallery-page">
         <h2 className="subheader-client">about the artist</h2>
-        {images.length ?
+        {props.images.length ?
           <div className="container-image-about">
-            <img className="image-about" src={images[0].portraitFireBaseUrl} alt="about-image"></img>
-            <p className="container-bio">{images[0].bio}</p>
+            <img className="image-about" src={props.images[0].portraitFireBaseUrl} alt="about-image"></img>
+            <p className="container-bio">{props.images[0].bio}</p>
           </div> : null
         }
       </div>
     </div>
   )
+}
+
+export async function getStaticProps() {
+  let response = await model.getAbout();
+  
+  return {
+    props: {
+      images: JSON.parse(JSON.stringify(response))
+    },
+    revalidate: 10
+  }
 }
