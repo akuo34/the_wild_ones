@@ -2,6 +2,7 @@ import Head from 'next/head';
 import Slider from 'react-slick';
 import model from '../database/model.js';
 import { useState } from 'react';
+import { isMobile } from 'react-device-detect';
 
 export default function Home(props) {
 
@@ -16,7 +17,9 @@ export default function Home(props) {
   };
 
   const mouseEnter = () => {
-    setShowDetails(true);
+    if (!isMobile) {
+      setShowDetails(true);
+    }
   }
 
   const mouseLeave = () => {
