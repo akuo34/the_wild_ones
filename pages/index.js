@@ -1,8 +1,11 @@
 import Head from 'next/head';
 import Slider from 'react-slick';
 import model from '../database/model.js';
+import { useState } from 'react';
 
 export default function Home(props) {
+
+  const [showDetails, setShowDetails] = useState(false);
 
   var settings = {
     arrows: true,
@@ -11,6 +14,14 @@ export default function Home(props) {
     slidesToShow: 1,
     initialSlide: 0,
   };
+
+  const mouseEnter = () => {
+    setShowDetails(true);
+  }
+
+  const mouseLeave = () => {
+    setShowDetails(false);
+  }
 
   return (
     <div>
@@ -29,11 +40,20 @@ export default function Home(props) {
               {props.images.map((image, key) => {
                 return (
                   <div key={key} className="container-image-gallery">
+                    {
+                      image.title || image.description ?
+                        <div className={showDetails ? "image-details active" : "image-details hidden"}>
+                          <p className="header-details">{image.title}</p>
+                          <p style={{ "fontSize": "16px", "lineHeight": "20px" }}>{image.description}</p>
+                        </div> : null
+                    }
                     <img
                       className="image-gallery"
                       onClick={props.modalHandler}
                       data-url={image.fireBaseUrl}
                       src={image.fireBaseUrl}
+                      onMouseEnter={mouseEnter}
+                      onMouseLeave={mouseLeave}
                       alt="gallery-image"></img>
                   </div>
                 )
