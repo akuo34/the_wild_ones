@@ -44,47 +44,50 @@ export default function Contact(props) {
       <div className="container-gallery-page">
         <h2 className="subheader-client">contact</h2>
         <div style={{ "display": "flex", "flexWrap": "wrap", "width": "100%", "justifyContent": "space-between" }}>
-          <div className="column" style={{ "margin": "0 auto" }}>
-            {
-              props.contacts[0].phone ?
-                <div className="row-contact">
-                  <a href={`tel:+1-${props.contacts[0].phone}`}>
-                    <img style={{ "height": "calc(25px + 1.75vw)", "marginRight": "calc(10px + 1vw)" }} src="/phone_icon.svg" alt="phone" />
-                  </a>
-                  <h3 style={{ "margin": "auto 0" }}>
-                    <a style={{ "textDecoration": "none", "color": "inherit" }} href={`tel:+1-${props.contacts[0].phone}`}>
-                      {props.contacts[0].phone}
+          {
+            props.contacts.length ?
+            <div className="column" style={{ "margin": "0 auto" }}>
+              {
+                props.contacts[0].phone ?
+                  <div className="row-contact">
+                    <a href={`tel:+1-${props.contacts[0].phone}`}>
+                      <img style={{ "height": "calc(25px + 1.75vw)", "marginRight": "calc(10px + 1vw)" }} src="/phone_icon.svg" alt="phone" />
                     </a>
-                  </h3>
-                </div> : null
-            }
-            {
-              props.contacts[0].email ?
-                <div className="row-contact">
-                  <a href={`mailto:${props.contacts[0].email}`}>
-                    <img style={{ "height": "calc(25px + 1.75vw)", "marginRight": "calc(10px + 1vw)" }} src="/email_icon.svg" alt="email"></img>
-                  </a>
-                  <h3 style={{ "margin": "auto 0" }}>
-                    <a style={{ "textDecoration": "none", "color": "inherit" }} href={`mailto:${props.contacts[0].email}`}>
-                      {props.contacts[0].email}
+                    <h3 style={{ "margin": "auto 0" }}>
+                      <a style={{ "textDecoration": "none", "color": "inherit" }} href={`tel:+1-${props.contacts[0].phone}`}>
+                        {props.contacts[0].phone}
+                      </a>
+                    </h3>
+                  </div> : null
+              }
+              {
+                props.contacts[0].email ?
+                  <div className="row-contact">
+                    <a href={`mailto:${props.contacts[0].email}`}>
+                      <img style={{ "height": "calc(25px + 1.75vw)", "marginRight": "calc(10px + 1vw)" }} src="/email_icon.svg" alt="email"></img>
                     </a>
-                  </h3>
-                </div> : null
-            }
-            {
-              props.contacts[0].instagram ?
-                <div className="row-contact">
-                  <a style={{ "textDecoration": "none", "color": "inherit" }} href={props.contacts[0].instagram}>
-                    <img style={{ "height": "calc(25px + 1.75vw)", "opacity": "75%", "marginRight": "calc(10px + 1vw)" }} src="/instagram.svg" alt="instagram"></img>
-                  </a>
-                  <h3 style={{ "margin": "auto 0" }}>
+                    <h3 style={{ "margin": "auto 0" }}>
+                      <a style={{ "textDecoration": "none", "color": "inherit" }} href={`mailto:${props.contacts[0].email}`}>
+                        {props.contacts[0].email}
+                      </a>
+                    </h3>
+                  </div> : null
+              }
+              {
+                props.contacts[0].instagram ?
+                  <div className="row-contact">
                     <a style={{ "textDecoration": "none", "color": "inherit" }} href={props.contacts[0].instagram}>
-                      {props.contacts[0].instagram.split('//').pop()}
+                      <img style={{ "height": "calc(25px + 1.75vw)", "opacity": "75%", "marginRight": "calc(10px + 1vw)" }} src="/instagram.svg" alt="instagram"></img>
                     </a>
-                  </h3>
-                </div> : null
-            }
-          </div>
+                    <h3 style={{ "margin": "auto 0" }}>
+                      <a style={{ "textDecoration": "none", "color": "inherit" }} href={props.contacts[0].instagram}>
+                        {props.contacts[0].instagram.split('//').pop()}
+                      </a>
+                    </h3>
+                  </div> : null
+              }
+            </div> : null
+          }
           <div style={{ "margin": "0 auto", "display": "flex", "flexDirection": "column" }}>
             <form id="form-contact-client" className="form-gallery" style={{ "margin": "0 auto" }} onSubmit={submitForm}>
               <h4 className="text-gallery-form-header">Send an email</h4>
