@@ -81,7 +81,7 @@ export default function Contact(props) {
                     </a>
                     <h3 style={{ "margin": "auto 0" }}>
                       <a style={{ "textDecoration": "none", "color": "inherit" }} href={props.contacts[0].instagram}>
-                        {props.contacts[0].instagram.split('//').pop()}
+                        {'@' + props.contacts[0].instagram.split('instagram.com/').pop()}
                       </a>
                     </h3>
                   </div> : null
