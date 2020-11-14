@@ -46,7 +46,7 @@ export default function Contact(props) {
         <div style={{ "display": "flex", "flexWrap": "wrap", "width": "100%", "justifyContent": "space-between" }}>
           {
             props.contacts.length ?
-            <div className="column" style={{ "margin": "0 auto" }}>
+            <div className="column" style={{ "margin": "0 auto", "maxWidth": "90vw" }}>
               {
                 props.contacts[0].phone ?
                   <div className="row-contact">
