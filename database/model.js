@@ -33,7 +33,7 @@ module.exports = {
   putAboutPortrait: (portraitFireBaseUrl, portraitFilename, _id) => AboutItem.findOneAndUpdate({ _id }, { portraitFireBaseUrl, portraitFilename }),
   putAboutBanner: (bannerFireBaseUrl, bannerFilename, _id) => AboutItem.findOneAndUpdate({ _id }, { bannerFireBaseUrl, bannerFilename }),
   deleteAbout: (_id) => AboutItem.findOneAndDelete({ _id }),
-  getEvent: () => EventItem.find().sort([['startDate', 1]]),
+  getEvent: async () => EventItem.find().sort([['startDate', 1]]),
   postEvent: (images, title, resource, location, startDate, endDate, startTime, endTime, allDay, timezone) => EventItem.create({ images, title, resource, location, startDate, endDate, startTime, endTime, allDay, timezone }),
   putEvent: (title, resource, location, startDate, endDate, startTime, endTime, allDay, _id, timezone) => {
 
@@ -47,7 +47,7 @@ module.exports = {
   },
   putEventPhoto: (images, _id) => EventItem.findOneAndUpdate({ _id }, { images }),
   deleteEvent: (_id) => EventItem.findOneAndDelete({ _id }),
-  getStore: () => StoreItem.find().sort([['price', 1]]),
+  getStore: async () => StoreItem.find().sort([['price', 1]]),
   postStore: (images, title, description, width, height, price, category, quantity) => StoreItem.create({ images, title, description, width, height, price, category, quantity }),
   putStore: (title, description, width, height, price, category, quantity, _id) => {
 

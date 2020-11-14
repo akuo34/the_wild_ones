@@ -68,14 +68,14 @@ h2 {
 }
 
 h3 {
-  font-size: calc(18px + 0.5vw);
+  font-size: calc(15px + 0.5vw);
   font-family: typewriter;
   margin-bottom: calc(8px + 0.7vw);
   color: rgb(100, 93, 69);
 }
 
 h4 {
-  font-size: calc(18px + 0.5vw);
+  font-size: calc(15px + 0.5vw);
   font-family: typewriter;
   margin-bottom: calc(8px + 0.7vw);
   color: rgb(224, 173, 158);
@@ -1098,6 +1098,20 @@ button.slick-arrow.slick-next,
 
 .button-add-cart-client:active {
   background-color: rgb(138, 128, 96);
+}
+
+.row-contact {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.response-email {
+  font-size: calc(15px + 0.5vw);
+  font-family: typewriter;
+  margin: 20px auto 0 auto;
+  color: rgb(224, 173, 158);
+  transition: all 0.5s ease;
 }
 
 @media only screen and (max-device-width: 823px) {

@@ -1,26 +1,16 @@
 import Head from 'next/head';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Router from 'next/router';
-import Axios from 'axios';
+import model from '../database/model.js';
 
 export default function Store(props) {
 
   const [category, setCategory] = useState('Prints');
-  const [items, setItems] = useState([]);
 
   const categoryHandler = (e) => {
     let category = e.target.dataset.category;
     setCategory(category);
   }
-
-  useEffect(() => {
-    Axios
-      .get('/api/store')
-      .then(response => {
-        setItems(response.data);
-      })
-      .catch(err => console.error(err));
-  }, [])
 
   // const addCartHandler = (e) => {
   //   e.preventDefault();
@@ -83,10 +73,10 @@ export default function Store(props) {
         <h2 className="subheader-client-store">{category.toLowerCase()}</h2>
         <div className="container-grid">
           {
-            items.map(item => {
+            props.items.map((item, key) => {
               if (item.category === category) {
                 return (
-                  <div style={{ "marginBottom": "60px" }}>
+                  <div key={key} style={{ "marginBottom": "60px" }}>
                     <div className="container-item-store-client">
                       <div className="container-image-store-client">
                         <img
@@ -114,4 +104,15 @@ export default function Store(props) {
       </div>
     </div>
   )
+}
+
+export async function getStaticProps() {
+  let response = await model.getStore();
+
+  return {
+    props: {
+      items: JSON.parse(JSON.stringify(response))
+    },
+    revalidate: 10
+  }
 }

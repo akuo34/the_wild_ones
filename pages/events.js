@@ -1,8 +1,8 @@
 import Head from 'next/head';
 import React, { useState, useEffect } from 'react';
-import Axios from 'axios';
-import { Calendar, momentLocalizer } from 'react-big-calendar'
-import moment from 'moment-timezone'
+import { Calendar, momentLocalizer } from 'react-big-calendar';
+import moment from 'moment-timezone';
+import model from '../database/model.js';
 
 // Setup the localizer by providing the moment (or globalize) Object
 // to the correct localizer.
@@ -16,42 +16,33 @@ export default function Events(props) {
   const [indexes, setIndexes] = useState({});
 
   useEffect(() => {
-    getImages();
+    let today = new Date();
+    let index = 0;
+    let copy = { ...indexes };
+
+    let events = [];
+
+    props.events.forEach(item => {
+      copy[item._id] = 0;
+
+      let start = new Date(item.startDate);
+      let end = new Date(item.endDate);
+      if (end < today) {
+        index++;
+      }
+      // localize the UTC and push into events array
+      let localizedStart = moment(start).tz(item.timezone);
+      let localizedEnd = moment(end).tz(item.timezone);
+      item.startDate = localizedStart;
+      item.endDate = localizedEnd;
+      events.push(item);
+    })
+    setIndexes(copy);
+    setUpcomingEvents(events.slice(index));
+
+    let reversedPast = events.slice(0, index).reverse();
+    setPastEvents(reversedPast);
   }, []);
-
-  const getImages = () => {
-    Axios
-      .get('/api/events')
-      .then(response => {
-        let today = new Date();
-        let index = 0;
-        let copy = { ...indexes };
-
-        let events = [];
-
-        response.data.forEach(item => {
-          copy[item._id] = 0;
-
-          let start = new Date(item.startDate);
-          let end = new Date(item.endDate);
-          if (end < today) {
-            index++;
-          }
-          // localize the UTC and push into events array
-          let localizedStart = moment(start).tz(item.timezone);
-          let localizedEnd = moment(end).tz(item.timezone);
-          item.startDate = localizedStart;
-          item.endDate = localizedEnd;
-          events.push(item);
-        })
-        setIndexes(copy);
-        setUpcomingEvents(events.slice(index));
-
-        let reversedPast = events.slice(0, index).reverse();
-        setPastEvents(reversedPast);
-      })
-      .catch(err => console.error(err));
-  }
 
   const convertDate = (ISOdate) => {
     let date = new Date(ISOdate);
@@ -261,4 +252,15 @@ export default function Events(props) {
       </div>
     </div>
   )
+}
+
+export async function getStaticProps() {
+  let response = await model.getEvent();
+  
+  return {
+    props: {
+      events: JSON.parse(JSON.stringify(response))
+    },
+    revalidate: 10
+  }
 }
