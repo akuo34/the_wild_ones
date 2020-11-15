@@ -45,7 +45,7 @@ export default function Home(props) {
                   <div key={key} className="container-image-gallery">
                     {
                       image.title || image.description ?
-                        <div className={showDetails ? "image-details active" : "image-details hidden"}>
+                        <div onMouseEnter={mouseEnter} onMouseLeave={mouseLeave} className={showDetails ? "image-details active" : "image-details hidden"}>
                           <p className="header-details">{image.title}</p>
                           <p style={{ "fontSize": "16px", "lineHeight": "20px" }}>{image.description}</p>
                         </div> : null
@@ -54,6 +54,8 @@ export default function Home(props) {
                       className="image-gallery"
                       onClick={props.modalHandler}
                       data-url={image.fireBaseUrl}
+                      data-title={image.title}
+                      data-description={image.description}
                       src={image.fireBaseUrl}
                       onMouseEnter={mouseEnter}
                       onMouseLeave={mouseLeave}

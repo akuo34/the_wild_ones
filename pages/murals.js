@@ -54,6 +54,8 @@ export default function Murals(props) {
                       className="image-gallery"
                       onClick={props.modalHandler}
                       data-url={image.fireBaseUrl}
+                      data-title={image.title}
+                      data-description={image.description}
                       src={image.fireBaseUrl}
                       onMouseEnter={mouseEnter}
                       onMouseLeave={mouseLeave}

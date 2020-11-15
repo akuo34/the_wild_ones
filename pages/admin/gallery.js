@@ -265,7 +265,7 @@ export default function GalleryManager(props) {
           <form id="form-gallery" className="form-gallery" onSubmit={handleFireBaseUpload}>
             <h4 className="text-gallery-form-header">Upload new photo</h4>
             <input className="input-landing" type="text" name="title" placeholder="Title" />
-            <textarea className="input-description" name="description" placeholder="Description" />
+            <textarea className="input-description" maxLength="475" name="description" placeholder="Description" />
             <div className="container-gallery-inputs">
               <input
                 className="input-gallery-file"
@@ -323,7 +323,7 @@ export default function GalleryManager(props) {
                           </form>
                           <form id={item._id} className="form-gallery-edit" onSubmit={editHandler} data-id={item._id}>
                             <input type="text" name="title" placeholder="Title" style={{ "marginBottom": "5px", "marginTop": "5px", "fontSize": "14px" }}></input>
-                            <textarea name="description" placeholder="Description" style={{ "height": "50px", "marginBottom": "5px", "fontSize": "14px" }}></textarea>
+                            <textarea name="description" maxLength="475" placeholder="Description" style={{ "height": "50px", "marginBottom": "5px", "fontSize": "14px" }}></textarea>
                             <div className="container-form-buttons">
                               <button type="submit" style={{ "marginRight": "5px" }}>Submit Changes</button>
                             </div>

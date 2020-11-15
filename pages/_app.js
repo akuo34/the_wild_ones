@@ -8,6 +8,7 @@ import { useEffect } from 'react';
 import Axios from 'axios';
 import { AuthProvider } from '../contexts/auth.js';
 import DotLoader from 'react-spinners/DotLoader';
+import { isMobile } from 'react-device-detect';
 
 function MyApp({ Component, pageProps }) {
 
@@ -20,6 +21,10 @@ function MyApp({ Component, pageProps }) {
   const [items, setItems] = useState([]);
   const [stock, setStock] = useState({});
   const [loading, setLoading] = useState(false);
+
+  const [showDetails, setShowDetails] = useState(false);
+  const [title, setTitle] = useState(null);
+  const [description, setDescription] = useState(null);
 
   useEffect(() => {
     // getCart();
@@ -50,11 +55,11 @@ function MyApp({ Component, pageProps }) {
 
   const getStore = () => {
     Axios
-    .get('/api/store')
-    .then(response => {
-      setItems(response.data);
-    })
-    .catch(err => console.error(err));
+      .get('/api/store')
+      .then(response => {
+        setItems(response.data);
+      })
+      .catch(err => console.error(err));
   }
 
   const totalCart = () => {
@@ -71,7 +76,11 @@ function MyApp({ Component, pageProps }) {
 
   const modalHandler = (e) => {
     const url = e.target.dataset.url;
+    const title = e.target.dataset.title;
+    const description = e.target.dataset.description;
     setCurrentUrl(url);
+    setTitle(title);
+    setDescription(description);
 
     if (showModal) {
       setShowModal(false);
@@ -92,6 +101,16 @@ function MyApp({ Component, pageProps }) {
 
   const toCheckout = () => {
     Router.push('/checkout');
+  }
+
+  const mouseEnter = () => {
+    if (!isMobile) {
+      setShowDetails(true);
+    }
+  }
+
+  const mouseLeave = () => {
+    setShowDetails(false);
   }
 
   return (
@@ -163,11 +182,21 @@ function MyApp({ Component, pageProps }) {
         <div
           className={`container-modal-image ${animation}`}
           onClick={modalHandler}>
-          {currentUrl !== null ?
-            <img
-              className={`modal-image ${animation}`}
-              src={currentUrl}
-            /> : null
+          {
+            title || description ?
+              <div onMouseEnter={mouseEnter} onMouseLeave={mouseLeave} className={showDetails ? "modal-details active" : "modal-details hidden"}>
+                <p className="header-details">{title}</p>
+                <p style={{ "fontSize": "16px", "lineHeight": "20px" }}>{description}</p>
+              </div> : null
+          }
+          {
+            currentUrl !== null ?
+              <img
+                className={`modal-image ${animation}`}
+                onMouseEnter={mouseEnter}
+                onMouseLeave={mouseLeave}
+                src={currentUrl}
+              /> : null
           }
         </div>
         <div className={loading ? "container-loader" : "container-loader-hidden"}>
