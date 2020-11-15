@@ -53,7 +53,7 @@ export const AuthProvider = ({ children }) => {
     const password = e.target.password.value;
 
     try {
-      const response = await Axios.post('/api/login', { username, password });
+      const response = await api.post('/api/login', { username, password });
       const token = response.data.authToken;
 
       document.cookie = `auth=${token}; path=/`;
