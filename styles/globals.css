@@ -773,8 +773,9 @@ button.slick-arrow.slick-next,
   position: absolute;
   font-family: sans-serif;
   color: rgb(100, 93, 69);
-  bottom: 50px;
-  margin-left: 100px;
+  bottom: 70px;
+  align-self: flex-start;
+  margin: 0 auto 0 100px;
   box-sizing: border-box;
   padding: 10px;
   z-index: 1;

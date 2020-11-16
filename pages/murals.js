@@ -7,6 +7,8 @@ import { isMobile } from 'react-device-detect';
 export default function Murals(props) {
 
   const [showDetails, setShowDetails] = useState(false);
+  const [title, setTitle] = useState(null);
+  const [description, setDescription] = useState(null);
 
   var settings = {
     arrows: true,
@@ -16,9 +18,11 @@ export default function Murals(props) {
     initialSlide: 0
   };
 
-  const mouseEnter = () => {
-    if (!isMobile) {
+  const mouseEnter = (title, description) => {
+    if (title || description && !isMobile) {
       setShowDetails(true);
+      setTitle(title);
+      setDescription(description);
     }
   }
 
@@ -37,19 +41,16 @@ export default function Murals(props) {
       <div className="buffer"></div>
       <div className="container-gallery-page">
         <h2 className="subheader-client">murals</h2>
+        <div onMouseEnter={() => mouseEnter(title, description)} onMouseLeave={mouseLeave} className={showDetails ? "image-details active" : "image-details hidden"}>
+          <p className="header-details">{title}</p>
+          <p style={{ "fontSize": "16px", "lineHeight": "20px" }}>{description}</p>
+        </div>
         {
           props.images.length ?
             <Slider className="slider" {...settings}>
               {props.images.map((image, key) => {
                 return (
                   <div key={key} className="container-image-gallery">
-                    {
-                      image.title || image.description ?
-                        <div className={showDetails ? "image-details active" : "image-details hidden"}>
-                          <p className="header-details">{image.title}</p>
-                          <p style={{ "fontSize": "16px", "lineHeight": "20px" }}>{image.description}</p>
-                        </div> : null
-                    }
                     <img
                       className="image-gallery"
                       onClick={props.modalHandler}
@@ -57,7 +58,7 @@ export default function Murals(props) {
                       data-title={image.title}
                       data-description={image.description}
                       src={image.fireBaseUrl}
-                      onMouseEnter={mouseEnter}
+                      onMouseEnter={() => mouseEnter(image.title, image.description)}
                       onMouseLeave={mouseLeave}
                       alt="murals-carousel-image" />
                   </div>
