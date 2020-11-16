@@ -187,7 +187,7 @@ function MyApp({ Component, pageProps }) {
             title || description ?
               <div onMouseEnter={mouseEnter} onMouseLeave={mouseLeave} className={showDetails ? "modal-details active" : "modal-details hidden"}>
                 <p className="header-details">{title}</p>
-                <p style={{ "fontSize": "16px", "lineHeight": "20px" }}>{description}</p>
+                <p className="paragraph-details">{description}</p>
               </div> : null
           }
           {

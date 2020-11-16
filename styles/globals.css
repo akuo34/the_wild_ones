@@ -766,20 +766,26 @@ button.slick-arrow.slick-next,
 .header-details {
   color: rgb(100, 93, 69);
   font-family: typewriter;
-  font-size: 18px;
+  font-size: calc(1px + 1.1vw);
+}
+
+.paragraph-details {
+  font-size: calc(0px + 1.1vw);
+  line-height: calc(4px + 1vw);
 }
 
 .image-details {
   position: absolute;
   font-family: sans-serif;
   color: rgb(100, 93, 69);
-  bottom: 70px;
+  bottom: calc(50px + 1vw);
   align-self: flex-start;
   margin: 0 auto 0 100px;
   box-sizing: border-box;
   padding: 10px;
   z-index: 1;
-  width: 250px;
+  /* width: 250px; */
+  width: calc(100px + 9vw);
   transition: all 0.25s ease;
   border: 1px solid rgb(153, 142, 106);
   outline: 5px solid rgb(255, 219, 88);
@@ -798,7 +804,8 @@ button.slick-arrow.slick-next,
   box-sizing: border-box;
   padding: 10px;
   z-index: 1;
-  width: 250px;
+  /* width: 250px; */
+  width: calc(100px + 9vw);
   transition: all 0.25s ease;
   border: 1px solid rgb(153, 142, 106);
   outline: 5px solid rgb(255, 219, 88);

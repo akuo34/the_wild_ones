@@ -43,7 +43,7 @@ export default function Murals(props) {
         <h2 className="subheader-client">murals</h2>
         <div onMouseEnter={() => mouseEnter(title, description)} onMouseLeave={mouseLeave} className={showDetails ? "image-details active" : "image-details hidden"}>
           <p className="header-details">{title}</p>
-          <p style={{ "fontSize": "16px", "lineHeight": "20px" }}>{description}</p>
+          <p className="paragraph-details">{description}</p>
         </div>
         {
           props.images.length ?
