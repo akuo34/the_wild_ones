@@ -1,5 +1,4 @@
 import Head from 'next/head';
-import Image from 'next/image';
 import React, { useState } from 'react';
 import Router from 'next/router';
 import model from '../database/model.js';
@@ -80,12 +79,12 @@ export default function Store(props) {
                   <div key={key} style={{ "marginBottom": "60px" }}>
                     <div className="container-item-store-client">
                       <div className="container-image-store-client">
-                        <Image
+                        <img
                           className="image-store-client"
                           onClick={toProductDetails}
                           data-id={item._id}
                           src={item.images[0].fireBaseUrl}
-                          alt="store-image" />
+                          alt="store-img" />
                       </div>
                       <div className="container-title-price-client">
                         <h3

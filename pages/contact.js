@@ -1,5 +1,4 @@
 import Head from 'next/head'
-import Image from 'next/image';
 import model from '../database/model.js';
 import Axios from 'axios';
 import { useState } from 'react';
@@ -52,7 +51,7 @@ export default function Contact(props) {
                 props.contacts[0].phone ?
                   <div className="row-contact">
                     <a href={`tel:+1-${props.contacts[0].phone}`}>
-                      <Image style={{ "height": "calc(25px + 1.75vw)", "marginRight": "calc(10px + 1vw)" }} src="/phone_icon.svg" alt="phone-icon" />
+                      <img style={{ "height": "calc(25px + 1.75vw)", "marginRight": "calc(10px + 1vw)" }} src="/phone_icon.svg" alt="phone" />
                     </a>
                     <h3 style={{ "margin": "auto 0" }}>
                       <a style={{ "textDecoration": "none", "color": "inherit" }} href={`tel:+1-${props.contacts[0].phone}`}>
@@ -65,7 +64,7 @@ export default function Contact(props) {
                 props.contacts[0].email ?
                   <div className="row-contact">
                     <a href={`mailto:${props.contacts[0].email}`}>
-                      <Image style={{ "height": "calc(25px + 1.75vw)", "marginRight": "calc(10px + 1vw)" }} src="/email_icon.svg" alt="email-icon"></Image>
+                      <img style={{ "height": "calc(25px + 1.75vw)", "marginRight": "calc(10px + 1vw)" }} src="/email_icon.svg" alt="email"></img>
                     </a>
                     <h3 style={{ "margin": "auto 0" }}>
                       <a style={{ "textDecoration": "none", "color": "inherit" }} href={`mailto:${props.contacts[0].email}`}>
@@ -78,7 +77,7 @@ export default function Contact(props) {
                 props.contacts[0].instagram ?
                   <div className="row-contact">
                     <a style={{ "textDecoration": "none", "color": "inherit" }} href={props.contacts[0].instagram}>
-                      <Image style={{ "height": "calc(25px + 1.75vw)", "opacity": "75%", "marginRight": "calc(10px + 1vw)" }} src="/instagram.svg" alt="instagram-icon"></Image>
+                      <img style={{ "height": "calc(25px + 1.75vw)", "opacity": "75%", "marginRight": "calc(10px + 1vw)" }} src="/instagram.svg" alt="instagram"></img>
                     </a>
                     <h3 style={{ "margin": "auto 0" }}>
                       <a style={{ "textDecoration": "none", "color": "inherit" }} href={props.contacts[0].instagram}>

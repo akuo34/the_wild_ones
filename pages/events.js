@@ -1,5 +1,4 @@
 import Head from 'next/head';
-import Image from 'next/image';
 import React, { useState, useEffect } from 'react';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment-timezone';
@@ -101,27 +100,25 @@ export default function Events(props) {
                 currentEvent.images.length ?
                   <div className="wrapper-image-buttons-events">
                     <div style={{ "display": "flex", "justifyContent": "center", "alignItems": "center", "width": "100%", "marginBottom": "20px" }}>
-                      <Image
+                      <img
                         className={indexes[currentEvent._id] > 0 ? "button-carousel" : "button-carousel hidden"}
                         onClick={previousPhoto}
                         data-id={currentEvent._id}
-                        src={'/black_left_arrow.svg'}
-                        alt="left-button" />
+                        src={'/black_left_arrow.svg'} />
                       <div style={{ "width": "90%", "textAlign": "center", "overflow": "hidden", "display": "flex", "justifyContent": "center" }}>
-                        <Image
+                        <img
                           className="image-events"
                           loading="lazy"
                           onClick={props.modalHandler}
                           data-url={currentEvent.images[indexes[currentEvent._id]].fireBaseUrl}
                           src={currentEvent.images[indexes[currentEvent._id]].fireBaseUrl}
-                          alt="event-image" />
+                          alt="gallery-image" />
                       </div>
-                      <Image
+                      <img
                         className={indexes[currentEvent._id] < currentEvent.images.length - 1 ? "button-carousel" : "button-carousel hidden"}
                         onClick={nextPhoto}
                         data-id={currentEvent._id}
-                        src={'/black_right_arrow.svg'}
-                        alt="right-button" />
+                        src={'/black_right_arrow.svg'} />
                     </div>
                   </div> : null
               }
@@ -138,27 +135,25 @@ export default function Events(props) {
                   upcomingEvents[0].images.length ?
                     <div className="wrapper-image-buttons-events">
                       <div style={{ "display": "flex", "justifyContent": "center", "alignItems": "center", "width": "100%", "marginBottom": "20px" }}>
-                        <Image
+                        <img
                           className={indexes[upcomingEvents[0]._id] > 0 ? "button-carousel" : "button-carousel hidden"}
                           onClick={previousPhoto}
                           data-id={upcomingEvents[0]._id}
-                          src={'/black_left_arrow.svg'}
-                          alt="left-button" />
+                          src={'/black_left_arrow.svg'} />
                         <div style={{ "width": "90%", "textAlign": "center", "overflow": "hidden", "display": "flex", "justifyContent": "center" }}>
-                          <Image
+                          <img
                             className="image-events"
                             loading="lazy"
                             onClick={props.modalHandler}
                             data-url={upcomingEvents[0].images[indexes[upcomingEvents[0]._id]].fireBaseUrl}
                             src={upcomingEvents[0].images[indexes[upcomingEvents[0]._id]].fireBaseUrl}
-                            alt="event-image" />
+                            alt="gallery-image" />
                         </div>
-                        <Image
+                        <img
                           className={indexes[upcomingEvents[0]._id] < upcomingEvents[0].images.length - 1 ? "button-carousel" : "button-carousel hidden"}
                           onClick={nextPhoto}
                           data-id={upcomingEvents[0]._id}
-                          src={'/black_right_arrow.svg'}
-                          alt="right-button" />
+                          src={'/black_right_arrow.svg'} />
                       </div>
                     </div> : null
                 }
@@ -181,27 +176,25 @@ export default function Events(props) {
                 image.images.length ?
                   <div className="wrapper-image-buttons-events">
                     <div style={{ "display": "flex", "justifyContent": "center", "width": "100%", "alignItems": "center", "marginBottom": "40px" }}>
-                      <Image
+                      <img
                         className={indexes[image._id] > 0 ? "button-carousel" : "button-carousel hidden"}
                         onClick={previousPhoto}
                         data-id={image._id}
-                        src={'/black_left_arrow.svg'}
-                        alt="left-button" />
+                        src={'/black_left_arrow.svg'} />
                       <div style={{ "width": "90%", "textAlign": "center", "overflow": "hidden", "display": "flex", "justifyContent": "center" }}>
-                        <Image
+                        <img
                           className="image-events"
                           loading="lazy"
                           onClick={props.modalHandler}
                           data-url={image.images[indexes[image._id]].fireBaseUrl}
                           src={image.images[indexes[image._id]].fireBaseUrl}
-                          alt="event-image" />
+                          alt="gallery-image" />
                       </div>
-                      <Image
+                      <img
                         className={indexes[image._id] < image.images.length - 1 ? "button-carousel" : "button-carousel hidden"}
                         onClick={nextPhoto}
                         data-id={image._id}
-                        src={'/black_right_arrow.svg'}
-                        alt="right-button" />
+                        src={'/black_right_arrow.svg'} />
                     </div>
                   </div> : null
               }
@@ -225,27 +218,25 @@ export default function Events(props) {
                 image.images.length ?
                   <div className="wrapper-image-buttons-events">
                     <div style={{ "display": "flex", "justifyContent": "center", "alignItems": "center", "marginBottom": "40px", "width": "100%" }}>
-                      <Image
+                      <img
                         className={indexes[image._id] > 0 ? "button-carousel" : "button-carousel hidden"}
                         onClick={previousPhoto}
                         data-id={image._id}
-                        src={'/black_left_arrow.svg'}
-                        alt="left-button" />
+                        src={'/black_left_arrow.svg'} />
                       <div style={{ "width": "90%", "textAlign": "center", "overflow": "hidden", "display": "flex", "justifyContent": "center" }}>
-                        <Image
+                        <img
                           className="image-events"
                           loading="lazy"
                           onClick={props.modalHandler}
                           data-url={image.images[indexes[image._id]].fireBaseUrl}
                           src={image.images[indexes[image._id]].fireBaseUrl}
-                          alt="event-image" />
+                          alt="gallery-image" />
                       </div>
-                      <Image
+                      <img
                         className={indexes[image._id] < image.images.length - 1 ? "button-carousel" : "button-carousel hidden"}
                         onClick={nextPhoto}
                         data-id={image._id}
-                        src={'/black_right_arrow.svg'}
-                        alt="right-button" />
+                        src={'/black_right_arrow.svg'} />
                     </div>
                   </div> : null
               }
