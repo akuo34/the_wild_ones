@@ -84,7 +84,7 @@ export default function Store(props) {
                           onClick={toProductDetails}
                           data-id={item._id}
                           src={item.images[0].fireBaseUrl}
-                          alt="store-img" />
+                          alt="store-image" />
                       </div>
                       <div className="container-title-price-client">
                         <h3

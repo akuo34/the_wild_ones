@@ -71,7 +71,7 @@ export default function ProductDetails() {
                     className="image-slider-store"
                     onClick={modalHandler}
                     src={image.fireBaseUrl}
-                    alt="gallery-image"></img>
+                    alt="product-details-modal-image" />
                 </div>
               )
             })}
@@ -87,7 +87,7 @@ export default function ProductDetails() {
               data-id={id}
               onClick={modalHandler}
               src={product.images[0].fireBaseUrl}
-              alt="store-img"></img>
+              alt="product-details-image" />
             <div style={{ "margin": "0 10px" }}>
               <p className="container-bio">{product.description}</p>
               {product.width && product.height ? <p className="container-bio" style={{ "marginBottom": "10px" }}>{product.width} &#10005; {product.height} (inches)</p> : null}

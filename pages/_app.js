@@ -153,12 +153,12 @@ function MyApp({ Component, pageProps }) {
           </div>
         </div>
         <div className="container-main-header">
-          <img className="banner" src={banner}></img>
+          <img className="banner" src={banner} alt="banner" />
           <div className="container-logo-home">
             <div className="logo-home" onClick={returnHome}></div>
           </div>
           <div className="container-logo">
-            <img className="logo" src="/white_logo.jpg"></img>
+            <img className="logo" src="/white_logo.jpg" alt="logo" />
           </div>
           <div className='container-h1'>
             <h1>the wild ones</h1>
@@ -172,9 +172,10 @@ function MyApp({ Component, pageProps }) {
               <img
                 className="button-cart"
                 onClick={toCheckout}
-                src={cart && cart.length ? "/shopping_cart_red.svg" : "/shopping_cart_light_grey.svg"}></img>
+                src={cart && cart.length ? "/shopping_cart_red.svg" : "/shopping_cart_light_grey.svg"}
+                alt="cart-icon" />
             </div>
-            <img className="button-hamburger" src="/hamburger_light_grey.svg" onClick={toolBarHandler}></img>
+            <img className="button-hamburger" src="/hamburger_light_grey.svg" alt="menu-icon" onClick={toolBarHandler} />
           </div>
         </div>
         <div className={animation === "active" ? "modal-image-zoom zoom-active" : `modal-image-zoom ${animation}`} onClick={modalHandler}>
@@ -196,6 +197,7 @@ function MyApp({ Component, pageProps }) {
                 onMouseEnter={mouseEnter}
                 onMouseLeave={mouseLeave}
                 src={currentUrl}
+                alt="modal-image"
               /> : null
           }
         </div>

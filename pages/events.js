@@ -104,7 +104,8 @@ export default function Events(props) {
                         className={indexes[currentEvent._id] > 0 ? "button-carousel" : "button-carousel hidden"}
                         onClick={previousPhoto}
                         data-id={currentEvent._id}
-                        src={'/black_left_arrow.svg'} />
+                        src={'/black_left_arrow.svg'} 
+                        alt="left-button" />
                       <div style={{ "width": "90%", "textAlign": "center", "overflow": "hidden", "display": "flex", "justifyContent": "center" }}>
                         <img
                           className="image-events"
@@ -112,13 +113,14 @@ export default function Events(props) {
                           onClick={props.modalHandler}
                           data-url={currentEvent.images[indexes[currentEvent._id]].fireBaseUrl}
                           src={currentEvent.images[indexes[currentEvent._id]].fireBaseUrl}
-                          alt="gallery-image" />
+                          alt="events-image" />
                       </div>
                       <img
                         className={indexes[currentEvent._id] < currentEvent.images.length - 1 ? "button-carousel" : "button-carousel hidden"}
                         onClick={nextPhoto}
                         data-id={currentEvent._id}
-                        src={'/black_right_arrow.svg'} />
+                        src={'/black_right_arrow.svg'}
+                        alt="right-button" />
                     </div>
                   </div> : null
               }
@@ -139,7 +141,8 @@ export default function Events(props) {
                           className={indexes[upcomingEvents[0]._id] > 0 ? "button-carousel" : "button-carousel hidden"}
                           onClick={previousPhoto}
                           data-id={upcomingEvents[0]._id}
-                          src={'/black_left_arrow.svg'} />
+                          src={'/black_left_arrow.svg'}
+                          alt="left-button" />
                         <div style={{ "width": "90%", "textAlign": "center", "overflow": "hidden", "display": "flex", "justifyContent": "center" }}>
                           <img
                             className="image-events"
@@ -147,13 +150,14 @@ export default function Events(props) {
                             onClick={props.modalHandler}
                             data-url={upcomingEvents[0].images[indexes[upcomingEvents[0]._id]].fireBaseUrl}
                             src={upcomingEvents[0].images[indexes[upcomingEvents[0]._id]].fireBaseUrl}
-                            alt="gallery-image" />
+                            alt="events-image" />
                         </div>
                         <img
                           className={indexes[upcomingEvents[0]._id] < upcomingEvents[0].images.length - 1 ? "button-carousel" : "button-carousel hidden"}
                           onClick={nextPhoto}
                           data-id={upcomingEvents[0]._id}
-                          src={'/black_right_arrow.svg'} />
+                          src={'/black_right_arrow.svg'}
+                          alt="right-button" />
                       </div>
                     </div> : null
                 }
@@ -180,7 +184,8 @@ export default function Events(props) {
                         className={indexes[image._id] > 0 ? "button-carousel" : "button-carousel hidden"}
                         onClick={previousPhoto}
                         data-id={image._id}
-                        src={'/black_left_arrow.svg'} />
+                        src={'/black_left_arrow.svg'}
+                        alt="left-button" />
                       <div style={{ "width": "90%", "textAlign": "center", "overflow": "hidden", "display": "flex", "justifyContent": "center" }}>
                         <img
                           className="image-events"
@@ -188,13 +193,14 @@ export default function Events(props) {
                           onClick={props.modalHandler}
                           data-url={image.images[indexes[image._id]].fireBaseUrl}
                           src={image.images[indexes[image._id]].fireBaseUrl}
-                          alt="gallery-image" />
+                          alt="events-image" />
                       </div>
                       <img
                         className={indexes[image._id] < image.images.length - 1 ? "button-carousel" : "button-carousel hidden"}
                         onClick={nextPhoto}
                         data-id={image._id}
-                        src={'/black_right_arrow.svg'} />
+                        src={'/black_right_arrow.svg'}
+                        alt="right-button" />
                     </div>
                   </div> : null
               }
@@ -222,7 +228,8 @@ export default function Events(props) {
                         className={indexes[image._id] > 0 ? "button-carousel" : "button-carousel hidden"}
                         onClick={previousPhoto}
                         data-id={image._id}
-                        src={'/black_left_arrow.svg'} />
+                        src={'/black_left_arrow.svg'}
+                        alt="left-button" />
                       <div style={{ "width": "90%", "textAlign": "center", "overflow": "hidden", "display": "flex", "justifyContent": "center" }}>
                         <img
                           className="image-events"
@@ -230,13 +237,14 @@ export default function Events(props) {
                           onClick={props.modalHandler}
                           data-url={image.images[indexes[image._id]].fireBaseUrl}
                           src={image.images[indexes[image._id]].fireBaseUrl}
-                          alt="gallery-image" />
+                          alt="events-image" />
                       </div>
                       <img
                         className={indexes[image._id] < image.images.length - 1 ? "button-carousel" : "button-carousel hidden"}
                         onClick={nextPhoto}
                         data-id={image._id}
-                        src={'/black_right_arrow.svg'} />
+                        src={'/black_right_arrow.svg'}
+                        alt="right-button" />
                     </div>
                   </div> : null
               }
