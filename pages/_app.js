@@ -154,12 +154,12 @@ function MyApp({ Component, pageProps }) {
           </div>
         </div>
         <div className="container-main-header">
-          <Image className="banner" src={banner} alt="banner-image" layout="fill" />
+          <Image className="banner" src={banner} alt="banner-image"></Image>
           <div className="container-logo-home">
             <div className="logo-home" onClick={returnHome}></div>
           </div>
           <div className="container-logo">
-            <Image className="logo" src="/white_logo.jpg" alt="logo" layout="fill" />
+            <Image className="logo" src="/white_logo.jpg" alt="logo"></Image>
           </div>
           <div className='container-h1'>
             <h1>the wild ones</h1>
@@ -170,13 +170,13 @@ function MyApp({ Component, pageProps }) {
                 cart && totalCart() > 0 ?
                   <span style={{ "alignSelf": "flexStart", "marginRight": "5px", "color": "rgb(204,0,0)", "fontSize": "calc(12px + 0.2vw)", "fontFamily": "typewriter" }}>{totalCart()}</span> : null
               } */}
-              <img
+              <Image
                 className="button-cart"
                 onClick={toCheckout}
                 src={cart && cart.length ? "/shopping_cart_red.svg" : "/shopping_cart_light_grey.svg"}
-                alt="cart-icon" />
+                alt="cart-icon"></Image>
             </div>
-            <img className="button-hamburger" src="/hamburger_light_grey.svg" alt="options-icon" onClick={toolBarHandler} />
+            <Image className="button-hamburger" src="/hamburger_light_grey.svg" alt="options-icon" onClick={toolBarHandler}></Image>
           </div>
         </div>
         <div className={animation === "active" ? "modal-image-zoom zoom-active" : `modal-image-zoom ${animation}`} onClick={modalHandler}>
@@ -198,7 +198,6 @@ function MyApp({ Component, pageProps }) {
                 onMouseEnter={mouseEnter}
                 onMouseLeave={mouseLeave}
                 src={currentUrl}
-                layout="fill"
                 alt="modal-image"
               /> : null
           }

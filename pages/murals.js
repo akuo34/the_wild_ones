@@ -60,8 +60,7 @@ export default function Murals(props) {
                       src={image.fireBaseUrl}
                       onMouseEnter={mouseEnter}
                       onMouseLeave={mouseLeave}
-                      alt="murals-carousel-image"
-                      layout="fill" />
+                      alt="murals-carousel-image"></Image>
                   </div>
                 )
               })}
@@ -78,8 +77,7 @@ export default function Murals(props) {
                   data-title={image.title}
                   data-description={image.description}
                   src={image.fireBaseUrl}
-                  alt="murals-grid-image"
-                  layout="fill" />
+                  alt="murals-grid-image"></Image>
               </div>
             )
           })}

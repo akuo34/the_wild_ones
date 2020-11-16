@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import Image from 'next/image';
 import model from '../database/model.js';
 
 export default function About(props) {
@@ -14,7 +15,7 @@ export default function About(props) {
         <h2 className="subheader-client">about the artist</h2>
         {props.images.length ?
           <div className="container-image-about">
-            <img className="image-about" src={props.images[0].portraitFireBaseUrl} alt="about-image" />
+            <Image className="image-about" src={props.images[0].portraitFireBaseUrl} alt="about-image"></Image>
             <p className="container-bio">{props.images[0].bio}</p>
           </div> : null
         }

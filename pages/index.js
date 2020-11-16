@@ -60,8 +60,7 @@ export default function Home(props) {
                       src={image.fireBaseUrl}
                       onMouseEnter={mouseEnter}
                       onMouseLeave={mouseLeave}
-                      alt="gallery-carousel-image"
-                      layout="fill" />
+                      alt="gallery-carousel-image"></Image>
                   </div>
                 )
               })}
@@ -78,8 +77,7 @@ export default function Home(props) {
                   data-title={image.title}
                   data-description={image.description}
                   src={image.fireBaseUrl}
-                  alt="gallery-grid-image"
-                  layout="fill" />
+                  alt="gallery-grid-image"></Image>
               </div>
             )
           })}
