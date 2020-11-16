@@ -72,7 +72,8 @@ export default function ProductDetails() {
                     className="image-slider-store"
                     onClick={modalHandler}
                     src={image.fireBaseUrl}
-                    alt="product-details-modal-image"></Image>
+                    alt="product-details-modal-image"
+                    layout="fill" />
                 </div>
               )
             })}
@@ -83,12 +84,12 @@ export default function ProductDetails() {
         <div className="container-gallery-page">
           <h2 className="subheader-client">{product.title.toLowerCase()}</h2>
           <div className="container-image-about">
-            <Image
+            <img
               className="image-store-item"
               data-id={id}
               onClick={modalHandler}
               src={product.images[0].fireBaseUrl}
-              alt="product-details-image"></Image>
+              alt="product-details-image" />
             <div style={{ "margin": "0 10px" }}>
               <p className="container-bio">{product.description}</p>
               {product.width && product.height ? <p className="container-bio" style={{ "marginBottom": "10px" }}>{product.width} &#10005; {product.height} (inches)</p> : null}
