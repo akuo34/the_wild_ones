@@ -73,7 +73,8 @@ export default function Home(props) {
                   className="image-grid"
                   onClick={props.modalHandler}
                   data-url={image.fireBaseUrl}
-                  loading="lazy"
+                  data-title={image.title}
+                  data-description={image.description}
                   src={image.fireBaseUrl}
                   alt="gallery-image"></img>
               </div>

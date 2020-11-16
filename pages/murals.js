@@ -72,8 +72,9 @@ export default function Murals(props) {
                 <img
                   className="image-grid"
                   onClick={props.modalHandler}
-                  loading="lazy"
                   data-url={image.fireBaseUrl}
+                  data-title={image.title}
+                  data-description={image.description}
                   src={image.fireBaseUrl}
                   alt="gallery-image"></img>
               </div>
