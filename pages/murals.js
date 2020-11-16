@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import Image from 'next/image';
 import Slider from 'react-slick';
 import model from '../database/model.js';
 import { useState } from 'react';
@@ -50,7 +51,7 @@ export default function Murals(props) {
                           <p style={{ "fontSize": "16px", "lineHeight": "20px" }}>{image.description}</p>
                         </div> : null
                     }
-                    <img
+                    <Image
                       className="image-gallery"
                       onClick={props.modalHandler}
                       data-url={image.fireBaseUrl}
@@ -59,7 +60,7 @@ export default function Murals(props) {
                       src={image.fireBaseUrl}
                       onMouseEnter={mouseEnter}
                       onMouseLeave={mouseLeave}
-                      alt="gallery-image"></img>
+                      alt="murals-carousel-image"></Image>
                   </div>
                 )
               })}
@@ -69,14 +70,14 @@ export default function Murals(props) {
           {props.images.map((image, key) => {
             return (
               <div key={key} className="container-image-grid">
-                <img
+                <Image
                   className="image-grid"
                   onClick={props.modalHandler}
                   data-url={image.fireBaseUrl}
                   data-title={image.title}
                   data-description={image.description}
                   src={image.fireBaseUrl}
-                  alt="gallery-image"></img>
+                  alt="murals-grid-image"></Image>
               </div>
             )
           })}

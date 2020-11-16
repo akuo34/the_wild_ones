@@ -3,6 +3,7 @@ import '../styles/horizontal.css';
 import '../styles/react-big-calendar.css';
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import Router from 'next/router';
 import { useEffect } from 'react';
 import Axios from 'axios';
@@ -153,12 +154,12 @@ function MyApp({ Component, pageProps }) {
           </div>
         </div>
         <div className="container-main-header">
-          <img className="banner" src={banner}></img>
+          <Image className="banner" src={banner} alt="banner-image"></Image>
           <div className="container-logo-home">
             <div className="logo-home" onClick={returnHome}></div>
           </div>
           <div className="container-logo">
-            <img className="logo" src="/white_logo.jpg"></img>
+            <Image className="logo" src="/white_logo.jpg" alt="logo"></Image>
           </div>
           <div className='container-h1'>
             <h1>the wild ones</h1>
@@ -169,12 +170,13 @@ function MyApp({ Component, pageProps }) {
                 cart && totalCart() > 0 ?
                   <span style={{ "alignSelf": "flexStart", "marginRight": "5px", "color": "rgb(204,0,0)", "fontSize": "calc(12px + 0.2vw)", "fontFamily": "typewriter" }}>{totalCart()}</span> : null
               } */}
-              <img
+              <Image
                 className="button-cart"
                 onClick={toCheckout}
-                src={cart && cart.length ? "/shopping_cart_red.svg" : "/shopping_cart_light_grey.svg"}></img>
+                src={cart && cart.length ? "/shopping_cart_red.svg" : "/shopping_cart_light_grey.svg"}
+                alt="cart-icon"></Image>
             </div>
-            <img className="button-hamburger" src="/hamburger_light_grey.svg" onClick={toolBarHandler}></img>
+            <Image className="button-hamburger" src="/hamburger_light_grey.svg" alt="options-icon" onClick={toolBarHandler}></Image>
           </div>
         </div>
         <div className={animation === "active" ? "modal-image-zoom zoom-active" : `modal-image-zoom ${animation}`} onClick={modalHandler}>
@@ -191,11 +193,12 @@ function MyApp({ Component, pageProps }) {
           }
           {
             currentUrl !== null ?
-              <img
+              <Image
                 className={`modal-image ${animation}`}
                 onMouseEnter={mouseEnter}
                 onMouseLeave={mouseLeave}
                 src={currentUrl}
+                alt="modal-image"
               /> : null
           }
         </div>
