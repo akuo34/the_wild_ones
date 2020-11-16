@@ -784,7 +784,6 @@ button.slick-arrow.slick-next,
   box-sizing: border-box;
   padding: 10px;
   z-index: 1;
-  /* width: 250px; */
   width: calc(100px + 9vw);
   transition: all 0.25s ease;
   border: 1px solid rgb(153, 142, 106);
@@ -800,11 +799,10 @@ button.slick-arrow.slick-next,
   font-family: sans-serif;
   color: rgb(100, 93, 69);
   bottom: 15vh;
-  left: 10vw;
+  left: 5vw;
   box-sizing: border-box;
   padding: 10px;
   z-index: 1;
-  /* width: 250px; */
   width: calc(100px + 9vw);
   transition: all 0.25s ease;
   border: 1px solid rgb(153, 142, 106);
