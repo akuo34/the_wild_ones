@@ -71,10 +71,10 @@ export default function Events(props) {
     document.getElementById(`${type}-${_id}`).className = 'image-events fadeout';
     setTimeout(() => {
       setIndexes(copy);
-    }, 200)
+    }, 230)
     setTimeout(() => {
       document.getElementById(`${type}-${_id}`).className = 'image-events';
-    }, 550)
+    }, 600)
   }
 
   const previousPhoto = (e) => {
@@ -87,10 +87,10 @@ export default function Events(props) {
     document.getElementById(`${type}-${_id}`).className = 'image-events fadeout';
     setTimeout(() => {
       setIndexes(copy);
-    }, 200)
+    }, 230)
     setTimeout(() => {
       document.getElementById(`${type}-${_id}`).className = 'image-events';
-    }, 550)
+    }, 600)
   }
 
   return (
