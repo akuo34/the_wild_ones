@@ -76,7 +76,7 @@ export default function Home(props) {
                   data-url={image.fireBaseUrl}
                   data-title={image.title}
                   data-description={image.description}
-                  src={image.smallFireBaseUrl}
+                  src={image.fireBaseUrl}
                   alt="gallery-grid-image" />
               </div>
             )

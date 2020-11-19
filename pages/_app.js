@@ -21,7 +21,6 @@ function MyApp({ Component, pageProps }) {
   const [items, setItems] = useState([]);
   const [stock, setStock] = useState({});
   const [loading, setLoading] = useState(false);
-
   const [showDetails, setShowDetails] = useState(false);
   const [title, setTitle] = useState(null);
   const [description, setDescription] = useState(null);
