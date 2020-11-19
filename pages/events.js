@@ -74,7 +74,7 @@ export default function Events(props) {
     }, 200)
     setTimeout(() => {
       document.getElementById(`${type}-${_id}`).className = 'image-events';
-    }, 450)
+    }, 550)
   }
 
   const previousPhoto = (e) => {
@@ -90,7 +90,7 @@ export default function Events(props) {
     }, 200)
     setTimeout(() => {
       document.getElementById(`${type}-${_id}`).className = 'image-events';
-    }, 450)
+    }, 550)
   }
 
   return (
