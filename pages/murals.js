@@ -11,7 +11,8 @@ export default function Murals(props) {
   const [description, setDescription] = useState(null);
 
   var settings = {
-    arrows: true,
+    arrows: isMobile ? false : true,
+    dots: isMobile ? true : false,
     infinite: true,
     speed: 800,
     slidesToShow: 1,
