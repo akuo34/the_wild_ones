@@ -69,10 +69,12 @@ export default function Events(props) {
     let type = e.target.dataset.type === "special" ? "special" : "event";
 
     document.getElementById(`${type}-${_id}`).className = 'image-events fadeout';
-    setIndexes(copy);
+    setTimeout(() => {
+      setIndexes(copy);
+    }, 200)
     setTimeout(() => {
       document.getElementById(`${type}-${_id}`).className = 'image-events';
-    }, 350)
+    }, 450)
   }
 
   const previousPhoto = (e) => {
@@ -83,10 +85,12 @@ export default function Events(props) {
     let type = e.target.dataset.type === "special" ? "special" : "event";
 
     document.getElementById(`${type}-${_id}`).className = 'image-events fadeout';
-    setIndexes(copy);
+    setTimeout(() => {
+      setIndexes(copy);
+    }, 200)
     setTimeout(() => {
       document.getElementById(`${type}-${_id}`).className = 'image-events';
-    }, 350)
+    }, 450)
   }
 
   return (
