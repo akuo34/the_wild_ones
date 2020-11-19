@@ -69,11 +69,9 @@ export default function Events(props) {
     let type = e.target.dataset.type === "special" ? "special" : "event";
 
     document.getElementById(`${type}-${_id}`).className = 'image-events fadeout';
+    setIndexes(copy);
     setTimeout(() => {
-      setIndexes(copy);
-      setTimeout(() => {
-        document.getElementById(`${type}-${_id}`).className = 'image-events';
-      }, 300)
+      document.getElementById(`${type}-${_id}`).className = 'image-events';
     }, 350)
   }
 
@@ -85,11 +83,9 @@ export default function Events(props) {
     let type = e.target.dataset.type === "special" ? "special" : "event";
 
     document.getElementById(`${type}-${_id}`).className = 'image-events fadeout';
+    setIndexes(copy);
     setTimeout(() => {
-      setIndexes(copy);
-      setTimeout(() => {
-        document.getElementById(`${type}-${_id}`).className = 'image-events';
-      }, 300)
+      document.getElementById(`${type}-${_id}`).className = 'image-events';
     }, 350)
   }
 
