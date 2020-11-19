@@ -14,7 +14,6 @@ export default function Events(props) {
   const [currentEvent, setCurrentEvent] = useState({});
   const [pastEvents, setPastEvents] = useState([]);
   const [indexes, setIndexes] = useState({});
-  const [animation, setAnimation] = useState('active');
 
   useEffect(() => {
     let today = new Date();
@@ -66,22 +65,28 @@ export default function Events(props) {
     const _id = e.target.dataset.id;
     let copy = Object.assign({}, indexes);
     copy[_id]++;
-    setAnimation('fadeout');
+
+    document.getElementById(`event-${_id}`).className = 'image-events fadeout';
     setTimeout(() => {
       setIndexes(copy);
-      setAnimation('active');
-    }, 250)
+      setTimeout(() => {
+        document.getElementById(`event-${_id}`).className = 'image-events';
+      }, 300)
+    }, 350)
   }
 
   const previousPhoto = (e) => {
     const _id = e.target.dataset.id;
     let copy = Object.assign({}, indexes);
     copy[_id]--;
-    setAnimation('fadeout');
+
+    document.getElementById(`event-${_id}`).className = 'image-events fadeout';
     setTimeout(() => {
       setIndexes(copy);
-      setAnimation('active');
-    }, 250)
+      setTimeout(() => {
+        document.getElementById(`event-${_id}`).className = 'image-events';
+      }, 300)
+    }, 350)
   }
 
   return (
@@ -117,7 +122,8 @@ export default function Events(props) {
                         alt="left-button" />
                       <div style={{ "width": "90%", "textAlign": "center", "overflow": "hidden", "display": "flex", "justifyContent": "center" }}>
                         <img
-                          className={`image-events ${animation}`}
+                          id={`event-${currentEvent._id}`}
+                          className="image-events"
                           onClick={props.modalHandler}
                           data-url={currentEvent.images[indexes[currentEvent._id]].fireBaseUrl}
                           src={currentEvent.images[indexes[currentEvent._id]].smallFireBaseUrl}
@@ -153,7 +159,8 @@ export default function Events(props) {
                           alt="left-button" />
                         <div style={{ "width": "90%", "textAlign": "center", "overflow": "hidden", "display": "flex", "justifyContent": "center" }}>
                           <img
-                            className={`image-events ${animation}`}
+                            id={`event-${upcomingEvents[0]._id}`}
+                            className="image-events"
                             onClick={props.modalHandler}
                             data-url={upcomingEvents[0].images[indexes[upcomingEvents[0]._id]].fireBaseUrl}
                             src={upcomingEvents[0].images[indexes[upcomingEvents[0]._id]].smallFireBaseUrl}
@@ -195,7 +202,8 @@ export default function Events(props) {
                         alt="left-button" />
                       <div style={{ "width": "90%", "textAlign": "center", "overflow": "hidden", "display": "flex", "justifyContent": "center" }}>
                         <img
-                          className={`image-events ${animation}`}
+                          id={`event-${image._id}`}
+                          className="image-events"
                           onClick={props.modalHandler}
                           data-url={image.images[indexes[image._id]].fireBaseUrl}
                           src={image.images[indexes[image._id]].smallFireBaseUrl}
@@ -238,7 +246,8 @@ export default function Events(props) {
                         alt="left-button" />
                       <div style={{ "width": "90%", "textAlign": "center", "overflow": "hidden", "display": "flex", "justifyContent": "center" }}>
                         <img
-                          className={`image-events ${animation}`}
+                          id={`event-${image._id}`}
+                          className="image-events"
                           onClick={props.modalHandler}
                           data-url={image.images[indexes[image._id]].fireBaseUrl}
                           src={image.images[indexes[image._id]].smallFireBaseUrl}
