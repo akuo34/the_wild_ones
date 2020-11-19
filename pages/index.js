@@ -12,7 +12,6 @@ export default function Home(props) {
 
   var settings = {
     arrows: true,
-    lazyLoad: true,
     infinite: true,
     speed: 800,
     slidesToShow: 1,
