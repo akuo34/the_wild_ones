@@ -109,10 +109,9 @@ export default function Events(props) {
                       <div style={{ "width": "90%", "textAlign": "center", "overflow": "hidden", "display": "flex", "justifyContent": "center" }}>
                         <img
                           className="image-events"
-                          loading="lazy"
                           onClick={props.modalHandler}
                           data-url={currentEvent.images[indexes[currentEvent._id]].fireBaseUrl}
-                          src={currentEvent.images[indexes[currentEvent._id]].fireBaseUrl}
+                          src={currentEvent.images[indexes[currentEvent._id]].smallFireBaseUrl}
                           alt="events-image" />
                       </div>
                       <img
@@ -146,10 +145,9 @@ export default function Events(props) {
                         <div style={{ "width": "90%", "textAlign": "center", "overflow": "hidden", "display": "flex", "justifyContent": "center" }}>
                           <img
                             className="image-events"
-                            loading="lazy"
                             onClick={props.modalHandler}
                             data-url={upcomingEvents[0].images[indexes[upcomingEvents[0]._id]].fireBaseUrl}
-                            src={upcomingEvents[0].images[indexes[upcomingEvents[0]._id]].fireBaseUrl}
+                            src={upcomingEvents[0].images[indexes[upcomingEvents[0]._id]].smallFireBaseUrl}
                             alt="events-image" />
                         </div>
                         <img
@@ -189,10 +187,9 @@ export default function Events(props) {
                       <div style={{ "width": "90%", "textAlign": "center", "overflow": "hidden", "display": "flex", "justifyContent": "center" }}>
                         <img
                           className="image-events"
-                          loading="lazy"
                           onClick={props.modalHandler}
                           data-url={image.images[indexes[image._id]].fireBaseUrl}
-                          src={image.images[indexes[image._id]].fireBaseUrl}
+                          src={image.images[indexes[image._id]].smallFireBaseUrl}
                           alt="events-image" />
                       </div>
                       <img
@@ -233,10 +230,9 @@ export default function Events(props) {
                       <div style={{ "width": "90%", "textAlign": "center", "overflow": "hidden", "display": "flex", "justifyContent": "center" }}>
                         <img
                           className="image-events"
-                          loading="lazy"
                           onClick={props.modalHandler}
                           data-url={image.images[indexes[image._id]].fireBaseUrl}
-                          src={image.images[indexes[image._id]].fireBaseUrl}
+                          src={image.images[indexes[image._id]].smallFireBaseUrl}
                           alt="events-image" />
                       </div>
                       <img

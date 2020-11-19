@@ -34,6 +34,8 @@ const eventSchema = new mongoose.Schema({
   images: [{
     fireBaseUrl: String,
     filename: String,
+    smallFireBaseUrl: String,
+    smallFilename: String
   }],
   title: String,
   location: String,

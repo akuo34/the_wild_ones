@@ -7,10 +7,12 @@ import timezones from '../../components/timezones.js';
 import moment from 'moment-timezone';
 import { useAuth } from '../../contexts/auth.js';
 import DotLoader from 'react-spinners/DotLoader';
+import Resizer from 'react-image-file-resizer';
 
 export default function EventsManager(props) {
 
   const [imageAsFile, setImageAsFile] = useState('');
+  const [smallImageAsFile, setSmallImageAsFile] = useState('');
   const [urlList, setUrlList] = useState([]);
   const [showEdit, setShowEdit] = useState(null);
   const [indexes, setIndexes] = useState({});
@@ -42,9 +44,11 @@ export default function EventsManager(props) {
     setIndexes(copy);
   }, [urlList]);
 
-  const handleImageAsFile = (e) => {
+  const handleImageAsFile = async (e) => {
     const image = e.target.files[0];
-    setImageAsFile(imageFile => image)
+    const smallImage = await resizeFile(image);
+    setImageAsFile(image)
+    setSmallImageAsFile(smallImage);
   };
 
   const getImages = () => {
@@ -58,6 +62,15 @@ export default function EventsManager(props) {
       .catch(err => console.error(err));
   }
 
+  const resizeFile = (file) => new Promise(resolve => {
+    Resizer.imageFileResizer(file, 400, 260, 'JPEG', 100, 0,
+      uri => {
+        resolve(uri);
+      },
+      'blob'
+    );
+  });
+
   const handleFireBaseUpload = (e) => {
     e.preventDefault();
 
@@ -66,7 +79,7 @@ export default function EventsManager(props) {
     const resource = e.target.description.value;
     const title = e.target.title.value;
     const location = e.target.location.value;
-    let startDate = e.target.startDate.value;
+    const startDate = e.target.startDate.value;
     const startTime = e.target.startTime.value;
     const endTime = e.target.endTime.value;
     const allDay = false;
@@ -77,23 +90,23 @@ export default function EventsManager(props) {
       return;
     }
 
-    let startYear = startDate.substring(0, 4);
-    let startMonth = startDate.substring(5, 7);
-    let startDay = startDate.substring(8, 10);
-    let endYear = startYear;
-    let endMonth = startMonth;
-    let endDay = startDay;
+    const startYear = startDate.substring(0, 4);
+    const startMonth = startDate.substring(5, 7);
+    const startDay = startDate.substring(8, 10);
+    const endYear = startYear;
+    const endMonth = startMonth;
+    const endDay = startDay;
 
-    let startHours = startTime.substring(0, 2);
-    let startMinutes = startTime.substring(3, 5);
-    let endHours = endTime.substring(0, 2);
-    let endMinutes = endTime.substring(3, 5);
+    const startHours = startTime.substring(0, 2);
+    const startMinutes = startTime.substring(3, 5);
+    const endHours = endTime.substring(0, 2);
+    const endMinutes = endTime.substring(3, 5);
 
-    let timezoneCode = timezones[timezone];
-    let a = moment.tz(`${startYear}-${startMonth}-${startDay} ${startHours}:${startMinutes}`, timezoneCode);
-    let b = moment.tz(`${endYear}-${endMonth}-${endDay} ${endHours}:${endMinutes}`, timezoneCode);
-    let startUTC = a.utc().format();
-    let endUTC = b.utc().format();
+    const timezoneCode = timezones[timezone];
+    const a = moment.tz(`${startYear}-${startMonth}-${startDay} ${startHours}:${startMinutes}`, timezoneCode);
+    const b = moment.tz(`${endYear}-${endMonth}-${endDay} ${endHours}:${endMinutes}`, timezoneCode);
+    const startUTC = a.utc().format();
+    const endUTC = b.utc().format();
 
     if (endUTC < startUTC) {
       alert('Event end time must be later than start time');
@@ -109,9 +122,10 @@ export default function EventsManager(props) {
       return;
     };
 
-    let randomizer = (Math.floor(Math.random() * (1000 - 1)) + 1).toString();
-    let split = imageAsFile.name.split('.');
+    const randomizer = (Math.floor(Math.random() * (1000 - 1)) + 1).toString();
+    const split = imageAsFile.name.split('.');
     const filename = split[0] + randomizer + '.' + split[1];
+    const smallFilename = 'small-' + filename;
 
     const uploadTask = storage.ref(`/events/${filename}`).put(imageAsFile);
 
@@ -124,16 +138,30 @@ export default function EventsManager(props) {
       storage.ref('events').child(filename).getDownloadURL()
         .then(fireBaseUrl => {
 
-          let images = [{ fireBaseUrl, filename }];
-          const request = { images, resource, title, location, startDate: startUTC, endDate: endUTC, startTime, endTime, allDay, timezone: timezoneCode };
+          const uploadTask2 = storage.ref(`/events/${smallFilename}`).put(smallImageAsFile);
 
-          Axios
-            .post('/api/events', request)
-            .then(response => {
-              getImages();
-              setImageAsFile('');
-            })
-            .catch(err => console.error(err))
+          uploadTask2.on('state_changed', (snapshot) => {
+            console.log(snapshot)
+          }, (err) => {
+            console.log(err);
+          }, () => {
+            console.log('uploaded to firebase')
+            storage.ref('events').child(smallFilename).getDownloadURL()
+              .then(smallFireBaseUrl => {
+      
+                let images = [{ fireBaseUrl, filename, smallFireBaseUrl, smallFilename }];
+                const request = { images, resource, title, location, startDate: startUTC, endDate: endUTC, startTime, endTime, allDay, timezone: timezoneCode };
+      
+                Axios
+                  .post('/api/events', request)
+                  .then(response => {
+                    getImages();
+                    setImageAsFile('');
+                    setSmallImageAsFile('');
+                  })
+                  .catch(err => console.error(err))
+              });
+          });
         });
     });
 
@@ -212,6 +240,10 @@ export default function EventsManager(props) {
           storage.ref('events').child(image.filename).delete()
             .then(() => console.log('deleted from firebase'))
             .catch(err => console.error(err));
+
+          storage.ref('events').child(image.smallFilename).delete()
+            .then(() => console.log('deleted from firebase'))
+            .catch(err => console.error(err));
         })
 
       })
@@ -234,9 +266,10 @@ export default function EventsManager(props) {
       return;
     };
 
-    let randomizer = (Math.floor(Math.random() * (1000 - 1)) + 1).toString();
-    let split = imageAsFile.name.split('.');
+    const randomizer = (Math.floor(Math.random() * (1000 - 1)) + 1).toString();
+    const split = imageAsFile.name.split('.');
     const filename = split[0] + randomizer + '.' + split[1];
+    const smallFilename = 'small-' + filename;
 
     const uploadTask = storage.ref(`/events/${filename}`).put(imageAsFile);
 
@@ -249,23 +282,37 @@ export default function EventsManager(props) {
       storage.ref('events').child(filename).getDownloadURL()
         .then(fireBaseUrl => {
 
-          let photosArray = urlList.filter(item => item._id === _id);
-          let newPhoto = { fireBaseUrl, filename };
-          photosArray[0].images.push(newPhoto);
+          const uploadTask2 = storage.ref(`/events/${smallFilename}`).put(smallImageAsFile);
 
-          let result = { images: photosArray[0].images }
-
-          let copy = { ...indexes };
-          copy[_id] = photosArray[0].images.length - 1;
-          setIndexes(copy);
-
-          Axios
-            .put(`/api/events/photo/${_id}`, result)
-            .then(response => {
-              getImages();
-              setImageAsFile('');
-            })
-            .catch(err => console.error(err));
+          uploadTask2.on('state_changed', (snapshot) => {
+            console.log(snapshot)
+          }, (err) => {
+            console.log(err);
+          }, () => {
+            console.log('uploaded to firebase')
+            storage.ref('events').child(smallFilename).getDownloadURL()
+              .then(smallFireBaseUrl => {
+      
+                const event = urlList.filter(item => item._id === _id)[0];
+                let photosArray = event.images;
+                const newPhoto = { fireBaseUrl, filename, smallFireBaseUrl, smallFilename };
+                photosArray.push(newPhoto);
+      
+                let result = { images: photosArray }
+      
+                let copy = { ...indexes };
+                copy[_id] = photosArray.length - 1;
+                setIndexes(copy);
+      
+                Axios
+                  .put(`/api/events/photo/${_id}`, result)
+                  .then(response => {
+                    getImages();
+                    setImageAsFile('');
+                  })
+                  .catch(err => console.error(err));
+              });
+          });
         });
     });
 
@@ -277,6 +324,7 @@ export default function EventsManager(props) {
     let index = indexes[_id];
     let images = urlList.filter(item => item._id === _id)[0].images;
     const filename = images[index].filename;
+    const smallFilename = images[index].smallFilename;
     images.splice(index, 1);
 
     Axios
@@ -298,6 +346,7 @@ export default function EventsManager(props) {
         getImages();
 
         storage.ref('events').child(filename).delete();
+        storage.ref('events').child(smallFilename).delete();
       })
       .catch(err => console.error(err));
   }
@@ -400,7 +449,7 @@ export default function EventsManager(props) {
                     <div style={{ "display": "flex", "alignItems": "center", "marginBottom": "40px" }}>
                       <img className={indexes[item._id] > 0 ? "button-carousel" : "button-carousel hidden"} onClick={previousPhoto} data-id={item._id} src={'/black_left_arrow.svg'}></img>
                       <div className="container-store-img">
-                        <img className="img-store" src={item.images.length === 0 ? "https://calendar-trips.s3-us-west-1.amazonaws.com/unnamed.png" : indexes[item._id] !== undefined ? item.images[indexes[item._id]].fireBaseUrl : item.images[0].fireBaseUrl} alt="gallery img" />
+                        <img className="img-store" src={item.images.length === 0 ? "https://calendar-trips.s3-us-west-1.amazonaws.com/unnamed.png" : indexes[item._id] !== undefined ? item.images[indexes[item._id]].smallFireBaseUrl : item.images[0].smallFireBaseUrl} alt="gallery img" />
                       </div>
                       <img className={indexes[item._id] < item.images.length - 1 ? "button-carousel" : "button-carousel hidden"} onClick={nextPhoto} data-id={item._id} src={'/black_right_arrow.svg'}></img>
                     </div>
