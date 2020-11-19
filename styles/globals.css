@@ -992,6 +992,7 @@ button.slick-arrow.slick-next,
   max-width: min(400px, 90vw);
   object-fit: cover;
   margin: 0 auto;
+  transition: all 0.25s ease;
 }
 
 .image-events:hover {
