@@ -5,10 +5,12 @@ import { storage } from '../../firebase/firebase.js';
 import Axios from 'axios';
 import { useAuth } from '../../contexts/auth.js';
 import DotLoader from 'react-spinners/DotLoader';
+import Resizer from 'react-image-file-resizer';
 
 export default function GalleryManager(props) {
 
   const [imageAsFile, setImageAsFile] = useState('');
+  const [smallImageAsFile, setSmallImageAsFile] = useState('');
   const [urlList, setUrlList] = useState([]);
   const [showEdit, setShowEdit] = useState(null);
   const { admin } = useAuth();
@@ -22,9 +24,11 @@ export default function GalleryManager(props) {
       .catch(err => console.error(err));
   }, []);
 
-  const handleImageAsFile = (e) => {
+  const handleImageAsFile = async (e) => {
     const image = e.target.files[0];
-    setImageAsFile(imageFile => image)
+    const smallImage = await resizeFile(image);
+    setImageAsFile(image)
+    setSmallImageAsFile(smallImage);
   };
 
   const getImages = () => {
@@ -36,6 +40,15 @@ export default function GalleryManager(props) {
       })
       .catch(err => console.error(err));
   }
+
+  const resizeFile = (file) => new Promise(resolve => {
+    Resizer.imageFileResizer(file, 250, 150, 'JPEG', 100, 0,
+      uri => {
+        resolve(uri);
+      },
+      'blob'
+    );
+  });
 
   const handleFireBaseUpload = (e) => {
     e.preventDefault();
@@ -54,9 +67,13 @@ export default function GalleryManager(props) {
       return;
     };
 
-    let randomizer = (Math.floor(Math.random() * (1000 - 1)) + 1).toString();
-    let split = imageAsFile.name.split('.');
+    const randomizer = (Math.floor(Math.random() * (1000 - 1)) + 1).toString();
+    const split = imageAsFile.name.split('.');
     const filename = split[0] + randomizer + '.' + split[1];
+    const smallFilename = 'small-' + filename;
+    const index = urlList.length;
+    let date = new Date()
+    date = date.toDateString();
 
     const uploadTask = storage.ref(`/images/${filename}`).put(imageAsFile);
 
@@ -69,21 +86,32 @@ export default function GalleryManager(props) {
       storage.ref('images').child(filename).getDownloadURL()
         .then(fireBaseUrl => {
 
-          let date = new Date()
-          date = date.toDateString();
-          let index = urlList.length;
+          const uploadTask2 = storage.ref(`/images/${smallFilename}`).put(smallImageAsFile);
 
-          const request = { fireBaseUrl, description, title, date, filename, index };
+          uploadTask2.on('state_changed', (snapshot) => {
+            console.log(snapshot)
+          }, (err) => {
+            console.log(err);
+          }, () => {
+            console.log('uploaded to firebase')
+            storage.ref('images').child(`${smallFilename}`).getDownloadURL()
+              .then(smallFireBaseUrl => {
 
-          Axios
-            .post('/api/gallery', request)
-            .then(response => {
-              getImages();
-              setImageAsFile('');
-            })
-            .catch(err => console.error(err))
+                const request = { fireBaseUrl, description, title, date, filename, index, smallFireBaseUrl, smallFilename };
+
+                Axios
+                  .post('/api/gallery', request)
+                  .then(response => {
+                    getImages();
+                    setImageAsFile('');
+                    setSmallImageAsFile('');
+                  })
+                  .catch(err => console.error(err))
+              });
+          });
         });
     });
+
 
     document.getElementById('form-gallery').reset();
   };
@@ -111,7 +139,8 @@ export default function GalleryManager(props) {
     props.setLoading(true);
 
     const _id = e.target.dataset.id;
-    let filename = e.target.dataset.filename;
+    const filename = e.target.dataset.filename;
+    const smallFilename = e.target.dataset.smallfilename;
 
     console.log('start of upload');
 
@@ -125,6 +154,7 @@ export default function GalleryManager(props) {
     let randomizer = (Math.floor(Math.random() * (1000 - 1)) + 1).toString();
     let split = imageAsFile.name.split('.');
     const filenameNew = split[0] + randomizer + '.' + split[1];
+    const smallFilenameNew = 'small-' + filenameNew;
 
     const uploadTask = storage.ref(`/images/${filenameNew}`).put(imageAsFile);
 
@@ -137,19 +167,37 @@ export default function GalleryManager(props) {
       storage.ref('images').child(filenameNew).getDownloadURL()
         .then(fireBaseUrl => {
 
-          storage.ref('images').child(filename).delete()
-            .then(() => console.log('deleted from firebase'))
-            .catch(err => console.error(err));
+          const uploadTask2 = storage.ref(`/images/${smallFilenameNew}`).put(smallImageAsFile);
 
-          const request = { fireBaseUrl, filename: filenameNew };
-          Axios
-            .put(`/api/gallery/photo/${_id}`, request)
-            .then(response => {
-              getImages();
-              setImageAsFile('');
-            })
-            .catch(err => console.error(err))
+          uploadTask2.on('state_changed', (snapshot) => {
+            console.log(snapshot)
+          }, (err) => {
+            console.log(err);
+          }, () => {
+            console.log('uploaded to firebase')
+            storage.ref('images').child(smallFilenameNew).getDownloadURL()
+              .then(smallFireBaseUrl => {
 
+                storage.ref('images').child(filename).delete()
+                  .then(() => console.log('deleted from firebase'))
+                  .catch(err => console.error(err));
+
+                storage.ref('images').child(smallFilename).delete()
+                  .then(() => console.log('deleted from firebase'))
+                  .catch(err => console.error(err));
+
+                const request = { fireBaseUrl, filename: filenameNew, smallFireBaseUrl, smallFilename: smallFilenameNew };
+                Axios
+                  .put(`/api/gallery/photo/${_id}`, request)
+                  .then(response => {
+                    getImages();
+                    setImageAsFile('');
+                    setSmallImageAsFile('');
+                  })
+                  .catch(err => console.error(err))
+
+              });
+          });
         });
     });
 
@@ -159,6 +207,7 @@ export default function GalleryManager(props) {
   const deleteHandler = (e) => {
     const _id = e.target.value;
     const filename = e.target.dataset.filename;
+    const smallFilename = e.target.dataset.smallfilename;
     const index = parseInt(e.target.dataset.index);
 
     Axios
@@ -167,6 +216,10 @@ export default function GalleryManager(props) {
         getImages();
 
         storage.ref('images').child(filename).delete()
+          .then(() => console.log('deleted from firebase'))
+          .catch(err => console.error(err));
+
+        storage.ref('images').child(smallFilename).delete()
           .then(() => console.log('deleted from firebase'))
           .catch(err => console.error(err));
       })
@@ -282,7 +335,7 @@ export default function GalleryManager(props) {
                   <div className="container-gallery-img">
                     <img
                       className="img-gallery"
-                      src={item.fireBaseUrl}
+                      src={item.smallFireBaseUrl}
                       alt="gallery img" />
                   </div>
                   <div className="wrapper-arrows-form">
@@ -306,11 +359,11 @@ export default function GalleryManager(props) {
                       <p><b>Date uploaded:</b> {item.date}</p>
                       <div className="container-form-buttons">
                         <button value={item._id} type="submit" style={{ "marginRight": "5px" }} onClick={editToggler}>Edit</button>
-                        <button value={item._id} onClick={deleteHandler} data-filename={item.filename} data-index={item.index}>Delete</button>
+                        <button value={item._id} onClick={deleteHandler} data-filename={item.filename} data-smallfilename={item.smallFilename} data-index={item.index}>Delete</button>
                       </div>
                       {showEdit === item._id ?
                         <div>
-                          <form id="form-edit-gallery" onSubmit={handleChangeGallery} data-id={item._id} data-filename={item.filename}>
+                          <form id="form-edit-gallery" onSubmit={handleChangeGallery} data-id={item._id} data-filename={item.filename} data-smallfilename={item.smallFilename}>
                             <div style={{ "marginBottom": "5px", "marginTop": "20px" }}>Change photo</div>
                             <div style={{ "marginBottom": "20px" }}>
                               <input

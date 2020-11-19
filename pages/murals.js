@@ -76,7 +76,7 @@ export default function Murals(props) {
                   data-url={image.fireBaseUrl}
                   data-title={image.title}
                   data-description={image.description}
-                  src={image.fireBaseUrl}
+                  src={image.smallFireBaseUrl}
                   alt="murals-grid-image" />
               </div>
             )

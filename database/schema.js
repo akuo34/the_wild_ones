@@ -6,7 +6,9 @@ const gallerySchema = new mongoose.Schema({
   description: String,
   date: String,
   filename: String,
-  index: Number
+  index: Number,
+  smallFireBaseUrl: String,
+  smallFilename: String
 });
 
 const muralSchema = new mongoose.Schema({
@@ -15,7 +17,9 @@ const muralSchema = new mongoose.Schema({
   description: String,
   date: String,
   filename: String,
-  index: Number
+  index: Number,
+  smallFireBaseUrl: String,
+  smallFilename: String
 });
 
 const aboutSchema = new mongoose.Schema({

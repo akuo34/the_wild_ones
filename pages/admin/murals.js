@@ -5,10 +5,12 @@ import { storage } from '../../firebase/firebase';
 import Axios from 'axios';
 import { useAuth } from '../../contexts/auth.js';
 import DotLoader from 'react-spinners/DotLoader';
+import Resizer from 'react-image-file-resizer';
 
 export default function MuralsManager(props) {
 
   const [imageAsFile, setImageAsFile] = useState('');
+  const [smallImageAsFile, setSmallImageAsFile] = useState('');
   const [urlList, setUrlList] = useState([]);
   const [showEdit, setShowEdit] = useState(null);
   const { admin } = useAuth();
@@ -17,29 +19,36 @@ export default function MuralsManager(props) {
     Axios
       .get('/api/murals')
       .then(response => {
-
         setUrlList(response.data);
       })
       .catch(err => console.error(err));
   }, []);
 
-  const handleImageAsFile = (e) => {
+  const handleImageAsFile = async (e) => {
     const image = e.target.files[0];
-    setImageAsFile(imageFile => image)
+    const smallImage = await resizeFile(image);
+    setImageAsFile(image)
+    setSmallImageAsFile(smallImage);
   };
 
   const getImages = () => {
     Axios
       .get('/api/murals')
       .then(response => {
-
-        let array = response.data;
-
-        setUrlList(array);
+        setUrlList(response.data);
         props.setLoading(false);
       })
       .catch(err => console.error(err));
   }
+
+  const resizeFile = (file) => new Promise(resolve => {
+    Resizer.imageFileResizer(file, 250, 150, 'JPEG', 100, 0,
+      uri => {
+        resolve(uri);
+      },
+      'blob'
+    );
+  });
 
   const handleFireBaseUpload = (e) => {
     e.preventDefault();
@@ -58,9 +67,13 @@ export default function MuralsManager(props) {
       return;
     };
 
-    let randomizer = (Math.floor(Math.random() * (1000 - 1)) + 1).toString();
-    let split = imageAsFile.name.split('.');
+    const randomizer = (Math.floor(Math.random() * (1000 - 1)) + 1).toString();
+    const split = imageAsFile.name.split('.');
     const filename = split[0] + randomizer + '.' + split[1];
+    const smallFilename = 'small-' + filename;
+    const index = urlList.length;
+    let date = new Date()
+    date = date.toDateString();
 
     const uploadTask = storage.ref(`/murals/${filename}`).put(imageAsFile);
 
@@ -73,19 +86,29 @@ export default function MuralsManager(props) {
       storage.ref('murals').child(filename).getDownloadURL()
         .then(fireBaseUrl => {
 
-          let date = new Date()
-          date = date.toDateString();
-          let index = urlList.length;
+          const uploadTask2 = storage.ref(`/murals/${smallFilename}`).put(smallImageAsFile);
 
-          const request = { fireBaseUrl, description, title, date, filename, index };
-
-          Axios
-            .post('/api/murals', request)
-            .then(response => {
-              getImages();
-              setImageAsFile('');
-            })
-            .catch(err => console.error(err))
+          uploadTask2.on('state_changed', (snapshot) => {
+            console.log(snapshot)
+          }, (err) => {
+            console.log(err);
+          }, () => {
+            console.log('uploaded to firebase')
+            storage.ref('murals').child(smallFilename).getDownloadURL()
+              .then(smallFireBaseUrl => {
+      
+                const request = { fireBaseUrl, description, title, date, filename, index, smallFireBaseUrl, smallFilename };
+      
+                Axios
+                  .post('/api/murals', request)
+                  .then(response => {
+                    getImages();
+                    setImageAsFile('');
+                    setSmallImageAsFile('');
+                  })
+                  .catch(err => console.error(err))
+              });
+          });
         });
     });
 
@@ -115,7 +138,8 @@ export default function MuralsManager(props) {
     props.setLoading(true);
 
     const _id = e.target.dataset.id;
-    let filename = e.target.dataset.filename;
+    const filename = e.target.dataset.filename;
+    const smallFilename = e.target.dataset.smallfilename;
 
     console.log('start of upload');
 
@@ -126,11 +150,12 @@ export default function MuralsManager(props) {
       return;
     };
 
-    let randomizer = (Math.floor(Math.random() * (1000 - 1)) + 1).toString();
-    let split = imageAsFile.name.split('.');
-    const newfilename = split[0] + randomizer + '.' + split[1];
+    const randomizer = (Math.floor(Math.random() * (1000 - 1)) + 1).toString();
+    const split = imageAsFile.name.split('.');
+    const filenameNew = split[0] + randomizer + '.' + split[1];
+    const smallFilenameNew = 'small-' + filenameNew;
 
-    const uploadTask = storage.ref(`/murals/${newfilename}`).put(imageAsFile);
+    const uploadTask = storage.ref(`/murals/${filenameNew}`).put(imageAsFile);
 
     uploadTask.on('state_changed', (snapshot) => {
       console.log(snapshot)
@@ -138,24 +163,40 @@ export default function MuralsManager(props) {
       console.log(err);
     }, () => {
       console.log('uploaded to firebase')
-      storage.ref('murals').child(newfilename).getDownloadURL()
+      storage.ref('murals').child(filenameNew).getDownloadURL()
         .then(fireBaseUrl => {
 
-          storage.ref('murals').child(filename).delete()
-            .then(() => console.log('deleted from firebase'))
-            .catch(err => console.error(err));
+          const uploadTask2 = storage.ref(`/murals/${smallFilenameNew}`).put(smallImageAsFile);
 
-          filename = newfilename;
+          uploadTask2.on('state_changed', (snapshot) => {
+            console.log(snapshot)
+          }, (err) => {
+            console.log(err);
+          }, () => {
+            console.log('uploaded to firebase')
+            storage.ref('murals').child(smallFilenameNew).getDownloadURL()
+              .then(smallFireBaseUrl => {
+      
+                storage.ref('murals').child(filename).delete()
+                  .then(() => console.log('deleted from firebase'))
+                  .catch(err => console.error(err));
 
-          const request = { fireBaseUrl, filename };
-          Axios
-            .put(`/api/murals/photo/${_id}`, request)
-            .then(response => {
-              getImages();
-              setImageAsFile('');
-            })
-            .catch(err => console.error(err))
-
+                storage.ref('murals').child(smallFilename).delete()
+                  .then(() => console.log('deleted from firebase'))
+                  .catch(err => console.error(err));
+      
+                const request = { fireBaseUrl, filename: filenameNew, smallFireBaseUrl, smallFilename: smallFilenameNew };
+                Axios
+                  .put(`/api/murals/photo/${_id}`, request)
+                  .then(response => {
+                    getImages();
+                    setImageAsFile('');
+                    setSmallImageAsFile('');
+                  })
+                  .catch(err => console.error(err))
+      
+              });
+          });
         });
     });
 
@@ -165,6 +206,7 @@ export default function MuralsManager(props) {
   const deleteHandler = (e) => {
     const _id = e.target.value;
     const filename = e.target.dataset.filename;
+    const smallFilename = e.target.dataset.smallfilename;
     const index = parseInt(e.target.dataset.index);
 
     Axios
@@ -173,6 +215,10 @@ export default function MuralsManager(props) {
         getImages();
 
         storage.ref('murals').child(filename).delete()
+          .then(() => console.log('deleted from firebase'))
+          .catch(err => console.error(err));
+
+        storage.ref('murals').child(smallFilename).delete()
           .then(() => console.log('deleted from firebase'))
           .catch(err => console.error(err));
       })
@@ -288,7 +334,7 @@ export default function MuralsManager(props) {
                   <div className="container-gallery-img">
                     <img
                       className="img-gallery"
-                      src={item.fireBaseUrl}
+                      src={item.smallFireBaseUrl}
                       alt="gallery img" />
                   </div>
                   <div className="wrapper-arrows-form">
@@ -312,11 +358,11 @@ export default function MuralsManager(props) {
                       <p><b>Date uploaded:</b> {item.date}</p>
                       <div className="container-form-buttons">
                         <button value={item._id} type="submit" onClick={editToggler} style={{ "marginRight": "5px" }}>Edit</button>
-                        <button value={item._id} onClick={deleteHandler} data-filename={item.filename} data-index={item.index}>Delete</button>
+                        <button value={item._id} onClick={deleteHandler} data-filename={item.filename} data-smallfilename={item.smallFilename} data-index={item.index}>Delete</button>
                       </div>
                       {showEdit === item._id ?
                         <div>
-                          <form id="form-edit-mural" onSubmit={handleChangeMural} data-id={item._id} data-filename={item.filename}>
+                          <form id="form-edit-mural" onSubmit={handleChangeMural} data-id={item._id} data-filename={item.filename} data-smallfilename={item.smallFilename}>
                             <div style={{ "marginBottom": "5px", "marginTop": "20px" }}>Change photo</div>
                             <div style={{ "marginBottom": "20px" }}>
                               <input

@@ -2,9 +2,9 @@ import model from '../../database/model.js';
 
 export default async (req, res) => {
   if (req.method === 'POST') {
-    const { title, description, fireBaseUrl, date, filename, index } = req.body;
+    const { title, description, fireBaseUrl, date, filename, index, smallFireBaseUrl, smallFilename } = req.body;
     model
-      .postGallery(title, description, fireBaseUrl, date, filename, index)
+      .postGallery(title, description, fireBaseUrl, date, filename, index, smallFireBaseUrl, smallFilename)
       .then(() => res.status(201).send('posted to DB'))
       .catch(err => res.status(400).send(err));
   }

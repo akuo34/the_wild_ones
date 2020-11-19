@@ -2,7 +2,7 @@ const { GalleryItem, MuralItem, AboutItem, EventItem, StoreItem, ContactItem, Or
 
 module.exports = {
   getGallery: async () => GalleryItem.find().sort([['index', 1]]),
-  postGallery: (title, description, fireBaseUrl, date, filename, index) => GalleryItem.create({ title, description, fireBaseUrl, date, filename, index }),
+  postGallery: (title, description, fireBaseUrl, date, filename, index, smallFireBaseUrl, smallFilename) => GalleryItem.create({ title, description, fireBaseUrl, date, filename, index, smallFireBaseUrl, smallFilename }),
   putGallery: (title, description, _id, index) => {
     let object = { title, description, index };
     for (let key in object) {
@@ -12,10 +12,10 @@ module.exports = {
     }   
     return GalleryItem.findOneAndUpdate({ _id }, object)
   },
-  putGalleryPhoto: (fireBaseUrl, filename, _id) => GalleryItem.findOneAndUpdate({ _id }, { fireBaseUrl, filename }),
+  putGalleryPhoto: (fireBaseUrl, filename, _id, smallFireBaseUrl, smallFilename) => GalleryItem.findOneAndUpdate({ _id }, { fireBaseUrl, filename, smallFireBaseUrl, smallFilename }),
   deleteGallery: (_id) => GalleryItem.findByIdAndDelete({ _id }),
   getMural: async () => MuralItem.find().sort([['index', 1]]),
-  postMural: (title, description, fireBaseUrl, date, filename, index) => MuralItem.create({ title, description, fireBaseUrl, date, filename, index }),
+  postMural: (title, description, fireBaseUrl, date, filename, index, smallFireBaseUrl, smallFilename) => MuralItem.create({ title, description, fireBaseUrl, date, filename, index, smallFireBaseUrl, smallFilename }),
   putMural: (title, description, _id, index) => {
     let object = { title, description, index };
     for (let key in object) {
@@ -25,7 +25,7 @@ module.exports = {
     }
     return MuralItem.findOneAndUpdate({ _id }, object)
   },
-  putMuralPhoto: (fireBaseUrl, filename, _id) => MuralItem.findOneAndUpdate({ _id }, { fireBaseUrl, filename }),
+  putMuralPhoto: (fireBaseUrl, filename, _id, smallFireBaseUrl, smallFilename) => MuralItem.findOneAndUpdate({ _id }, { fireBaseUrl, filename, smallFireBaseUrl, smallFilename }),
   deleteMural: (_id) => MuralItem.findByIdAndDelete({ _id }),
   getAbout: async () => AboutItem.find(),
   postAbout: (portraitFireBaseUrl, bio, portraitFilename, bannerFireBaseUrl, bannerFilename) => AboutItem.create({ portraitFireBaseUrl, bio, portraitFilename, bannerFireBaseUrl, bannerFilename }),
