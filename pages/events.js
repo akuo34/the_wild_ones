@@ -66,11 +66,13 @@ export default function Events(props) {
     let copy = Object.assign({}, indexes);
     copy[_id]++;
 
-    document.getElementById(`event-${_id}`).className = 'image-events fadeout';
+    let type = e.target.dataset.type === "special" ? "special" : "event";
+
+    document.getElementById(`${type}-${_id}`).className = 'image-events fadeout';
     setTimeout(() => {
       setIndexes(copy);
       setTimeout(() => {
-        document.getElementById(`event-${_id}`).className = 'image-events';
+        document.getElementById(`${type}-${_id}`).className = 'image-events';
       }, 300)
     }, 350)
   }
@@ -80,11 +82,13 @@ export default function Events(props) {
     let copy = Object.assign({}, indexes);
     copy[_id]--;
 
-    document.getElementById(`event-${_id}`).className = 'image-events fadeout';
+    let type = e.target.dataset.type === "special" ? "special" : "event";
+
+    document.getElementById(`${type}-${_id}`).className = 'image-events fadeout';
     setTimeout(() => {
       setIndexes(copy);
       setTimeout(() => {
-        document.getElementById(`event-${_id}`).className = 'image-events';
+        document.getElementById(`${type}-${_id}`).className = 'image-events';
       }, 300)
     }, 350)
   }
@@ -118,11 +122,12 @@ export default function Events(props) {
                         className={indexes[currentEvent._id] > 0 ? "button-carousel" : "button-carousel hidden"}
                         onClick={previousPhoto}
                         data-id={currentEvent._id}
+                        data-type="special"
                         src={'/black_left_arrow.svg'} 
                         alt="left-button" />
                       <div style={{ "width": "90%", "textAlign": "center", "overflow": "hidden", "display": "flex", "justifyContent": "center" }}>
                         <img
-                          id={`event-${currentEvent._id}`}
+                          id={`special-${currentEvent._id}`}
                           className="image-events"
                           onClick={props.modalHandler}
                           data-url={currentEvent.images[indexes[currentEvent._id]].fireBaseUrl}
@@ -133,6 +138,7 @@ export default function Events(props) {
                         className={indexes[currentEvent._id] < currentEvent.images.length - 1 ? "button-carousel" : "button-carousel hidden"}
                         onClick={nextPhoto}
                         data-id={currentEvent._id}
+                        data-type="special"
                         src={'/black_right_arrow.svg'}
                         alt="right-button" />
                     </div>
@@ -155,11 +161,12 @@ export default function Events(props) {
                           className={indexes[upcomingEvents[0]._id] > 0 ? "button-carousel" : "button-carousel hidden"}
                           onClick={previousPhoto}
                           data-id={upcomingEvents[0]._id}
+                          data-type="special"
                           src={'/black_left_arrow.svg'}
                           alt="left-button" />
                         <div style={{ "width": "90%", "textAlign": "center", "overflow": "hidden", "display": "flex", "justifyContent": "center" }}>
                           <img
-                            id={`event-${upcomingEvents[0]._id}`}
+                            id={`special-${upcomingEvents[0]._id}`}
                             className="image-events"
                             onClick={props.modalHandler}
                             data-url={upcomingEvents[0].images[indexes[upcomingEvents[0]._id]].fireBaseUrl}
@@ -170,6 +177,7 @@ export default function Events(props) {
                           className={indexes[upcomingEvents[0]._id] < upcomingEvents[0].images.length - 1 ? "button-carousel" : "button-carousel hidden"}
                           onClick={nextPhoto}
                           data-id={upcomingEvents[0]._id}
+                          data-type="special"
                           src={'/black_right_arrow.svg'}
                           alt="right-button" />
                       </div>
