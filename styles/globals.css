@@ -758,10 +758,12 @@ button.slick-arrow.slick-next,
 
 .image-gallery {
   height: 100%;
-  width: 100%;
-  object-fit: contain;
+  max-width: 100%;
+  /* width: 100%; */
+  /* object-fit: contain; */
+  object-fit: cover;
   margin: 0 auto;
-  z-index: 2;
+  /* z-index: 2; */
 }
 
 .header-details {
