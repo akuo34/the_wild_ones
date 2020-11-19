@@ -758,6 +758,7 @@ button.slick-arrow.slick-next,
 
 .image-gallery {
   height: 100%;
+  width: 100%;
   object-fit: contain;
   margin: 0 auto;
   z-index: 2;
@@ -848,6 +849,7 @@ button.slick-arrow.slick-next,
 .image-grid {
   height: 150px;
   margin: 0 auto;
+  object-fit: cover;
 }
 
 .image-grid:hover {
