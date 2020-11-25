@@ -13,6 +13,7 @@ export default function Murals(props) {
   var settings = {
     arrows: true,
     infinite: true,
+    lazyLoad: "progressive",
     speed: 800,
     slidesToShow: 1,
     initialSlide: 0

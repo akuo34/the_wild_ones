@@ -92,7 +92,7 @@ export default function Store(props) {
                           onClick={toProductDetails}
                           data-id={item._id}
                           style={{ "textAlign": "right" }}>{item.title}</h3>
-                        <span className="price">${item.price}</span>
+                        <span className="price">{item.price ? item.price.toFixed(2) : null}</span>
                       </div>
                     </div>
                   </div>

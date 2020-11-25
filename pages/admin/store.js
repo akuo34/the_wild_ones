@@ -300,8 +300,8 @@ export default function StoreManager(props) {
             <textarea className="input-description" name="description" placeholder="Description" />
             <div className="container-store-form-row">
               <div className="container-store-form-column">
-                <input type="number" name="quantity" min="0" placeholder="Quantity" style={{ "height": "24.69px", "fontSize": "14px", "boxSizing": "border-box" }} />
-                <input type="number" name="price" min="0" placeholder="Price" style={{ "height": "24.69px", "fontSize": "14px", "boxSizing": "border-box" }} />
+                <input required type="number" name="quantity" min="0" placeholder="Quantity" style={{ "height": "24.69px", "fontSize": "14px", "boxSizing": "border-box" }} />
+                <input required type="number" name="price" min="0" placeholder="Price" style={{ "height": "24.69px", "fontSize": "14px", "boxSizing": "border-box" }} />
               </div>
               <div className="container-store-form-column">
                 <input type="number" name="width" min="0" placeholder="Width (in)" style={{ "height": "24.69px", "fontSize": "14px", "boxSizing": "border-box" }} />

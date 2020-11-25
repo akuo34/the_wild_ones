@@ -93,3 +93,10 @@
 	left: -200%;
 }
 
+
+@media only screen and (min-device-width: 1450px) {
+	
+	.slider {
+		margin-bottom: 160px;
+	}
+}

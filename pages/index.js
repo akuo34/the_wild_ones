@@ -12,6 +12,7 @@ export default function Home(props) {
 
   var settings = {
     arrows: true,
+    lazyLoad: "progressive",
     infinite: true,
     speed: 800,
     slidesToShow: 1,
@@ -76,7 +77,7 @@ export default function Home(props) {
                   data-url={image.fireBaseUrl}
                   data-title={image.title}
                   data-description={image.description}
-                  src={image.fireBaseUrl}
+                  src={image.smallFireBaseUrl}
                   alt="gallery-grid-image" />
               </div>
             )

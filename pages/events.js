@@ -74,7 +74,7 @@ export default function Events(props) {
     }, 230)
     setTimeout(() => {
       document.getElementById(`${type}-${_id}`).className = 'image-events';
-    }, 600)
+    }, 700)
   }
 
   const previousPhoto = (e) => {
@@ -90,7 +90,7 @@ export default function Events(props) {
     }, 230)
     setTimeout(() => {
       document.getElementById(`${type}-${_id}`).className = 'image-events';
-    }, 600)
+    }, 700)
   }
 
   return (
@@ -113,17 +113,17 @@ export default function Events(props) {
           />
           {Object.keys(currentEvent).length ?
             <div className="container-image-events">
-              <h3 style={{ "margin": "0 auto 20px auto", "maxWidth": "60vw", "textAlign": "center" }}>Selected Event: {currentEvent.title}</h3>
+              <h3 style={{ "marginTop": "0", "marginRight": "auto", "marginLeft": "auto", "marginBottom": "calc(10px + 2vw)", "maxWidth": "60vw", "textAlign": "center" }}>Selected Event: {currentEvent.title}</h3>
               {
                 currentEvent.images.length ?
-                  <div className="wrapper-image-buttons-events">
+                  <div className="wrapper-image-buttons-events" style={{ "marginTop": "0", "marginRight": "auto", "marginLeft": "auto", "marginBottom": "calc(10px + 2vw)" }}>
                     <div style={{ "display": "flex", "justifyContent": "center", "alignItems": "center", "width": "100%", "marginBottom": "20px" }}>
                       <img
                         className={indexes[currentEvent._id] > 0 ? "button-carousel" : "button-carousel hidden"}
                         onClick={previousPhoto}
                         data-id={currentEvent._id}
                         data-type="special"
-                        src={'/black_left_arrow.svg'} 
+                        src={'/black_left_arrow.svg'}
                         alt="left-button" />
                       <div style={{ "width": "90%", "textAlign": "center", "overflow": "hidden", "display": "flex", "justifyContent": "center" }}>
                         <img
@@ -144,7 +144,8 @@ export default function Events(props) {
                     </div>
                   </div> : null
               }
-              <div className="container-client-events" style={{ "marginTop": "20px" }}>
+              <div className="container-client-events pink">
+                {/* <div className="container-client-events pink" style={{ "marginTop": "20px" }}> */}
                 <p style={{ "marginBottom": "20px" }}>{currentEvent.resource}</p>
                 <p style={{ "marginBottom": "20px" }}>Where: {currentEvent.location}</p>
                 <p>When: {convertDate(currentEvent.startDate)} from {convertTime(currentEvent.startTime)} to {convertTime(currentEvent.endTime)}</p>
@@ -152,10 +153,10 @@ export default function Events(props) {
             </div>
             : upcomingEvents.length ?
               <div className="container-image-events">
-                <h3 style={{ "margin": "0 auto 20px auto", "maxWidth": "60vw", "textAlign": "center" }}>Next Event: {upcomingEvents[0].title}</h3>
+                <h3 style={{ "marginTop": "0", "marginRight": "auto", "marginLeft": "auto", "marginBottom": "calc(10px + 2vw)", "maxWidth": "60vw", "textAlign": "center" }}>Next Event: {upcomingEvents[0].title}</h3>
                 {
                   upcomingEvents[0].images.length ?
-                    <div className="wrapper-image-buttons-events">
+                    <div className="wrapper-image-buttons-events" style={{ "marginTop": "0", "marginRight": "auto", "marginLeft": "auto", "marginBottom": "calc(10px + 2vw)" }}>
                       <div style={{ "display": "flex", "justifyContent": "center", "alignItems": "center", "width": "100%", "marginBottom": "20px" }}>
                         <img
                           className={indexes[upcomingEvents[0]._id] > 0 ? "button-carousel" : "button-carousel hidden"}
@@ -183,7 +184,7 @@ export default function Events(props) {
                       </div>
                     </div> : null
                 }
-                <div className="container-client-events" style={{ "marginTop": "20px" }}>
+                <div className="container-client-events pink">
                   <p style={{ "marginBottom": "20px" }}>{upcomingEvents[0].resource}</p>
                   <p style={{ "marginBottom": "20px" }}>Where: {upcomingEvents[0].location}</p>
                   <p>When: {convertDate(upcomingEvents[0].startDate)} from {convertTime(upcomingEvents[0].startTime)} to {convertTime(upcomingEvents[0].endTime)}</p>
@@ -192,51 +193,56 @@ export default function Events(props) {
           }
         </div>
         {upcomingEvents.length ?
-          <h3 style={{ "marginBottom": "40px" }}>Upcoming Events</h3>
+          // <h3 className="subheader-client" style={{ "marginBottom": "40px" }}>Upcoming Events</h3>
+          <div className="pink column" style={{ "width": "100vw", "alignItems": "center" }}>
+            <div style={{ "width": "90vw", "margin": "0 auto" }}>
+              <h3 className="subheader-client" style={{ "margin-left": "auto", "margin-right": "auto", "textAlign": "center" }}>Upcoming Events</h3>
+              {upcomingEvents.map((image, index) => {
+                return (
+                  <div className="container-calendar pink" key={index}>
+                    {
+                      image.images.length ?
+                        <div className="wrapper-image-buttons-events">
+                          <div style={{ "display": "flex", "justifyContent": "center", "width": "100%", "alignItems": "center", "marginBottom": "40px" }}>
+                            <img
+                              className={indexes[image._id] > 0 ? "button-carousel" : "button-carousel hidden"}
+                              onClick={previousPhoto}
+                              data-id={image._id}
+                              src={'/black_left_arrow.svg'}
+                              alt="left-button" />
+                            <div style={{ "width": "90%", "textAlign": "center", "overflow": "hidden", "display": "flex", "justifyContent": "center" }}>
+                              <img
+                                id={`event-${image._id}`}
+                                className="image-events"
+                                onClick={props.modalHandler}
+                                data-url={image.images[indexes[image._id]].fireBaseUrl}
+                                src={image.images[indexes[image._id]].smallFireBaseUrl}
+                                alt="events-image" />
+                            </div>
+                            <img
+                              className={indexes[image._id] < image.images.length - 1 ? "button-carousel" : "button-carousel hidden"}
+                              onClick={nextPhoto}
+                              data-id={image._id}
+                              src={'/black_right_arrow.svg'}
+                              alt="right-button" />
+                          </div>
+                        </div> : null
+                    }
+                    <div className="container-client-events">
+                      <h4 style={{ "marginBottom": "20px" }}>{image.title}</h4>
+                      <p style={{ "marginBottom": "20px" }}>{image.resource}</p>
+                      <p style={{ "marginBottom": "20px" }}>Where: {image.location}</p>
+                      <p>When: {convertDate(image.startDate)} from {convertTime(image.startTime)} to {convertTime(image.endTime)}</p>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
           : null
         }
-        {upcomingEvents.map((image, index) => {
-          return (
-            <div className="container-calendar" key={index}>
-              {
-                image.images.length ?
-                  <div className="wrapper-image-buttons-events">
-                    <div style={{ "display": "flex", "justifyContent": "center", "width": "100%", "alignItems": "center", "marginBottom": "40px" }}>
-                      <img
-                        className={indexes[image._id] > 0 ? "button-carousel" : "button-carousel hidden"}
-                        onClick={previousPhoto}
-                        data-id={image._id}
-                        src={'/black_left_arrow.svg'}
-                        alt="left-button" />
-                      <div style={{ "width": "90%", "textAlign": "center", "overflow": "hidden", "display": "flex", "justifyContent": "center" }}>
-                        <img
-                          id={`event-${image._id}`}
-                          className="image-events"
-                          onClick={props.modalHandler}
-                          data-url={image.images[indexes[image._id]].fireBaseUrl}
-                          src={image.images[indexes[image._id]].smallFireBaseUrl}
-                          alt="events-image" />
-                      </div>
-                      <img
-                        className={indexes[image._id] < image.images.length - 1 ? "button-carousel" : "button-carousel hidden"}
-                        onClick={nextPhoto}
-                        data-id={image._id}
-                        src={'/black_right_arrow.svg'}
-                        alt="right-button" />
-                    </div>
-                  </div> : null
-              }
-              <div className="container-client-events">
-                <h4 style={{ "marginBottom": "20px" }}>{image.title}</h4>
-                <p style={{ "marginBottom": "20px" }}>{image.resource}</p>
-                <p style={{ "marginBottom": "20px" }}>Where: {image.location}</p>
-                <p>When: {convertDate(image.startDate)} from {convertTime(image.startTime)} to {convertTime(image.endTime)}</p>
-              </div>
-            </div>
-          )
-        })}
         {pastEvents.length ?
-          <h3 style={{ "marginBottom": "40px" }}>Past Events</h3>
+          <h3 className="subheader-client">Past Events</h3>
           : null
         }
         {pastEvents.map((image, index) => {
@@ -270,7 +276,7 @@ export default function Events(props) {
                     </div>
                   </div> : null
               }
-              <div className="container-client-events">
+              <div className="container-client-events pink">
                 <h4 style={{ "marginBottom": "20px" }}>{image.title}</h4>
                 <p style={{ "marginBottom": "20px" }}>{image.resource}</p>
                 <p style={{ "marginBottom": "20px" }}>Where: {image.location}</p>
@@ -286,7 +292,7 @@ export default function Events(props) {
 
 export async function getStaticProps() {
   let response = await model.getEvent();
-  
+
   return {
     props: {
       events: JSON.parse(JSON.stringify(response))

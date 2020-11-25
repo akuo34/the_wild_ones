@@ -159,7 +159,7 @@ label {
   font-family: typewriter;
   padding: calc(14px + 1vh) calc(20px + 1vh);
   line-height: calc(20px + 2vh);
-  right: -200px;
+  right: -400px;
   transition: right 0.25s;
   -webkit-box-shadow: 9px 9px 14px -4px rgba(0,0,0,0.75);
   -moz-box-shadow: 9px 9px 14px -4px rgba(0,0,0,0.75);
@@ -718,7 +718,9 @@ label {
   font-family: typewriter;
   padding: calc(14px + 1vh) calc(20px + 1vh);
   line-height: calc(20px + 2vh);
-  right: -200px;
+  right: -400px;
+  /* left: 100vw; */
+  box-sizing: border-box;
   transition: right 0.25s;
   -webkit-box-shadow: 9px 9px 14px -4px rgba(80, 46, 46, 0.75);
   -moz-box-shadow: 9px 9px 14px -4px rgba(0,0,0,0.75);
@@ -890,8 +892,8 @@ button.slick-arrow.slick-next,
 
 .modal-image {
   position: relative;
-  max-height: 90vh;
-  max-width: 90vw;
+  height: 90vh;
+  width: 90vw;
   object-fit: contain;
   outline: none;
   margin: auto;
@@ -969,6 +971,7 @@ button.slick-arrow.slick-next,
   flex-wrap: wrap;
   width: 100%;
   justify-content: space-evenly;
+  margin-bottom: calc(10px + 2vw);
 }
 
 .container-image-events {
@@ -1007,6 +1010,7 @@ button.slick-arrow.slick-next,
   border: 1px solid #BFBFBF;
   box-shadow: 10px 10px 5px #aaaaaa;
   padding: 20px;
+  background-color: white;
   font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
@@ -1050,7 +1054,7 @@ button.slick-arrow.slick-next,
 
 .price {
   font-family: typewriter;
-  font-size: calc(16px + 1vw);
+  font-size: calc(15px + 0.5vw);
   color: rgb(100, 93, 69);
 }
 
@@ -1059,7 +1063,6 @@ button.slick-arrow.slick-next,
   max-width: min(572px, 90vw);
   object-fit: contain;
   margin: 0px 10px 20px 10px;
-  /* border: 1px solid red; */
 }
 
 .image-store-item:hover {
@@ -1077,6 +1080,7 @@ button.slick-arrow.slick-next,
   padding: 10px 5px;
   box-sizing: border-box;
   height: 50px;
+  margin-top: 5px;
 }
 
 .button-category-client {
@@ -1136,12 +1140,13 @@ button.slick-arrow.slick-next,
 
 .button-add-cart-client {
   background-color: rgb(224, 173, 158);
-  font-size: 14px;
+  font-size: calc(4px + 0.75vw);
   font-family: typewriter;
   color: rgb(100, 93, 69);
   border: 1px solid rgb(100, 93, 69);
-  box-shadow: inset 0 -0.6em 0 -0.35em rgba(0,0,0,0.17);
+  box-shadow: inset 0 -0.6em 0 -0.35em rgba(0,0,0,0.17);;
   padding: 6px;
+  margin: auto 0 auto 10px;
 }
 
 .button-add-cart-client:hover {
@@ -1166,7 +1171,19 @@ button.slick-arrow.slick-next,
   transition: all 0.5s ease;
 }
 
-@media only screen and (max-device-width: 823px) {
+.pink {
+  background-color: rgb(253, 248, 246);
+  background-image: linear-gradient(to right, rgb(253, 248, 246) , rgb(253,233,227));
+}
+
+.input-qty {
+  width: calc(30px + 2vw);
+  font-size: calc(2px + 1vw);
+  margin: auto 10px;
+}
+
+/* @media only screen and (max-device-width: 823px) { */
+@media only screen and (max-device-width: 1023px) {
 
   .container-category-buttons-client {
     position: fixed;
@@ -1181,6 +1198,7 @@ button.slick-arrow.slick-next,
     box-sizing: border-box;
     height: 50px;
     margin: 0 auto;
+    margin-top: 5px;
   }
 
   .button-category-client {
@@ -1197,4 +1215,126 @@ button.slick-arrow.slick-next,
     margin-top: 80px; 
     margin-top: calc(54px + 2vw);
   }
+
+  .container-bio {
+    width: 90vw;
+  }
+
+  .button-add-cart-client {
+    font-size: 14px;
+  }
+
+  .input-qty {
+    width: 50px;
+    font-size: 16px;
+    margin: auto 0 auto 10px;
+  }
+}
+
+@media only screen and (min-device-width: 1450px) {
+
+  button.slick-arrow.slick-next,
+  button.slick-arrow.slick-prev {
+    transform: translateY(-10px) scale(3);
+    -webkit-transform: translateY(-10px) scale(3);
+    -moz-transform: translateY(-10px) scale(3);
+  }
+
+  .container-image-grid {
+    width: 15vw;
+    height: 10vw;
+    margin-bottom: 80px;
+  }
+  
+  .image-grid {
+    height: 10vw;
+  }
+
+  .image-about {
+    max-width: 40vw;
+    max-height: 40vw;
+    margin: 0 60px;
+  }
+  
+  .container-bio {
+    width: 40vw;
+    font-size: calc(12px + 1vw);
+    margin: 0 60px;
+    line-height: calc(20px + 1vw);
+    margin-bottom: 60px;
+  }
+
+  .container-image-events {
+    width: 40vw;
+  }
+
+  .wrapper-image-buttons-events {
+    width: 40vw;
+    margin-bottom: 0px;
+  }
+
+  .image-events {
+    height: calc(120px + 10vw);
+    max-width: 80%;
+    object-fit: contain;
+    margin: auto 20px;
+  }
+
+  .button-carousel {
+    height: 30px;
+    height: calc(20px + 1vw);
+    margin: auto 60px;
+  }
+
+  .container-client-events {
+    width: 40vw;
+    line-height: calc(18px + 1vw);
+  }
+
+  p {
+    font-size: calc(10px + 1vw);
+  }
+
+  h3 {
+    font-size: calc(10px + 1vw);
+  }
+
+  .price {
+    font-size: calc(10px + 1vw);
+  }
+
+  .container-item-store-client {
+    width: 40vw;
+  }
+
+  .container-image-store-client {
+    width: 50%;
+  }
+
+  .image-store-client {
+    width: 100%
+  }
+
+  .container-title-price-client {
+    width: 50%;
+  }
+
+  .container-category-buttons-client {
+    width: auto;
+    height: auto;
+    margin-top: 10px;
+  }
+  
+  .button-category-client {
+    font-size: calc(6px + 1vw);
+    margin: 0 10px;
+  }
+
+  .image-store-item {
+    max-height: 60vh;
+    max-width: 40vw;
+    object-fit: contain;
+    margin: 0px 10px 20px 10px;
+  }
+
 }

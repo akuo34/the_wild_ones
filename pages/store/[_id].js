@@ -91,18 +91,17 @@ export default function ProductDetails() {
             <div style={{ "margin": "0 10px" }}>
               <p className="container-bio">{product.description}</p>
               {product.width && product.height ? <p className="container-bio" style={{ "marginBottom": "10px" }}>{product.width} &#10005; {product.height} (inches)</p> : null}
-              <p className="container-bio" style={{ "marginBottom": "15px", "fontSize": "25px", "textAlign": "right" }}>${product.price}</p>
+              <p className="container-bio" style={{ "marginBottom": "15px", "textAlign": "right" }}>${product.price ? product.price.toFixed(2) : null}</p>
               <p className="container-bio" style={{ "marginBottom": "10px", "textAlign": "right" }}>{product.quantity} left in stock.</p>
               <div className="container-bio" style={{ "display": "flex", "justifyContent": "flexEnd" }}>
                 <form id="form-add-cart"
-                  style={{ "marginLeft": "auto" }}
+                  style={{ "marginLeft": "auto", "display": "flex", "alignItems": "center" }}
                 // onSubmit={addCartHandler}
                 >
                   <label style={{ "fontFamily": "typewriter" }}>Quantity: </label>
-                  <input type="number" min="1" name="quantity" max={product.quantity} required style={{ "width": "40px", "fontSize": "16px" }}></input>
+                  <input className="input-qty" type="number" min="1" step="1" name="quantity" max={product.quantity} required></input>
                   <button
                     className="button-add-cart-client"
-                    style={{ "marginLeft": "10px" }}
                   >Add to cart</button>
                 </form>
               </div>
