@@ -701,7 +701,7 @@ label {
   font-family: typewriter;
   padding: calc(14px + 1vh) calc(20px + 1vh);
   line-height: calc(20px + 2vh);
-  transition: right 0.25s;
+  transition: right 0.35s linear;
   -webkit-box-shadow: 9px 9px 14px -4px rgba(0,0,0,0.75);
   -moz-box-shadow: 9px 9px 14px -4px rgba(0,0,0,0.75);
   box-shadow: 9px 9px 14px -4px rgba(0,0,0,0.75);
@@ -721,7 +721,7 @@ label {
   right: -400px;
   /* left: 100vw; */
   box-sizing: border-box;
-  transition: right 0.25s;
+  transition: right 0.35s linear;
   -webkit-box-shadow: 9px 9px 14px -4px rgba(80, 46, 46, 0.75);
   -moz-box-shadow: 9px 9px 14px -4px rgba(0,0,0,0.75);
   box-shadow: 9px 9px 14px -4px rgba(0,0,0,0.75);
@@ -1326,8 +1326,9 @@ button.slick-arrow.slick-next,
   }
   
   .button-category-client {
-    font-size: calc(6px + 1vw);
+    font-size: calc(5px + 1vw);
     margin: 0 10px;
+    padding: 10px;
   }
 
   .image-store-item {

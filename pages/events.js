@@ -66,15 +66,15 @@ export default function Events(props) {
     let copy = Object.assign({}, indexes);
     copy[_id]++;
 
-    let type = e.target.dataset.type === "special" ? "special" : "event";
+    // let type = e.target.dataset.type === "special" ? "special" : "event";
 
-    document.getElementById(`${type}-${_id}`).className = 'image-events fadeout';
-    setTimeout(() => {
+    // document.getElementById(`${type}-${_id}`).className = 'image-events fadeout';
+    // setTimeout(() => {
       setIndexes(copy);
-    }, 230)
-    setTimeout(() => {
-      document.getElementById(`${type}-${_id}`).className = 'image-events';
-    }, 700)
+    // }, 230)
+    // setTimeout(() => {
+      // document.getElementById(`${type}-${_id}`).className = 'image-events';
+    // }, 700)
   }
 
   const previousPhoto = (e) => {
@@ -82,15 +82,15 @@ export default function Events(props) {
     let copy = Object.assign({}, indexes);
     copy[_id]--;
 
-    let type = e.target.dataset.type === "special" ? "special" : "event";
+    // let type = e.target.dataset.type === "special" ? "special" : "event";
 
-    document.getElementById(`${type}-${_id}`).className = 'image-events fadeout';
-    setTimeout(() => {
+    // document.getElementById(`${type}-${_id}`).className = 'image-events fadeout';
+    // setTimeout(() => {
       setIndexes(copy);
-    }, 230)
-    setTimeout(() => {
-      document.getElementById(`${type}-${_id}`).className = 'image-events';
-    }, 700)
+    // }, 230)
+    // setTimeout(() => {
+      // document.getElementById(`${type}-${_id}`).className = 'image-events';
+    // }, 700)
   }
 
   return (
