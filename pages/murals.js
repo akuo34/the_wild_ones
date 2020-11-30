@@ -2,7 +2,7 @@ import Head from 'next/head';
 import Slider from 'react-slick';
 import model from '../database/model.js';
 import { useState } from 'react';
-import { isMobile } from 'react-device-detect';
+import { isMobile, isMobileOnly } from 'react-device-detect';
 
 export default function Murals(props) {
 
@@ -13,7 +13,6 @@ export default function Murals(props) {
   var settings = {
     arrows: true,
     infinite: true,
-    lazyLoad: "progressive",
     speed: 800,
     slidesToShow: 1,
     initialSlide: 0
@@ -47,7 +46,7 @@ export default function Murals(props) {
           <p className="paragraph-details">{description}</p>
         </div>
         {
-          props.images.length ?
+          !isMobileOnly || props.images.length ?
             <Slider className="slider" {...settings}>
               {props.images.map((image, key) => {
                 return (
