@@ -32,7 +32,7 @@ const AdminHeader = (props) => {
       <div className="buffer"></div>
       <div className="container-page">
         <div className={showAdminToolBar ? "wrapper-nav-client" : "wrapper-nav-client-hidden"} onClick={toolBarHandler}>
-          <div id={showAdminToolBar ? "nav-admin" : "nav-admin-hidden"}>
+          <div className={showAdminToolBar ? "nav-admin" : "nav-admin nav-hidden"}>
             <nav>
               <ul style={{ "display": "flex", "flexDirection": "column" }}>
                 <li>

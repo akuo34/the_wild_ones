@@ -116,7 +116,7 @@ function MyApp({ Component, pageProps }) {
     <div>
       <div className="container-client-header">
         <div className={showClientToolBar ? "wrapper-nav-client" : "wrapper-nav-client-hidden"} onClick={toolBarHandler}>
-          <div id={showClientToolBar ? "nav-client" : "nav-client-hidden"}>
+          <div className={showClientToolBar ? "nav-client" : "nav-client nav-hidden"}>
             <ul>
               <li>
                 <Link onClick={toolBarHandler} href="/">

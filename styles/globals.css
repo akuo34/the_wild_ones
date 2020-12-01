@@ -130,7 +130,7 @@ label {
   z-index: 1;
 }
 
-#nav-admin {
+.nav-admin {
   z-index: 11;
   position: fixed;
   right: 5px;
@@ -142,25 +142,7 @@ label {
   font-family: typewriter;
   padding: calc(14px + 1vh) calc(20px + 1vh);
   line-height: calc(20px + 2vh);
-  transition: right 0.25s;
-  -webkit-box-shadow: 9px 9px 14px -4px rgba(0,0,0,0.75);
-  -moz-box-shadow: 9px 9px 14px -4px rgba(0,0,0,0.75);
-  box-shadow: 9px 9px 14px -4px rgba(0,0,0,0.75);
-}
-
-#nav-admin-hidden {
-  z-index: 11;
-  position: fixed;
-  top: min(calc(60px + 7vw + 5px), 20vh + 5px);
-  border: 1px solid rgb(153, 142, 106);
-  outline: 5px solid rgb(255, 219, 88);
-  background-color: rgb(220, 202, 152);
-  font-size: calc(14px + 1vh);
-  font-family: typewriter;
-  padding: calc(14px + 1vh) calc(20px + 1vh);
-  line-height: calc(20px + 2vh);
-  right: -400px;
-  transition: right 0.25s;
+  transition: right 0.25s ease;
   -webkit-box-shadow: 9px 9px 14px -4px rgba(0,0,0,0.75);
   -moz-box-shadow: 9px 9px 14px -4px rgba(0,0,0,0.75);
   box-shadow: 9px 9px 14px -4px rgba(0,0,0,0.75);
@@ -689,7 +671,7 @@ label {
   transition: left 0.25s;
 }
 
-#nav-client {
+.nav-client {
   z-index: 14;
   position: fixed;
   right: 5px;
@@ -701,30 +683,14 @@ label {
   font-family: typewriter;
   padding: calc(14px + 1vh) calc(20px + 1vh);
   line-height: calc(20px + 2vh);
-  transition: right 0.35s linear;
+  transition: right 0.25s ease;
   -webkit-box-shadow: 9px 9px 14px -4px rgba(0,0,0,0.75);
   -moz-box-shadow: 9px 9px 14px -4px rgba(0,0,0,0.75);
   box-shadow: 9px 9px 14px -4px rgba(0,0,0,0.75);
 }
 
-#nav-client-hidden {
-  z-index: 11;
-  position: fixed;
-  top: min(calc(60px + 7vw + 5px), 20vh + 5px);
-  border: 1px solid rgb(153, 142, 106);
-  outline: 5px solid rgb(255, 219, 88);
-  background-color: rgb(220, 202, 152);
-  font-size: calc(14px + 1vh);
-  font-family: typewriter;
-  padding: calc(14px + 1vh) calc(20px + 1vh);
-  line-height: calc(20px + 2vh);
+.nav-hidden {
   right: -400px;
-  /* left: 100vw; */
-  box-sizing: border-box;
-  transition: right 0.35s linear;
-  -webkit-box-shadow: 9px 9px 14px -4px rgba(80, 46, 46, 0.75);
-  -moz-box-shadow: 9px 9px 14px -4px rgba(0,0,0,0.75);
-  box-shadow: 9px 9px 14px -4px rgba(0,0,0,0.75);
 }
 
 .slick-prev {
