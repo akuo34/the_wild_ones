@@ -1,14 +1,15 @@
 import Head from 'next/head';
 import Slider from 'react-slick';
 import model from '../database/model.js';
-import { useState } from 'react';
-import { isMobile, isMobileOnly } from 'react-device-detect';
+import { useState, useEffect } from 'react';
 
 export default function Murals(props) {
 
   const [showDetails, setShowDetails] = useState(false);
   const [title, setTitle] = useState(null);
   const [description, setDescription] = useState(null);
+  const [mobileOnly, setMobileOnly] = useState(true);
+  const [mobile, setMobile] = useState(false);
 
   var settings = {
     arrows: true,
@@ -19,7 +20,7 @@ export default function Murals(props) {
   };
 
   const mouseEnter = (title, description) => {
-    if (title || description && !isMobile) {
+    if (title || description && !mobile) {
       setShowDetails(true);
       setTitle(title);
       setDescription(description);
@@ -29,6 +30,12 @@ export default function Murals(props) {
   const mouseLeave = () => {
     setShowDetails(false);
   }
+
+  useEffect(() => {
+    const { isMobile, isMobileOnly } = require('react-device-detect');
+    setMobileOnly(isMobileOnly);
+    setMobile(isMobile);
+  }, [])
 
   return (
     <div>
@@ -45,27 +52,30 @@ export default function Murals(props) {
           <p className="header-details">{title}</p>
           <p className="paragraph-details">{description}</p>
         </div>
-        {
-          !isMobileOnly || props.images.length ?
-            <Slider className="slider" {...settings}>
-              {props.images.map((image, key) => {
-                return (
-                  <div key={key} className="container-image-gallery">
-                    <img
-                      className="image-gallery"
-                      onClick={props.modalHandler}
-                      data-url={image.fireBaseUrl}
-                      data-title={image.title}
-                      data-description={image.description}
-                      src={image.fireBaseUrl}
-                      onMouseEnter={() => mouseEnter(image.title, image.description)}
-                      onMouseLeave={mouseLeave}
-                      alt="murals-carousel-image" />
-                  </div>
-                )
-              })}
-            </Slider> : null
-        }
+        <div>
+          {
+            !mobileOnly && props.images.length ?
+              <Slider className="slider" {...settings}>
+                {
+                  props.images.map((image, key) => {
+                    return (
+                      <div key={key} className="container-image-gallery">
+                        <img
+                          className="image-gallery"
+                          onClick={props.modalHandler}
+                          data-url={image.fireBaseUrl}
+                          data-title={image.title}
+                          data-description={image.description}
+                          src={image.fireBaseUrl}
+                          onMouseEnter={() => mouseEnter(image.title, image.description)}
+                          onMouseLeave={mouseLeave}
+                          alt="murals-carousel-image" />
+                      </div>
+                    )
+                  })}
+              </Slider> : null
+          }
+        </div>
         <div className="container-grid">
           {props.images.map((image, key) => {
             return (
