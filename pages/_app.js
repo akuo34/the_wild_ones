@@ -138,11 +138,11 @@ function MyApp({ Component, pageProps }) {
                   <a className="link">murals</a>
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <Link onClick={toolBarHandler} href="/store">
                   <a className="link">store</a>
                 </Link>
-              </li>
+              </li> */}
               <li>
                 <Link onClick={toolBarHandler} href="/contact">
                   <a className="link">contact</a>
@@ -168,11 +168,11 @@ function MyApp({ Component, pageProps }) {
                 cart && totalCart() > 0 ?
                   <span style={{ "alignSelf": "flexStart", "marginRight": "5px", "color": "rgb(204,0,0)", "fontSize": "calc(12px + 0.2vw)", "fontFamily": "typewriter" }}>{totalCart()}</span> : null
               } */}
-              <img
+              {/* <img
                 className="button-cart"
                 onClick={toCheckout}
                 src={cart && cart.length ? "/shopping_cart_red.svg" : "/shopping_cart_light_grey.svg"}
-                alt="cart-icon" />
+                alt="cart-icon" /> */}
             </div>
             <img className="button-hamburger" src="/hamburger_light_grey.svg" alt="menu-icon" onClick={toolBarHandler} />
           </div>
