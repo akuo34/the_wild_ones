@@ -183,7 +183,7 @@ function MyApp({ Component, pageProps }) {
           className={`container-modal-image ${animation}`}
           onClick={modalHandler}>
           {
-            title || description ?
+            (title && title !== ' ') || (description && description !== ' ') ?
               <div onMouseEnter={mouseEnter} onMouseLeave={mouseLeave} className={showDetails ? "modal-details active" : "modal-details hidden"}>
                 <p className="header-details">{title}</p>
                 <p className="paragraph-details">{description}</p>

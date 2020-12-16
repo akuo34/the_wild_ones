@@ -20,7 +20,7 @@ export default function Murals(props) {
   };
 
   const mouseEnter = (title, description) => {
-    if (title || description && !mobile) {
+    if ((title && title !== " ") || (description && description !== " ") && !mobile) {
       setShowDetails(true);
       setTitle(title);
       setDescription(description);
