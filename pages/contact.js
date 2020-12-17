@@ -46,53 +46,60 @@ export default function Contact(props) {
         <div style={{ "display": "flex", "flexWrap": "wrap", "width": "100%", "justifyContent": "space-between" }}>
           {
             props.contacts.length ?
-            <div className="column" style={{ "margin": "0 auto", "maxWidth": "90vw" }}>
-              {
-                props.contacts[0].phone ?
-                  <div className="row-contact">
-                    <a href={`tel:+1-${props.contacts[0].phone}`}>
-                      <img style={{ "height": "calc(25px + 1.75vw)", "marginRight": "calc(10px + 1vw)" }} src="/phone_icon.svg" alt="phone-icon" />
-                    </a>
-                    <h3 style={{ "margin": "auto 0" }}>
-                      <a style={{ "textDecoration": "none", "color": "inherit" }} href={`tel:+1-${props.contacts[0].phone}`}>
-                        {props.contacts[0].phone}
-                      </a>
-                    </h3>
-                  </div> : null
-              }
-              {
-                props.contacts[0].email ?
-                  <div className="row-contact">
-                    <a href={`mailto:${props.contacts[0].email}`}>
-                      <img style={{ "height": "calc(25px + 1.75vw)", "marginRight": "calc(10px + 1vw)" }} src="/email_icon.svg" alt="email-icon" />
-                    </a>
-                    <h3 style={{ "margin": "auto 0" }}>
-                      <a style={{ "textDecoration": "none", "color": "inherit" }} href={`mailto:${props.contacts[0].email}`}>
-                        {props.contacts[0].email}
-                      </a>
-                    </h3>
-                  </div> : null
-              }
-              {
-                props.contacts[0].instagram ?
-                  <div className="row-contact">
-                    <a style={{ "textDecoration": "none", "color": "inherit" }} href={props.contacts[0].instagram}>
-                      <img style={{ "height": "calc(25px + 1.75vw)", "opacity": "75%", "marginRight": "calc(10px + 1vw)" }} src="/instagram.svg" alt="instagram-icon" />
-                    </a>
-                    <h3 style={{ "margin": "auto 0" }}>
-                      <a style={{ "textDecoration": "none", "color": "inherit" }} href={props.contacts[0].instagram}>
-                        {'@' + props.contacts[0].instagram.split('instagram.com/').pop()}
-                      </a>
-                    </h3>
-                  </div> : null
-              }
-            </div> : null
+              // <div style={{ "display": "flex", "flexDirection": "column" }}>
+              //   <h3 style={{ "marginBottom": "40px" }}>
+              //     Contact me for questions and quotes!
+              //   </h3>
+                <div className="column" style={{ "margin": "0 auto", "maxWidth": "90vw" }}>
+                  {
+                    props.contacts[0].phone ?
+                      <div className="row-contact">
+                        <a href={`tel:+1-${props.contacts[0].phone}`}>
+                          <img style={{ "height": "calc(25px + 1.75vw)", "marginRight": "calc(10px + 1vw)" }} src="/phone_icon.svg" alt="phone-icon" />
+                        </a>
+                        <h3 style={{ "margin": "auto 0" }}>
+                          <a style={{ "textDecoration": "none", "color": "inherit" }} href={`tel:+1-${props.contacts[0].phone}`}>
+                            {props.contacts[0].phone}
+                          </a>
+                        </h3>
+                      </div> : null
+                  }
+                  {
+                    props.contacts[0].email ?
+                      <div className="row-contact">
+                        <a href={`mailto:${props.contacts[0].email}`}>
+                          <img style={{ "height": "calc(25px + 1.75vw)", "marginRight": "calc(10px + 1vw)" }} src="/email_icon.svg" alt="email-icon" />
+                        </a>
+                        <h3 style={{ "margin": "auto 0" }}>
+                          <a style={{ "textDecoration": "none", "color": "inherit" }} href={`mailto:${props.contacts[0].email}`}>
+                            {props.contacts[0].email}
+                          </a>
+                        </h3>
+                      </div> : null
+                  }
+                  {
+                    props.contacts[0].instagram ?
+                      <div className="row-contact">
+                        <a style={{ "textDecoration": "none", "color": "inherit" }} href={props.contacts[0].instagram}>
+                          <img style={{ "height": "calc(25px + 1.75vw)", "opacity": "75%", "marginRight": "calc(10px + 1vw)" }} src="/instagram.svg" alt="instagram-icon" />
+                        </a>
+                        <h3 style={{ "margin": "auto 0" }}>
+                          <a style={{ "textDecoration": "none", "color": "inherit" }} href={props.contacts[0].instagram}>
+                            {'@' + props.contacts[0].instagram.split('instagram.com/').pop()}
+                          </a>
+                        </h3>
+                      </div> : null
+                  }
+                </div>
+
+              // </div>
+              : null
           }
           <div style={{ "margin": "0 auto", "display": "flex", "flexDirection": "column" }}>
             <form id="form-contact-client" className="form-gallery" style={{ "margin": "0 auto" }} onSubmit={submitForm}>
-              <h4 className="text-gallery-form-header">Send an email</h4>
-              <input required className="input-landing" name="name" placeholder="Name"></input>
-              <input required className="input-landing" name="email" type="email" placeholder="Email"></input>
+              <h4 className="text-gallery-form-header">email me for quotes!</h4>
+              <input required className="input-landing" name="name" placeholder="Your name"></input>
+              <input required className="input-landing" name="email" type="email" placeholder="Your email"></input>
               <input required className="input-landing" name="subject" placeholder="Subject"></input>
               <textarea required className="input-description" name="message" placeholder="Your message"></textarea>
               <button className="button-gallery-post" type="submit">Send message</button>
