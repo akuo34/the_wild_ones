@@ -1148,6 +1148,17 @@ button.slick-arrow.slick-next,
   margin: auto 10px;
 }
 
+@media only screen and (max-device-width: 500px) {
+  .container-image-grid {
+    height: auto;
+  }
+
+  .image-grid {
+    height: auto;
+    width: 100%;
+  }
+}
+
 /* @media only screen and (max-device-width: 823px) { */
 @media only screen and (max-device-width: 1023px) {
 
