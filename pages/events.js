@@ -189,7 +189,10 @@ export default function Events(props) {
                   <p style={{ "marginBottom": "20px" }}>Where: {upcomingEvents[0].location}</p>
                   <p>When: {convertDate(upcomingEvents[0].startDate)} from {convertTime(upcomingEvents[0].startTime)} to {convertTime(upcomingEvents[0].endTime)}</p>
                 </div>
-              </div> : null
+              </div> : 
+              <div className="container-client-events" style={{ "border": "none", "boxShadow": "none", "textAlign": "center" }}>
+                <h3>No upcoming events</h3>
+              </div>
           }
         </div>
         {upcomingEvents.length ?
