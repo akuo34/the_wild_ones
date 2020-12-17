@@ -1151,6 +1151,7 @@ button.slick-arrow.slick-next,
 @media only screen and (max-device-width: 500px) {
   .container-image-grid {
     height: auto;
+    width: 90vw;
   }
 
   .image-grid {
