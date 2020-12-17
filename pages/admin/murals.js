@@ -42,7 +42,7 @@ export default function MuralsManager(props) {
   }
 
   const resizeFile = (file) => new Promise(resolve => {
-    Resizer.imageFileResizer(file, 450, 450, 'JPEG', 100, 0,
+    Resizer.imageFileResizer(file, 250, 300, 'JPEG', 100, 0,
     // Resizer.imageFileResizer(file, 250, 150, 'JPEG', 100, 0,
       uri => {
         resolve(uri);
