@@ -79,7 +79,7 @@ export default function Home(props) {
         <div className="container-grid">
           {props.images.map((image, key) => {
             return (
-              <div key={key} className="container-image-grid">
+              <div key={key} className="container-image-grid" style={{ "display": "flex", "flexDirection": "column" }}>
                 <img
                   className="image-grid"
                   onClick={props.modalHandler}
@@ -88,6 +88,9 @@ export default function Home(props) {
                   data-description={image.description}
                   src={image.smallFireBaseUrl}
                   alt="gallery-grid-image" />
+                {
+                  mobileOnly ? <i style={{ "textAlign": "center", "marginTop": "10px", "color": "rgb(100, 93, 69)" }}>{image.title} - {image.description}</i> : null
+                }
               </div>
             )
           })}
