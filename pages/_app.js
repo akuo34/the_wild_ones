@@ -152,7 +152,7 @@ function MyApp({ Component, pageProps }) {
           </div>
         </div>
         <div className="container-main-header">
-          <img className="banner" src={banner} alt="banner" />
+          <img className="banner" src={banner} />
           <div className="container-logo-home">
             <div className="logo-home" onClick={returnHome}></div>
           </div>
