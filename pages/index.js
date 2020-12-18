@@ -93,6 +93,7 @@ export default function Home(props) {
             )
           })}
         </div>
+        <img src="/positivessl_trust_seal_md_167x42.png" alt="SSL_seal" style={{ "marginBottom": "20px" }}></img>
       </div>
     </div>
   )
