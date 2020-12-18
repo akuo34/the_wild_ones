@@ -89,7 +89,7 @@ export default function Murals(props) {
                   src={image.smallFireBaseUrl}
                   alt="murals-grid-image" />
                 {
-                  mobileOnly ? <i style={{ "textAlign": "center", "marginTop": "10px", "color": "rgb(100, 93, 69)" }}>{image.title} - {image.description}</i> : null
+                  !mobileOnly ? null : <i style={{ "textAlign": "center", "marginTop": "10px", "color": "rgb(100, 93, 69)" }}>{image.title} {image.title && image.description ? '-' : null} {image.description}</i>
                 }
               </div>
             )

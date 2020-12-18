@@ -796,10 +796,12 @@ button.slick-arrow.slick-next,
   box-sizing: border-box;
   width: 250px;
   height: 150px;
+  /* height: 200px; */
   margin: 0 5px 60px 5px;
   overflow: hidden;
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
 .container-image-grid-cart {
@@ -814,7 +816,7 @@ button.slick-arrow.slick-next,
 
 .image-grid {
   height: 150px;
-  margin: 0 auto;
+  margin: auto;
   object-fit: cover;
 }
 
