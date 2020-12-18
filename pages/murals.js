@@ -79,7 +79,7 @@ export default function Murals(props) {
         <div className="container-grid">
           {props.images.map((image, key) => {
             return (
-              <div key={key} className="container-image-grid">
+              <div key={key} className="container-image-grid" style={{ "display": "flex", "flexDirection": "column" }}>
                 <img
                   className="image-grid"
                   onClick={props.modalHandler}
