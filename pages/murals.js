@@ -88,9 +88,7 @@ export default function Murals(props) {
                   data-description={image.description}
                   src={image.smallFireBaseUrl}
                   alt="murals-grid-image" />
-                {
-                  !mobileOnly ? null : <i style={{ "textAlign": "center", "marginTop": "10px", "color": "rgb(100, 93, 69)" }}>{image.title} {image.title && image.description && image.title !== ' ' && image.description !== ' ' ? '-' : null} {image.description}</i>
-                }
+                <i style={{ "textAlign": "center", "marginTop": "10px", "marginBottom": "20px", "height": "30px", "color": "rgb(100, 93, 69)" }}>{mobile ? image.title : null} {mobile && image.title && image.description && image.title !== ' ' && image.description !== ' ' ? '-' : null} {mobile ? image.description : null}</i>
               </div>
             )
           })}
