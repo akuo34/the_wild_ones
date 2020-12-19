@@ -4,6 +4,7 @@ import '../styles/react-big-calendar.css';
 import { useState } from 'react';
 import Link from 'next/link';
 import Router from 'next/router';
+import Head from 'next/head';
 import { useEffect } from 'react';
 import Axios from 'axios';
 import { AuthProvider } from '../contexts/auth.js';
@@ -114,6 +115,10 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <div>
+      <Head>
+        <title>The Wild Ones - Art by Candy Kuo</title>
+        <meta name="Description" content="Candy yu-yen kuo is a visual artist based out of Austin, Texas. Born in Taipei and raised in South Texas, she often blends references to these cultural roots into her work. With a background in fashion and illustration, her portraits often portray female characters set against nature with all her creatures. Her color palettes are bright and colorful, explosive like the fiery women she tries to capture in her worlds." />
+      </Head>
       <div className="container-client-header">
         <div className={showClientToolBar ? "wrapper-nav-client" : "wrapper-nav-client-hidden"} onClick={toolBarHandler}>
           <div className={showClientToolBar ? "nav-client" : "nav-client nav-hidden"}>
