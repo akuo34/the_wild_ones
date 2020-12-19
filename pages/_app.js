@@ -117,6 +117,7 @@ function MyApp({ Component, pageProps }) {
     <div>
       <Head>
         <title>The Wild Ones - Art by Candy Kuo</title>
+        <link rel="icon" href="/white_logo.jpg" />
         <meta name="Description" content="Candy yu-yen kuo is a visual artist based out of Austin, Texas. Born in Taipei and raised in South Texas, she often blends references to these cultural roots into her work. With a background in fashion and illustration, her portraits often portray female characters set against nature with all her creatures. Her color palettes are bright and colorful, explosive like the fiery women she tries to capture in her worlds." />
       </Head>
       <div className="container-client-header">
