@@ -734,11 +734,13 @@ button.slick-arrow.slick-next,
   color: rgb(100, 93, 69);
   font-family: typewriter;
   font-size: calc(1px + 1.1vw);
+  text-align: center;
 }
 
 .paragraph-details {
   font-size: calc(0px + 1.1vw);
   line-height: calc(4px + 1vw);
+  text-align: center;
 }
 
 .image-details {
