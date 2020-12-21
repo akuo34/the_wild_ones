@@ -1161,6 +1161,7 @@ button.slick-arrow.slick-next,
   .image-grid {
     height: auto;
     width: 100%;
+    max-width: 100%;
   }
 }
 
