@@ -1152,6 +1152,12 @@ button.slick-arrow.slick-next,
   margin: auto 10px;
 }
 
+.embed-cv {
+  width: 60vw;
+  height: 80vw;
+  margin-bottom: 60px;
+}
+
 @media only screen and (max-device-width: 500px) {
   .container-image-grid {
     height: auto;
@@ -1162,6 +1168,12 @@ button.slick-arrow.slick-next,
     height: auto;
     width: 100%;
     max-width: 100%;
+  }
+
+  .embed-cv {
+    width: 90vw;
+    height: 80vw;
+    margin-bottom: 60px;
   }
 }
 
