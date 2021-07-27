@@ -27,7 +27,9 @@ const aboutSchema = new mongoose.Schema({
   bio: String,
   portraitFilename: String,
   bannerFireBaseUrl: String,
-  bannerFilename: String
+  bannerFilename: String,
+  cvFireBaseUrl: String,
+  cvFilename: String
 });
 
 const eventSchema = new mongoose.Schema({
