@@ -18,6 +18,10 @@ export default function About(props) {
             <p className="container-bio">{props.images[0].bio}</p>
           </div> : null
         }
+        <h2 className="subheader-client">CV</h2>
+        {props.images.length &&
+          <iframe className="embed-cv" height="300px" width="200px" src={`${props.images[0].cvFireBaseUrl}`}></iframe>
+        }
       </div>
     </div>
   )

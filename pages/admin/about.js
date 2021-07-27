@@ -77,8 +77,10 @@ export default function AboutManager(props) {
           let portraitFilename = filename;
           let bannerFireBaseUrl = '';
           let bannerFilename = '';
+          let cvFireBaseUrl = '';
+          let cvFilename = '';
 
-          const request = { portraitFireBaseUrl, bio, portraitFilename, bannerFireBaseUrl, bannerFilename };
+          const request = { portraitFireBaseUrl, bio, portraitFilename, bannerFireBaseUrl, bannerFilename, cvFireBaseUrl, cvFilename };
 
           Axios
             .post('/api/about', request)
@@ -200,6 +202,61 @@ export default function AboutManager(props) {
     document.getElementById('form-edit-banner').reset();
   };
 
+  const handleChangeCV = (e) => {
+    e.preventDefault();
+
+    props.setLoading(true);
+
+    const _id = e.target.dataset.id;
+    let oldCVFilename = e.target.dataset.filename;
+
+    console.log('start of upload');
+
+    if (imageAsFile === '') {
+      console.error(`not an image, the image file is a ${typeof (imageAsFile)}`);
+      props.setLoading(false);
+      alert('Please select an image to upload');
+      return;
+    };
+
+    let randomizer = (Math.floor(Math.random() * (1000 - 1)) + 1).toString();
+    let split = imageAsFile.name.split('.');
+    const filename = split[0] + randomizer + '.' + split[1];
+
+    const uploadTask = storage.ref(`/about/${filename}`).put(imageAsFile);
+
+    uploadTask.on('state_changed', (snapshot) => {
+      console.log(snapshot)
+    }, (err) => {
+      console.log(err);
+    }, () => {
+      console.log('uploaded to firebase')
+      storage.ref('about').child(filename).getDownloadURL()
+        .then(cvFireBaseUrl => {
+
+          if (oldCVFilename) {
+            storage.ref('about').child(oldCVFilename).delete()
+              .then(() => console.log('deleted from firebase'))
+              .catch(err => console.error(err));
+          }
+
+          const request = { cvFireBaseUrl, cvFilename: filename };
+
+          Axios
+            .put(`/api/about/cv/${_id}`, request)
+            .then(response => {
+              getBio();
+              props.setLoading(false);
+              window.location.reload();
+              setImageAsFile('');
+            })
+            .catch(err => console.error(err))
+        });
+    });
+
+    document.getElementById('form-edit-cv').reset();
+  };
+
   const editHandler = (e) => {
     e.preventDefault();
 
@@ -220,6 +277,7 @@ export default function AboutManager(props) {
     const _id = e.target.value;
     const portraitFilename = e.target.dataset.portraitfilename;
     const bannerFilename = e.target.dataset.bannerfilename;
+    const cvFilename = e.target.dataset.cvfilename;
 
     Axios
       .delete(`/api/about/${_id}`)
@@ -232,6 +290,10 @@ export default function AboutManager(props) {
           .catch(err => console.error(err));
 
         storage.ref('about').child(bannerFilename).delete()
+          .then(() => console.log('deleted from firebase'))
+          .catch(err => console.error(err));
+
+        storage.ref('about').child(cvFilename).delete()
           .then(() => console.log('deleted from firebase'))
           .catch(err => console.error(err));
       })
@@ -305,11 +367,22 @@ export default function AboutManager(props) {
                           <button>Upload banner</button>
                         </div>
                       </form>
+                      <form id="form-edit-cv" onSubmit={handleChangeCV} data-id={item._id} data-filename={item.cvFilename}>
+                        <div style={{ "marginBottom": "5px" }}>Change CV</div>
+                        <div style={{ "marginBottom": "20px" }}>
+                          <input
+                            type="file"
+                            onChange={handleImageAsFile}
+                            style={{ "marginBottom": "5px" }}
+                          />
+                          <button>Upload CV</button>
+                        </div>
+                      </form>
                       <form id={item._id} className="form-gallery-edit" onSubmit={editHandler} data-id={item._id}>
                         <textarea name="bio" placeholder="Bio" style={{ "height": "80px", "marginBottom": "5px" }}></textarea>
                         <div className="container-form-buttons">
                           <button type="submit" style={{ "marginRight": "5px" }}>Edit</button>
-                          <button value={item._id} onClick={deleteHandler} data-bannerfilename={item.bannerFilename} data-portraitfilename={item.portraitFilename}>Delete</button>
+                          <button value={item._id} onClick={deleteHandler} data-bannerfilename={item.bannerFilename} data-portraitfilename={item.portraitFilename} data-cvfilename={item.cvFilename}>Delete</button>
                         </div>
                       </form>
                     </div>
